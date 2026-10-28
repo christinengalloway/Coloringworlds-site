@@ -1,686 +1,542 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Coloring Worlds — Light RPG Coloring Books</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@400;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Coloring Worlds — Light RPG Coloring Books</title>
+<meta name="description" content="Story coloring books for grown-ups where every color you choose quietly shapes the ending. Start with Kingdoms of Color: The Dragon of Thornfield.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&family=IM+Fell+English:ital@0;1&display=swap">
+<style>
+/* Layout: an illuminated storybook for grown-up colorists. Christine's own artwork leads; the page reads like chapters, with jewel tones from the book's stained glass. Left-aligned text, generous margins. */
+:root {
+  --paper: #F6F1E4;
+  --panel: #ECE4D0;
+  --ink: #2A2238;
+  --muted: #5F566C;
+  --line: #2A2238;
+  --rule: #D8CDB5;
+  --gold: #9C7019;
+  --power: #A63A26;
+  --wisdom: #2B5590;
+  --heart: #4A7330;
+  --garnet: #8E2F45;
+  --teal: #2C6F69;
+  --accent-l: #9C7019;
+  --accent-d: #D9AE4E;
+  --accent: var(--accent-l);
+  --wash-o: .18;
+  --display: "IM Fell English", "Iowan Old Style", Georgia, serif;
+  --body: "Alegreya", "Iowan Old Style", Georgia, serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #1B1928; --panel: #252237; --ink: #EFE8D8; --muted: #B5ACC0; --line: #E9E1CF; --rule: #3A3652;
+    --gold: #D9AE4E; --power: #E0785B; --wisdom: #86A9E6; --heart: #93BE6D; --garnet: #E08AA0; --teal: #6CC2B6;
+    --accent: var(--accent-d); --wash-o: .12; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #1B1928; --panel: #252237; --ink: #EFE8D8; --muted: #B5ACC0; --line: #E9E1CF; --rule: #3A3652;
+  --gold: #D9AE4E; --power: #E0785B; --wisdom: #86A9E6; --heart: #93BE6D; --garnet: #E08AA0; --teal: #6CC2B6;
+  --accent: var(--accent-d); --wash-o: .12; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 1.125rem; line-height: 1.68; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; line-height: 1.12; text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(2rem, 4.4vw, 2.9rem); }
+h3 { font-size: 1.45rem; }
+p { margin: 0; }
+a { color: inherit; }
+img { display: block; max-width: 100%; height: auto; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-    :root {
-      --ink:      #1a1035;
-      --cream:    #fffdf5;
-      --rose:     #f25c8b;
-      --gold:     #f5c842;
-      --teal:     #3ecfc1;
-      --violet:   #9b6ee8;
-      --sky:      #5bb8f5;
-      --coral:    #ff7c5c;
-      --mint:     #6ddba8;
-    }
+/* Nav with a stained-glass stripe */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; border-bottom: 1px solid var(--rule);
+  background: linear-gradient(90deg, var(--garnet) 0 20%, var(--gold) 0 40%, var(--heart) 0 60%, var(--teal) 0 80%, var(--wisdom) 0) top / 100% 4px no-repeat, var(--paper); }
+.nav .wrap { display: flex; align-items: center; gap: 24px; padding-block: 14px 12px; }
+.mark { font-family: var(--display); font-style: italic; font-size: 1.45rem; text-decoration: none; white-space: nowrap; }
+.mark span { color: var(--accent); transition: color .5s; }
+.links { display: flex; gap: 22px; margin-left: auto; overflow-x: auto; scrollbar-width: none; font-size: 1rem; }
+.links::-webkit-scrollbar { display: none; }
+.links a { text-decoration: none; color: var(--muted); white-space: nowrap; padding-block: 4px; }
+.links a:hover { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 5px; }
+@media (max-width: 680px) { .nav .wrap { flex-direction: column; align-items: flex-start; gap: 4px; } .links { margin-left: 0; max-width: 100%; } }
 
-    html { scroll-behavior: smooth; }
+/* Hero: the real Thornfield page */
+.hero { padding-top: clamp(28px, 5vw, 56px); }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 5vw, 60px); align-items: center; }
+@media (max-width: 860px) { .hero-grid { grid-template-columns: minmax(0, 1fr); } }
+.hero-text { display: grid; gap: 18px; }
+.kicker { font-family: var(--display); font-style: italic; color: var(--muted); font-size: 1.15rem; }
+.hero h1 { font-size: clamp(2.6rem, 6vw, 4.3rem); line-height: 1.02; }
+.cap { float: left; font-size: 2.05em; line-height: .8; margin: .06em .12em 0 0; padding: .1em .14em .06em;
+  color: var(--paper); background: var(--accent); border: 3px double var(--paper); outline: 2px solid var(--accent); transition: background .5s, outline-color .5s; }
+.lede { font-size: 1.25rem; color: var(--muted); max-width: 32em; }
+.lede strong { color: var(--ink); font-weight: 500; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+.btn { display: inline-block; font: inherit; font-size: 1.05rem; text-decoration: none; cursor: pointer; padding: 10px 22px;
+  border: 1.5px solid var(--ink); border-radius: 999px; background: var(--ink); color: var(--paper); transition: background .3s, border-color .3s, color .3s; }
+.btn.ghost { background: transparent; color: var(--ink); }
+.btn:not(.ghost):hover { background: var(--accent); border-color: var(--accent); }
+.btn.ghost:hover { border-color: var(--accent); }
+.plate { position: relative; margin: 0; border: 1.5px solid var(--line); padding: 10px; background: var(--paper); box-shadow: 10px 10px 0 var(--rule); }
+.plate .frame { overflow: hidden; aspect-ratio: 2048 / 1374; }
+.plate img { width: 100%; height: 100%; object-fit: cover; transform-origin: 62% 40%; animation: pan 28s ease-in-out infinite alternate; }
+@keyframes pan { from { transform: scale(1.02) translate(0, 0); } to { transform: scale(1.12) translate(-2%, 1.5%); } }
+.plate figcaption { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: .95rem; color: var(--muted); font-style: italic; padding: 10px 4px 0; }
 
-    body {
-      font-family: 'Nunito', sans-serif;
-      background: var(--cream);
-      color: var(--ink);
-      overflow-x: hidden;
-    }
+/* Sections */
+section.band { position: relative; overflow: clip; padding-block: clamp(64px, 9vw, 112px); }
+.band + .band, .hero + .band { border-top: 1px solid var(--rule); }
+.hero + .band { margin-top: clamp(56px, 8vw, 96px); }
+.band > .wrap { position: relative; z-index: 1; }
+.wash { position: absolute; z-index: 0; border-radius: 46% 54% 60% 40% / 50% 42% 58% 50%; filter: blur(60px); opacity: var(--wash-o); pointer-events: none; animation: drift 30s ease-in-out infinite alternate; }
+@keyframes drift { to { transform: translate(40px, 30px) rotate(20deg) scale(1.1); } }
+.head { display: grid; gap: 12px; max-width: 680px; margin-bottom: clamp(30px, 4vw, 46px); }
+.head p { color: var(--muted); font-size: 1.2rem; }
+.brush { display: block; width: min(240px, 66%); height: 16px; overflow: visible; }
+.brush path { fill: none; stroke: var(--bc, var(--accent)); stroke-width: 6; stroke-linecap: round; stroke-dasharray: 300; stroke-dashoffset: 300; transition: stroke-dashoffset 1.4s ease; }
+.brush.seen path { stroke-dashoffset: 0; }
 
-    /* ── NOISE TEXTURE OVERLAY ── */
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 999;
-      opacity: 0.5;
-    }
+/* The page you color */
+.pages { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(18px, 3vw, 32px); }
+@media (max-width: 700px) { .pages { grid-template-columns: minmax(0, 1fr); } }
+.pages figure { margin: 0; display: grid; gap: 10px; }
+.pages .pg { border: 1.5px solid var(--line); padding: 8px; background: #FFFFFF; }
+.pages figcaption { color: var(--muted); font-size: 1rem; }
+.pages figcaption b { font-family: var(--display); font-weight: 400; font-size: 1.25rem; color: var(--ink); display: block; }
 
-    /* ── SPLASH BLOBS (background decoration) ── */
-    .blobs {
-      position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
-    }
-    .blob {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.18;
-      animation: drift 18s ease-in-out infinite alternate;
-    }
-    .blob-1 { width:520px; height:520px; background:var(--rose);   top:-120px; left:-100px; animation-delay:0s; }
-    .blob-2 { width:400px; height:400px; background:var(--teal);   top:30%;    right:-80px; animation-delay:-5s; }
-    .blob-3 { width:450px; height:450px; background:var(--violet); bottom:-80px; left:30%; animation-delay:-9s; }
-    .blob-4 { width:300px; height:300px; background:var(--gold);   top:60%;    left:-60px; animation-delay:-3s; }
-    @keyframes drift {
-      from { transform: translate(0,0) scale(1); }
-      to   { transform: translate(40px, 30px) scale(1.08); }
-    }
+/* For grown-up colorists */
+.why { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 30px 36px; list-style: none; padding: 0; margin: 0; }
+.why li { display: grid; gap: 6px; padding-top: 16px; border-top: 2px solid var(--c); min-width: 0; }
+.why li:nth-child(1) { --c: var(--garnet); } .why li:nth-child(2) { --c: var(--gold); } .why li:nth-child(3) { --c: var(--teal); } .why li:nth-child(4) { --c: var(--wisdom); }
+.why p { color: var(--muted); }
 
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1rem 2.5rem;
-      background: rgba(255,253,245,0.82);
-      backdrop-filter: blur(12px);
-      border-bottom: 2px dashed rgba(155,110,232,0.2);
-    }
-    .nav-logo {
-      font-family: 'Pacifico', cursive;
-      font-size: 1.4rem;
-      color: var(--violet);
-      letter-spacing: -0.5px;
-    }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a {
-      font-weight: 700; font-size: 0.9rem;
-      text-decoration: none; color: var(--ink);
-      letter-spacing: 0.03em;
-      padding: 0.3rem 0;
-      position: relative;
-      transition: color 0.2s;
-    }
-    .nav-links a::after {
-      content: '';
-      position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
-      background: var(--rose);
-      transform: scaleX(0);
-      transition: transform 0.25s;
-    }
-    .nav-links a:hover { color: var(--rose); }
-    .nav-links a:hover::after { transform: scaleX(1); }
+/* How it works: a true sequence */
+.steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 28px; }
+.steps li { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; min-width: 0; }
+.num { font-family: var(--display); font-size: 2.5rem; line-height: 1; min-width: 1.4em; color: var(--c); }
+.steps li:nth-child(1) { --c: var(--garnet); } .steps li:nth-child(2) { --c: var(--teal); } .steps li:nth-child(3) { --c: var(--wisdom); }
+.steps h3 { margin-bottom: 6px; }
+.steps p { color: var(--muted); }
+.paths { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 34px; }
+.path { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 8px; border: 1.5px solid var(--pc); border-radius: 999px; font-size: 1rem; font-weight: 500; }
+.path i { width: 18px; height: 18px; border-radius: 50%; display: inline-block; background: var(--pc); }
+.p-power { --pc: var(--power); } .p-wisdom { --pc: var(--wisdom); } .p-heart { --pc: var(--heart); }
 
-    /* ── HERO ── */
-    .hero {
-      position: relative; z-index: 1;
-      min-height: 100vh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center;
-      padding: 7rem 2rem 4rem;
-    }
+/* Banner teaser */
+.teaser { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
+@media (max-width: 780px) { .teaser { grid-template-columns: minmax(0, 1fr); } }
+.swatches { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 22px; }
+.swatch { display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 8px 14px; cursor: pointer; font: inherit; font-size: 1.05rem; color: var(--ink); text-align: left;
+  background: var(--paper); border: 1.5px solid var(--rule); border-radius: 10px; }
+.swatch:hover { border-color: var(--ink); }
+.swatch[aria-pressed="true"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.swatch b { width: 28px; height: 28px; border-radius: 50%; flex: none; border: 1.5px solid var(--line); background: var(--sw-l); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .swatch b { background: var(--sw-d); } }
+:root[data-theme="dark"] .swatch b { background: var(--sw-d); }
+.flag-stage { position: relative; border-radius: 14px; padding: 26px; display: grid; gap: 18px; background: var(--panel); background: color-mix(in srgb, var(--accent) 9%, var(--panel)); transition: background .6s; }
+.flag { width: 100%; max-width: 340px; height: auto; margin: 0 auto; display: block; overflow: visible; }
+.flag .o { stroke: var(--line); stroke-width: 2.5; stroke-linejoin: round; }
+.flag .cloth { fill: var(--paper); transition: fill .6s; }
+.flag .trim { fill: none; stroke: var(--gold); stroke-width: 2; }
+.flag.chosen .cloth { fill: var(--accent); }
+.verdict { min-height: 6.4em; }
+.verdict .says { font-family: var(--display); font-size: 1.35rem; line-height: 1.35; }
+.verdict .small { color: var(--muted); font-size: 1rem; margin-top: 8px; }
+.splat { position: absolute; border-radius: 50%; pointer-events: none; z-index: 2; }
 
-    .hero-badge {
-      display: inline-block;
-      background: var(--gold);
-      color: var(--ink);
-      font-weight: 800; font-size: 0.78rem;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      padding: 0.4rem 1.1rem;
-      border-radius: 999px;
-      margin-bottom: 1.5rem;
-      box-shadow: 3px 3px 0 var(--ink);
-      animation: pop-in 0.5s cubic-bezier(0.175,0.885,0.32,1.275) both;
-    }
+/* Featured book */
+.book { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
+@media (max-width: 780px) { .book { grid-template-columns: minmax(0, 1fr); } }
+.cover { margin: 0; max-width: 420px; justify-self: center; border: 1.5px solid var(--line); padding: 8px; background: var(--paper); box-shadow: 10px 10px 0 var(--rule); transform: rotate(-1.5deg); }
+.status { display: inline-block; font-size: .95rem; padding: 2px 12px; border-radius: 999px; border: 1px solid var(--rule); color: var(--muted); }
+.facts { list-style: none; padding: 0; margin: 22px 0 26px; display: grid; border-top: 1px solid var(--rule); }
+.facts li { display: grid; grid-template-columns: 4rem 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--rule); align-items: baseline; }
+.facts b { font-family: var(--display); font-weight: 400; font-size: 1.9rem; line-height: 1; color: var(--accent); transition: color .5s; font-variant-numeric: tabular-nums; }
+.book .copy { display: grid; gap: 14px; }
 
-    .hero h1 {
-      font-family: 'Lilita One', cursive;
-      font-size: clamp(3.2rem, 9vw, 7rem);
-      line-height: 1.0;
-      color: var(--ink);
-      margin-bottom: 0.4rem;
-      animation: slide-up 0.7s 0.1s cubic-bezier(0.175,0.885,0.32,1.275) both;
-    }
+/* Cast: tap a portrait to color it */
+.cast { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 18px; }
+.cast .person:first-child { grid-column: span 2; }
+.cast .person:first-child .tile { max-width: 340px; }
+@media (min-width: 940px) { .cast { grid-template-columns: repeat(5, minmax(0, 1fr)); } .cast .person:first-child { grid-column: auto; } }
+.person { display: grid; gap: 10px; align-content: start; min-width: 0; }
+.tile { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: pointer; perspective: 1000px; }
+.tile .in { display: block; position: relative; aspect-ratio: 4 / 5; transition: transform .8s cubic-bezier(.4,.1,.2,1); transform-style: preserve-3d; }
+.tile[aria-pressed="true"] .in { transform: rotateY(180deg); }
+.tile .f { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border: 1.5px solid var(--line); padding: 6px; background: #FFFFFF; overflow: hidden; }
+.tile .f.back { transform: rotateY(180deg); border-color: var(--c); box-shadow: 0 0 0 3px var(--c); }
+.tile img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+.tile .hint { font-family: var(--body); position: absolute; left: 10px; bottom: 10px; font-size: .85rem; padding: 2px 10px; border-radius: 999px; background: var(--paper); color: var(--ink); border: 1px solid var(--rule); }
+.person:nth-child(1) { --c: var(--heart); } .person:nth-child(2) { --c: var(--garnet); } .person:nth-child(3) { --c: var(--wisdom); }
+.person:nth-child(4) { --c: var(--teal); } .person:nth-child(5) { --c: var(--power); }
+.person .nm { font-family: var(--display); font-size: 1.35rem; line-height: 1.15; }
+.person .rl { color: var(--c); font-style: italic; font-size: 1rem; }
+.person p { color: var(--muted); font-size: 1.02rem; }
+.cast-note { margin-top: 26px; color: var(--muted); font-style: italic; }
 
-    .hero h1 .word-color {
-      display: inline-block;
-      background: linear-gradient(135deg, var(--rose), var(--violet), var(--sky));
-      -webkit-background-clip: text; background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .hero h1 .word-worlds {
-      display: inline-block;
-      background: linear-gradient(135deg, var(--teal), var(--mint), var(--gold));
-      -webkit-background-clip: text; background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero-sub {
-      font-family: 'Pacifico', cursive;
-      font-size: clamp(1rem, 2.5vw, 1.5rem);
-      color: var(--coral);
-      margin-bottom: 1.8rem;
-      animation: slide-up 0.7s 0.2s cubic-bezier(0.175,0.885,0.32,1.275) both;
-    }
-
-    .hero-desc {
-      max-width: 600px;
-      font-size: 1.15rem; line-height: 1.7;
-      color: #4a3f6b;
-      margin-bottom: 2.5rem;
-      animation: slide-up 0.7s 0.3s cubic-bezier(0.175,0.885,0.32,1.275) both;
-    }
-
-    .hero-ctas {
-      display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
-      animation: slide-up 0.7s 0.4s cubic-bezier(0.175,0.885,0.32,1.275) both;
-    }
-
-    .btn {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 800; font-size: 1rem;
-      padding: 0.85rem 2rem;
-      border-radius: 999px;
-      text-decoration: none;
-      border: 3px solid var(--ink);
-      box-shadow: 5px 5px 0 var(--ink);
-      transition: transform 0.15s, box-shadow 0.15s;
-      cursor: pointer;
-    }
-    .btn:hover { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 var(--ink); }
-    .btn:active { transform: translate(2px,2px); box-shadow: 3px 3px 0 var(--ink); }
-    .btn-primary { background: var(--rose); color: white; }
-    .btn-secondary { background: var(--cream); color: var(--ink); }
-
-    /* floating doodles */
-    .doodle {
-      position: absolute;
-      font-size: 2.5rem;
-      animation: float 4s ease-in-out infinite alternate;
-      user-select: none; pointer-events: none;
-    }
-    .d1 { top: 15%; left: 8%;  animation-delay: 0s;   }
-    .d2 { top: 25%; right: 9%; animation-delay: -1.2s; }
-    .d3 { bottom: 22%; left: 6%;  animation-delay: -2.4s; }
-    .d4 { bottom: 18%; right: 7%; animation-delay: -0.8s; }
-    @keyframes float {
-      from { transform: translateY(0) rotate(-5deg); }
-      to   { transform: translateY(-18px) rotate(5deg); }
-    }
-
-    /* scroll arrow */
-    .scroll-hint {
-      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-      font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em;
-      color: #9b8bb4;
-      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
-      animation: bounce 2s ease-in-out infinite;
-    }
-    .scroll-hint span { font-size: 1.4rem; }
-    @keyframes bounce {
-      0%,100% { transform: translateX(-50%) translateY(0); }
-      50%      { transform: translateX(-50%) translateY(8px); }
-    }
-
-    /* ── SECTION WRAPPER ── */
-    section {
-      position: relative; z-index: 1;
-      padding: 6rem 2rem;
-    }
-    .container { max-width: 1100px; margin: 0 auto; }
-
-    .section-label {
-      display: inline-block;
-      font-weight: 800; font-size: 0.78rem;
-      letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--violet);
-      margin-bottom: 0.8rem;
-    }
-    .section-title {
-      font-family: 'Lilita One', cursive;
-      font-size: clamp(2rem, 5vw, 3rem);
-      line-height: 1.1;
-      margin-bottom: 1.2rem;
-    }
-
-    /* ── WHAT IS A LIGHT RPG COLORING BOOK ── */
-    .what-section {
-      background: var(--ink);
-      color: var(--cream);
-      clip-path: polygon(0 4%, 100% 0%, 100% 96%, 0% 100%);
-      padding: 8rem 2rem;
-    }
-    .what-section .section-label { color: var(--gold); }
-    .what-section .section-title { color: var(--cream); }
-
-    .pillars {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem;
-      margin-top: 3rem;
-    }
-    .pillar {
-      background: rgba(255,255,255,0.06);
-      border: 2px solid rgba(255,255,255,0.12);
-      border-radius: 20px;
-      padding: 2rem 1.5rem;
-      transition: transform 0.2s, background 0.2s;
-    }
-    .pillar:hover {
-      transform: translateY(-6px);
-      background: rgba(255,255,255,0.1);
-    }
-    .pillar-icon { font-size: 2.2rem; margin-bottom: 0.8rem; }
-    .pillar h3 {
-      font-family: 'Lilita One', cursive;
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
-    }
-    .pillar p { font-size: 0.95rem; line-height: 1.6; color: #c8bfe8; }
-    .pillar-1 h3 { color: var(--rose); }
-    .pillar-2 h3 { color: var(--teal); }
-    .pillar-3 h3 { color: var(--gold); }
-    .pillar-4 h3 { color: var(--sky); }
-
-    /* ── FEATURED PROJECT ── */
-    .featured-section { background: var(--cream); }
-
-    .project-card {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: center;
-      background: white;
-      border: 3px solid var(--ink);
-      border-radius: 28px;
-      overflow: hidden;
-      box-shadow: 10px 10px 0 var(--ink);
-      margin-top: 3rem;
-    }
-    .project-art {
-      background: linear-gradient(135deg, #1a1035 0%, #3a1f6e 40%, #1e3d5c 100%);
-      min-height: 380px;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 1rem;
-      padding: 3rem 2rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .project-art::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(circle at 30% 50%, rgba(155,110,232,0.3), transparent 60%),
-                  radial-gradient(circle at 80% 20%, rgba(62,207,193,0.2), transparent 50%);
-    }
-    .project-art-crown { font-size: 4rem; position: relative; z-index:1; animation: float 3s ease-in-out infinite alternate; }
-    .project-art-title {
-      font-family: 'Lilita One', cursive;
-      font-size: 1.8rem;
-      color: white;
-      text-align: center;
-      position: relative; z-index: 1;
-      line-height: 1.2;
-    }
-    .project-art-sub {
-      font-size: 0.9rem; color: #a89fd4;
-      position: relative; z-index: 1;
-      letter-spacing: 0.05em;
-    }
-    .stat-pills {
-      display: flex; gap: 0.6rem; position: relative; z-index:1;
-    }
-    .stat-pill {
-      font-size: 0.75rem; font-weight: 800;
-      padding: 0.3rem 0.8rem;
-      border-radius: 999px;
-      letter-spacing: 0.05em;
-    }
-    .sp-grace  { background: rgba(245,200,66,0.2);  color: var(--gold);  border: 1.5px solid var(--gold); }
-    .sp-shadow { background: rgba(155,110,232,0.2); color: #c4a8ff;      border: 1.5px solid #9b6ee8; }
-    .sp-fate   { background: rgba(242,92,139,0.2);  color: #ff9dbf;      border: 1.5px solid var(--rose); }
-
-    .project-info { padding: 2.5rem 2.5rem 2.5rem 0; }
-    .project-phase {
-      display: inline-block;
-      background: var(--teal);
-      color: var(--ink);
-      font-size: 0.75rem; font-weight: 800;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      padding: 0.3rem 0.9rem;
-      border-radius: 999px;
-      margin-bottom: 1rem;
-    }
-    .project-info h3 {
-      font-family: 'Lilita One', cursive;
-      font-size: 2rem;
-      margin-bottom: 0.8rem;
-    }
-    .project-info p {
-      font-size: 1rem; line-height: 1.7;
-      color: #4a3f6b;
-      margin-bottom: 1.2rem;
-    }
-    .feature-list {
-      list-style: none;
-      display: flex; flex-direction: column; gap: 0.5rem;
-      margin-bottom: 2rem;
-    }
-    .feature-list li {
-      font-size: 0.95rem; font-weight: 600;
-      display: flex; align-items: center; gap: 0.5rem;
-    }
-    .feature-list li::before { content: '✦'; color: var(--violet); }
-
-    /* ── COMING SOON ── */
-    .coming-section {
-      background: linear-gradient(135deg, #fef9ec, #f0eaff);
-      clip-path: polygon(0 0, 100% 4%, 100% 100%, 0 96%);
-      padding: 9rem 2rem;
-    }
-    .coming-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
-      margin-top: 3rem;
-    }
-    .coming-card {
-      background: white;
-      border: 2.5px solid var(--ink);
-      border-radius: 20px;
-      padding: 2rem;
-      box-shadow: 6px 6px 0 var(--ink);
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .coming-card:hover { transform: translate(-3px,-3px); box-shadow: 9px 9px 0 var(--ink); }
-    .coming-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 5px;
-    }
-    .cc-1::before { background: linear-gradient(90deg, var(--rose), var(--coral)); }
-    .cc-2::before { background: linear-gradient(90deg, var(--teal), var(--sky)); }
-    .cc-3::before { background: linear-gradient(90deg, var(--violet), var(--rose)); }
-    .coming-soon-tag {
-      display: inline-block;
-      font-size: 0.7rem; font-weight: 800;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      background: #f0eaff; color: var(--violet);
-      padding: 0.25rem 0.7rem; border-radius: 999px;
-      margin-bottom: 0.8rem;
-    }
-    .coming-card h3 {
-      font-family: 'Lilita One', cursive;
-      font-size: 1.3rem;
-      margin-bottom: 0.5rem;
-    }
-    .coming-card p { font-size: 0.92rem; line-height: 1.6; color: #5a4f7a; }
-
-    /* ── CONTACT ── */
-    .contact-section {
-      background: var(--cream);
-      text-align: center;
-      padding: 6rem 2rem;
-    }
-    .contact-card {
-      display: inline-block;
-      background: var(--ink);
-      color: var(--cream);
-      border-radius: 28px;
-      padding: 3.5rem 4rem;
-      box-shadow: 12px 12px 0 var(--violet);
-      max-width: 580px;
-      width: 100%;
-    }
-    .contact-card .section-title { color: var(--cream); margin-bottom: 0.8rem; }
-    .contact-card p { color: #c8bfe8; font-size: 1rem; line-height: 1.7; margin-bottom: 1.8rem; }
-    .email-display {
-      display: inline-flex; align-items: center; gap: 0.6rem;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 800; font-size: 1rem;
-      background: rgba(255,255,255,0.08);
-      border: 2px solid rgba(255,255,255,0.2);
-      border-radius: 12px;
-      padding: 0.75rem 1.5rem;
-      color: var(--teal);
-      text-decoration: none;
-      letter-spacing: 0.02em;
-      transition: background 0.2s;
-      margin-bottom: 1.5rem;
-      display: block;
-    }
-    .email-display:hover { background: rgba(255,255,255,0.15); }
-
-    /* ── FOOTER ── */
-    footer {
-      background: var(--ink);
-      color: #6b5f8a;
-      text-align: center;
-      padding: 2.5rem 2rem;
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-    footer span { color: var(--rose); }
-    footer a {
-      color: var(--teal);
-      text-decoration: none;
-      font-weight: 700;
-    }
-    footer a:hover { text-decoration: underline; }
-
-    /* ── ANIMATIONS ── */
-    @keyframes pop-in {
-      from { transform: scale(0.5); opacity: 0; }
-      to   { transform: scale(1);   opacity: 1; }
-    }
-    @keyframes slide-up {
-      from { transform: translateY(30px); opacity: 0; }
-      to   { transform: translateY(0);    opacity: 1; }
-    }
-
-    /* fade-in on scroll via IntersectionObserver */
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      .project-card { grid-template-columns: 1fr; }
-      .project-art  { min-height: 260px; }
-      .project-info { padding: 2rem; }
-      nav { padding: 1rem 1.5rem; }
-      .nav-links { gap: 1.2rem; }
-      .contact-card { padding: 2.5rem 1.8rem; }
-    }
-  </style>
+/* Worlds */
+.worlds { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+.world { border: 1.5px solid var(--c, var(--rule)); border-radius: 10px; padding: 24px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.world.tides { --c: var(--wisdom); background: color-mix(in srgb, var(--wisdom) 8%, var(--paper)); }
+.world.apoth { --c: var(--garnet); background: color-mix(in srgb, var(--garnet) 7%, var(--paper)); }
+.world .stage { font-style: italic; color: var(--c, var(--muted)); font-size: 1rem; }
+.world p { color: var(--muted); }
+.world.join { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.world.join p, .world.join .stage { color: var(--paper); }
+.addr { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 6px; }
+.addr code { font-family: var(--body); font-size: 1.02rem; user-select: all; word-break: break-all; }
+.copy-btn { font: inherit; font-size: .95rem; padding: 5px 14px; border-radius: 999px; cursor: pointer; border: 1.5px solid currentColor; background: transparent; color: inherit; }
+.copied { font-size: .9rem; }
+.contact { display: grid; gap: 18px; max-width: 640px; }
+.contact .addr code { font-size: 1.25rem; }
+footer { border-top: 1px solid var(--rule); color: var(--muted); font-size: .95rem; }
+footer .wrap { padding-block: 28px; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .brush path { stroke-dashoffset: 0; }
+}
+</style>
 </head>
 <body>
 
-  <div class="blobs">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
-    <div class="blob blob-4"></div>
+
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="mark" href="#top">Coloring <span>Worlds</span></a>
+    <div class="links">
+      <a href="#pages">The pages</a>
+      <a href="#how">How it works</a>
+      <a href="#banner">Try it</a>
+      <a href="#kingdoms">The first book</a>
+      <a href="#cast">Characters</a>
+      <a href="#worlds">More worlds</a>
+      <a href="#contact">Contact</a>
+    </div>
   </div>
+</nav>
 
-  <!-- NAV -->
-  <nav>
-    <div class="nav-logo">Coloring Worlds</div>
-    <ul class="nav-links">
-      <li><a href="#what">What is it?</a></li>
-      <li><a href="#project">Projects</a></li>
-      <li><a href="#coming">Coming Soon</a></li>
-      <li><a href="#contact">Contact</a></li>
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div class="hero-text">
+      <p class="kicker">Story coloring books for grown-ups</p>
+      <h1><span class="cap" aria-hidden="true">W</span><span class="sr">W</span>here your colors write the story</h1>
+      <p class="lede">Richly detailed pages, a story that unfolds chapter by chapter, and a secret: <strong>every color you choose quietly shapes the ending.</strong> No dice. No rulebook. Just you, your pencils, and an evening in another world.</p>
+      <div class="actions">
+        <a class="btn" href="#pages">See the pages</a>
+        <a class="btn ghost" href="#banner">Try the first choice</a>
+      </div>
+    </div>
+    <figure class="plate">
+      <div class="frame"><img src="images/town_c.jpg" alt="A finished colored page from Kingdoms of Color: Elara stands on a flowered hillside above the walled town of Thornfield, its castle, river, and stone bridge glowing at sunset." width="1500" height="1006"></div>
+      <figcaption><span>The kingdom of Thornfield, chapter one</span><span>From Kingdoms of Color</span></figcaption>
+    </figure>
+  </div>
+</header>
+
+<section class="band" id="pages">
+  <span class="wash" aria-hidden="true" style="background:var(--gold);width:460px;height:340px;top:-100px;right:-160px"></span>
+  <div class="wrap">
+    <div class="head">
+      <h2>Every page is a world to get lost in</h2>
+      <p>Castles with a hundred windows, market stalls, rolling fields, wildflowers on the hillside. Each illustration is drawn with enough detail to fill a whole evening, or a whole week of evenings.</p>
+    </div>
+    <div class="pages">
+      <figure>
+        <div class="pg"><img src="images/town_l.jpg" alt="The black and white line art for the Thornfield page, full of fine detail waiting to be colored." loading="lazy" width="1500" height="1006"></div>
+        <figcaption><b>The page you color</b>Every line is yours to fill.</figcaption>
+      </figure>
+      <figure>
+        <div class="pg"><img src="images/town_c.jpg" alt="The same Thornfield scene shown in one possible set of colors." loading="lazy" width="1500" height="1006"></div>
+        <figcaption><b>One way it could look</b>Your version will be different, and that's the point.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="why">
+  <span class="wash" aria-hidden="true" style="background:var(--teal);width:420px;height:320px;bottom:-120px;left:-150px"></span>
+  <div class="wrap">
+    <div class="head">
+      <h2>Made for grown-up colorists</h2>
+      <p>If you love intricate coloring pages and a good story, this is both at once.</p>
+    </div>
+    <ul class="why">
+      <li><h3>Intricate, detailed art</h3><p>Stained glass, tapestries, scales, and stonework. Plenty of room for blending, shading, and your favorite techniques.</p></li>
+      <li><h3>A story to come back to</h3><p>Each chapter ends with a reason to start the next. It turns a coloring session into a little ritual you look forward to.</p></li>
+      <li><h3>Choices that matter</h3><p>Your palette is your vote. Warm, cool, or earthy, the colors you reach for decide how the tale ends.</p></li>
+      <li><h3>Worth coloring twice</h3><p>Three endings means three reasons to print the pages again and try a completely different palette.</p></li>
     </ul>
-  </nav>
+  </div>
+</section>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="doodle d1">🎨</div>
-    <div class="doodle d2">✨</div>
-    <div class="doodle d3">🐉</div>
-    <div class="doodle d4">📖</div>
-
-    <div class="hero-badge">✦ Welcome to the Studio ✦</div>
-
-    <h1>
-      <span class="word-color">Coloring</span><br>
-      <span class="word-worlds">Worlds</span>
-    </h1>
-
-    <p class="hero-sub">Where your colors write the story</p>
-
-    <p class="hero-desc">
-      Imagine a coloring book that actually responds to your choices.
-      Color your way through medieval kingdoms, build hidden stats, and unlock
-      branching endings — all with your favorite colored pencils (or digital brush).
-    </p>
-
-    <div class="hero-ctas">
-      <a href="#project" class="btn btn-primary">🏰 See Kingdoms of Color</a>
-      <a href="#what" class="btn btn-secondary">✦ Learn more</a>
+<section class="band" id="how">
+  <div class="wrap">
+    <div class="head">
+      <h2>How a Light RPG coloring book works</h2>
+      <p>It looks like a coloring book and plays like a story. Colored pencils, markers, or a digital brush all work.</p>
     </div>
-
-    <div class="scroll-hint">
-      SCROLL
-      <span>↓</span>
+    <ol class="steps">
+      <li><span class="num" aria-hidden="true">I</span><div><h3>Color each page</h3><p>Every chapter asks you to color something that matters: a banner, a dragon's scales, a gown, a cloak. Choose whatever colors you love.</p></div></li>
+      <li><span class="num" aria-hidden="true">II</span><div><h3>Your colors add up</h3><p>Behind the scenes, each color family quietly nudges one of three hidden paths. You won't know where you stand until the end.</p></div></li>
+      <li><span class="num" aria-hidden="true">III</span><div><h3>Reach your ending</h3><p>The final chapter reveals which of three endings your colors earned. Recolor and play again to find the others.</p></div></li>
+    </ol>
+    <div class="paths" aria-label="The three hidden paths">
+      <span class="path p-power"><i></i>Power</span>
+      <span class="path p-wisdom"><i></i>Wisdom</span>
+      <span class="path p-heart"><i></i>Heart</span>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- WHAT IS A LIGHT RPG COLORING BOOK -->
-  <section class="what-section" id="what">
-    <div class="container">
-      <span class="section-label reveal">✦ The Concept</span>
-      <h2 class="section-title reveal">What's a Light RPG<br>Coloring Book?</h2>
-      <p class="reveal" style="color:#c8bfe8; font-size:1.1rem; line-height:1.7; max-width:620px;">
-        It's a coloring book where every color you choose secretly matters.
-        No dice. No rulebook. Just your creative instincts guiding a story
-        toward one of several unique endings.
-      </p>
-
-      <div class="pillars">
-        <div class="pillar reveal">
-          <div class="pillar-icon">🎨</div>
-          <h3 class="pillar-1">Color Freely</h3>
-          <p>Choose any colors you love — each palette family secretly influences your character's hidden stats as you play.</p>
-        </div>
-        <div class="pillar reveal">
-          <div class="pillar-icon">⚔️</div>
-          <h3 class="pillar-2">Build Hidden Stats</h3>
-          <p>Three invisible forces — Power, Wisdom, and Heart — shift with every choice. You won't know exactly where you stand until the end.</p>
-        </div>
-        <div class="pillar reveal">
-          <div class="pillar-icon">📖</div>
-          <h3 class="pillar-3">Story That Responds</h3>
-          <p>Chapters unfold like illustrated storybooks. Your color choices shape the narrative and unlock different scenes.</p>
-        </div>
-        <div class="pillar reveal">
-          <div class="pillar-icon">🌟</div>
-          <h3 class="pillar-4">Multiple Endings</h3>
-          <p>Replay and recolor to discover every path. Each ending rewards a completely different creative approach.</p>
-        </div>
+<section class="band" id="banner">
+  <span class="wash" aria-hidden="true" style="background:var(--garnet);width:440px;height:340px;top:-90px;right:-150px"></span>
+  <div class="wrap teaser">
+    <div>
+      <p class="kicker">Chapter one: The Kingdom Awakens</p>
+      <h2 style="margin-top:8px">Thornfield needs a royal banner</h2>
+      <p style="color:var(--muted);margin-top:14px;font-size:1.2rem">Pick its color. In the book this choice quietly shapes your story. Here, it colors this whole page.</p>
+      <div class="swatches" role="group" aria-label="Banner colors">
+        <button class="swatch" type="button" id="sw-ember" data-k="ember" style="--sw-l:#A63A26;--sw-d:#E0785B" aria-pressed="false"><b></b>Ember red</button>
+        <button class="swatch" type="button" id="sw-gold" data-k="gold" style="--sw-l:#9C7019;--sw-d:#D9AE4E" aria-pressed="false"><b></b>Royal gold</button>
+        <button class="swatch" type="button" id="sw-night" data-k="night" style="--sw-l:#2B5590;--sw-d:#86A9E6" aria-pressed="false"><b></b>Midnight blue</button>
+        <button class="swatch" type="button" id="sw-moon" data-k="moon" style="--sw-l:#5D6880;--sw-d:#B1BBCA" aria-pressed="false"><b></b>Moon silver</button>
+        <button class="swatch" type="button" id="sw-moss" data-k="moss" style="--sw-l:#4A7330;--sw-d:#93BE6D" aria-pressed="false"><b></b>Moss green</button>
+        <button class="swatch" type="button" id="sw-oak" data-k="oak" style="--sw-l:#7A5534;--sw-d:#C59766" aria-pressed="false"><b></b>Oak brown</button>
       </div>
     </div>
-  </section>
-
-  <!-- FEATURED PROJECT -->
-  <section class="featured-section" id="project">
-    <div class="container">
-      <span class="section-label reveal">✦ First Release</span>
-      <h2 class="section-title reveal">Featured Project</h2>
-
-      <div class="project-card reveal">
-        <div class="project-art">
-          <div class="project-art-crown">👑</div>
-          <div class="project-art-title">Kingdoms of Color<br><span style="font-size:1rem; font-family:'Nunito',sans-serif; font-weight:600;">The Dragon of Thornfield</span></div>
-          <div class="project-art-sub">A Medieval Fantasy</div>
-          <div class="stat-pills">
-            <span class="stat-pill sp-grace">✦ Power</span>
-            <span class="stat-pill sp-shadow">◆ Wisdom</span>
-            <span class="stat-pill sp-fate">● Heart</span>
-          </div>
-        </div>
-
-        <div class="project-info">
-          <span class="project-phase">🎨 In Development</span>
-          <h3>The Dragon of Thornfield</h3>
-          <p>
-            In the kingdom of Thornfield, a dragon stirs beneath the ancient mountain.
-            You are Elara — and how you color your journey determines whether
-            Varathos becomes destroyer, ally, or legend.
-          </p>
-          <ul class="feature-list">
-            <li>6 illustrated chapters to color</li>
-            <li>5 unique characters with storylines</li>
-            <li>3 stat paths: Power · Wisdom · Heart</li>
-            <li>3 branching endings to unlock</li>
-            <li>Playable digitally (WebGL) or as PDF</li>
-          </ul>
-          <a href="https://coloringyourworlds.com/kingdoms/" target="_blank" class="btn btn-primary">
-            🏰 Visit the Project Hub
-          </a>
-        </div>
+    <div class="flag-stage">
+      <svg class="flag" id="flag" viewBox="0 0 320 320" aria-hidden="true">
+        <line class="o" x1="60" y1="20" x2="60" y2="312"/>
+        <path class="o" style="fill:var(--gold)" d="M60,6 L66,16 L60,26 L54,16 Z"/>
+        <line class="o" x1="40" y1="44" x2="250" y2="44"/>
+        <path class="cloth o" d="M48,44 L242,44 L242,230 L145,282 L48,230 Z"><animate class="wave" attributeName="d" dur="5s" repeatCount="indefinite" values="M48,44 L242,44 L242,230 L145,282 L48,230 Z;M48,44 L242,44 C246,120 238,170 244,232 L147,286 L48,228 C44,170 52,110 48,44 Z;M48,44 L242,44 L242,230 L145,282 L48,230 Z"/></path>
+        <path class="trim" d="M62,58 L228,58 L228,222 L145,266 L62,222 Z"/>
+        <path class="o" style="fill:none;stroke-width:2;opacity:.6" d="M110,150 L124,122 L138,142 L145,112 L152,142 L166,122 L180,150 L176,170 L114,170 Z"/>
+      </svg>
+      <div class="verdict" id="verdict" aria-live="polite">
+        <p class="says">Your banner is still uncolored.</p>
+        <p class="small">Choose a color and see what Thornfield makes of it.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- COMING SOON -->
-  <section class="coming-section" id="coming">
-    <div class="container">
-      <span class="section-label reveal">✦ On the Horizon</span>
-      <h2 class="section-title reveal">More Worlds<br>Are Coming</h2>
-      <p class="reveal" style="font-size:1.05rem; line-height:1.7; color:#4a3f6b; max-width:560px;">
-        Kingdoms of Color is just the beginning. Coloring Worlds is building
-        a whole library of Light RPG coloring books — each one a new world,
-        a new mechanic, a new story to color into life.
-      </p>
+<section class="band" id="kingdoms">
+  <span class="wash" aria-hidden="true" style="background:var(--wisdom);width:440px;height:340px;bottom:-130px;left:-160px"></span>
+  <div class="wrap book">
+    <figure class="cover"><img src="images/cover.jpg" alt="The cover art of Kingdoms of Color: the green dragon Varathos spreads his wings over a gothic castle at dusk while Elara looks up at him." loading="lazy" width="800" height="1192"></figure>
+    <div class="copy">
+      <span class="status" style="justify-self:start">In development</span>
+      <h2>Kingdoms of Color: The Dragon of Thornfield</h2>
+      <p>In the kingdom of Thornfield, a dragon stirs beneath the ancient mountain. You are Elara, and how you color your journey decides whether Varathos becomes a destroyer, an ally, or a legend.</p>
+      <ul class="facts">
+        <li><b>6</b><span>illustrated chapters to color</span></li>
+        <li><b>5</b><span>characters with their own storylines</span></li>
+        <li><b>3</b><span>hidden paths: Power, Wisdom, and Heart</span></li>
+        <li><b>3</b><span>endings to discover</span></li>
+      </ul>
+      <p style="color:var(--muted)">Play it digitally, or print the PDF and use your own pencils.</p>
+      <div class="actions"><a class="btn" href="https://coloringyourworlds.com/kingdoms/">Visit the project hub</a></div>
+    </div>
+  </div>
+</section>
 
-      <div class="coming-grid">
-        <div class="coming-card cc-1 reveal">
-          <span class="coming-soon-tag">Coming Soon</span>
-          <h3>🌊 Tides of Aethermoor</h3>
-          <p>An ocean adventure where your color palette shapes the moods of the sea and the fates of its sailors.</p>
-        </div>
-        <div class="coming-card cc-2 reveal">
-          <span class="coming-soon-tag">Concept Stage</span>
-          <h3>🌸 The Enchanted Apothecary</h3>
-          <p>Color magical ingredients, brew impossible potions, and determine the fate of a whimsical village in need.</p>
-        </div>
-        <div class="coming-card cc-3 reveal">
-          <span class="coming-soon-tag">Dream Stage</span>
-          <h3>⭐ Your World Here</h3>
-          <p>Have a world you'd love to see as a Light RPG coloring book? Every great world starts as a spark of imagination.</p>
-        </div>
+<section class="band" id="cast">
+  <span class="wash" aria-hidden="true" style="background:var(--heart);width:440px;height:330px;top:-100px;right:-150px"></span>
+  <div class="wrap">
+    <div class="head">
+      <h2>Meet the cast</h2>
+      <p>Each portrait starts as line art. Tap one to see it colored.</p>
+    </div>
+    <div class="cast">
+      <div class="person">
+        <button class="tile" type="button" aria-pressed="false" aria-label="Show Elara of Thornfield in color"><span class="in">
+          <span class="f front"><img src="images/elara_l.jpg" alt="Line art portrait of Elara holding a book beneath a gothic arch." loading="lazy"><span class="hint">Tap to color</span></span>
+          <span class="f back"><img src="images/elara_c.jpg" alt="Elara in color: long auburn hair and an embroidered green gown." loading="lazy"></span>
+        </span></button>
+        <span class="nm">Elara of Thornfield</span><span class="rl">The Maiden</span>
+        <p>Our hero. When the dragon stirs, her choices, and your colors, decide what Thornfield becomes.</p>
+      </div>
+      <div class="person">
+        <button class="tile" type="button" aria-pressed="false" aria-label="Show King Aldric in color"><span class="in">
+          <span class="f front"><img src="images/aldric_l.jpg" alt="Line art portrait of King Aldric in a crown and fur mantle." loading="lazy"><span class="hint">Tap to color</span></span>
+          <span class="f back"><img src="images/aldric_c.jpg" alt="King Aldric in color: a gold crown, crimson robes, and white fur." loading="lazy"></span>
+        </span></button>
+        <span class="nm">King Aldric</span><span class="rl">The King</span>
+        <p>Rules Thornfield from the castle on the hill, and calls his council together when danger comes.</p>
+      </div>
+      <div class="person">
+        <button class="tile" type="button" aria-pressed="false" aria-label="Show Prince Caelan in color"><span class="in">
+          <span class="f front"><img src="images/caelan_l.jpg" alt="Line art portrait of Prince Caelan in armor with a flowing cloak." loading="lazy"><span class="hint">Tap to color</span></span>
+          <span class="f back"><img src="images/caelan_c.jpg" alt="Prince Caelan in color: silver armor and a deep blue cloak." loading="lazy"></span>
+        </span></button>
+        <span class="nm">Prince Caelan</span><span class="rl">The Prince</span>
+        <p>Sets out on the quest when the kingdom needs him most. You choose the color of his cloak.</p>
+      </div>
+      <div class="person">
+        <button class="tile" type="button" aria-pressed="false" aria-label="Show Mira the Mapmaker in color"><span class="in">
+          <span class="f front"><img src="images/mira_l.jpg" alt="Line art portrait of Mira, smiling, holding a map, her scarf blowing in the wind." loading="lazy"><span class="hint">Tap to color</span></span>
+          <span class="f back"><img src="images/mira_c.jpg" alt="Mira in color: curly brown hair, a rust coat, and a blue scarf." loading="lazy"></span>
+        </span></button>
+        <span class="nm">Mira the Mapmaker</span><span class="rl">The Wildcard</span>
+        <p>Knows every road in Thornfield, and a few that aren't on any map. Color her scarf however you like.</p>
+      </div>
+      <div class="person">
+        <button class="tile" type="button" aria-pressed="false" aria-label="Show Varathos in color"><span class="in">
+          <span class="f front"><img src="images/varathos_l.jpg" alt="Line art portrait of the dragon Varathos, horned and finely scaled." loading="lazy"><span class="hint">Tap to color</span></span>
+          <span class="f back"><img src="images/varathos_c.jpg" alt="Varathos in color: deep green scales and a golden eye." loading="lazy"></span>
+        </span></button>
+        <span class="nm">Varathos</span><span class="rl">The Dragon</span>
+        <p>He has slept beneath the ancient mountain for a very long time. Destroyer, ally, or legend? That part is up to you.</p>
       </div>
     </div>
-  </section>
+    <p class="cast-note">These colors are only one possibility. In your copy, they're whatever you decide.</p>
+  </div>
+</section>
 
-  <!-- CONTACT -->
-  <section class="contact-section" id="contact">
-    <div class="contact-card reveal">
-      <span class="section-label" style="color:var(--gold)">✦ Say Hello</span>
-      <h2 class="section-title">Let's Connect</h2>
-      <p>Questions about the project? Want to follow along on the journey? I'd love to hear from you.</p>
-      <a href="mailto:coloringworlds@coloringworlds.network" class="email-display">
-        ✉️ &nbsp;coloringworlds@coloringworlds.network
-      </a>
-      <a href="https://coloringyourworlds.com/kingdoms/" target="_blank" class="btn btn-secondary" style="width:100%; justify-content:center; background:rgba(255,255,255,0.08); color:var(--cream); border-color:rgba(255,255,255,0.3);">
-        🏰 Visit the Kingdoms of Color Hub
-      </a>
+<section class="band" id="worlds">
+  <span class="wash" aria-hidden="true" style="background:var(--teal);width:420px;height:320px;bottom:-120px;right:-150px"></span>
+  <div class="wrap">
+    <div class="head">
+      <h2>More worlds are coming</h2>
+      <p>Kingdoms of Color is the first book in a growing library. Each world brings a new hero and a new story to color into life.</p>
     </div>
-  </section>
+    <div class="worlds">
+      <article class="world tides">
+        <span class="stage">Coming next</span>
+        <h3>Tides of Aethermoor</h3>
+        <p>An ocean adventure with Nerissa, where your palette shapes the moods of the sea and the fates of its sailors.</p>
+      </article>
+      <article class="world apoth">
+        <span class="stage">In early sketches</span>
+        <h3>The Enchanted Apothecary</h3>
+        <p>Help Pip color magical ingredients and brew impossible potions for a village in need. Mind the frogs.</p>
+      </article>
+      <article class="world join">
+        <span class="stage">Be first to know</span>
+        <h3>Hear when a new world opens</h3>
+        <p>The mailing list is almost ready. Until then, send a note that says "Add me" to this address and you'll be on it from day one.</p>
+        <div class="addr"><code>coloringworlds@coloringworlds.network</code><button class="copy-btn" type="button" data-copy="coloringworlds@coloringworlds.network">Copy address</button><span class="copied" aria-live="polite"></span></div>
+      </article>
+    </div>
+  </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>Made with <span>♥</span> by Coloring Worlds &nbsp;·&nbsp; <a href="mailto:coloringworlds@coloringworlds.network">coloringworlds@coloringworlds.network</a></p>
-    <p style="margin-top:0.4rem;">© 2026 Coloring Worlds · All rights reserved</p>
-  </footer>
+<section class="band" id="contact">
+  <div class="wrap contact">
+    <h2>Say hello</h2>
+    <p style="color:var(--muted);font-size:1.2rem">Questions about the books, or want to follow along as they come together? I'd love to hear from you.</p>
+    <div class="addr"><code>coloringworlds@coloringworlds.network</code><button class="copy-btn" type="button" data-copy="coloringworlds@coloringworlds.network">Copy address</button><span class="copied" aria-live="polite"></span></div>
+  </div>
+</section>
 
-  <script>
-    // Scroll reveal
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), i * 80);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    reveals.forEach(el => observer.observe(el));
-  </script>
+<footer>
+  <div class="wrap">
+    <span>© 2026 Coloring Worlds, LLC</span>
+    <span>Made with colored pencils in Ohio</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $$ = function (s) { return Array.prototype.slice.call(document.querySelectorAll(s)); };
+
+  /* Banner teaser */
+  var lines = {
+    ember: 'A banner of fire and courage. Thornfield will stand strong, and something with scales has noticed.',
+    gold: 'A banner that gleams like a crown. The king is pleased. So is anyone in the kingdom who loves treasure.',
+    night: 'A banner the color of the night sky. Somewhere above the clouds, an old secret stirs.',
+    moon: 'A banner like moonlight on stone. Quiet, watchful, and wiser than it looks.',
+    moss: 'A banner of forest and field. Roots run deep in Thornfield, and so do friendships.',
+    oak: 'A banner of sturdy oak. Plain, honest, and ready for whatever comes down the mountain.'
+  };
+  var swatches = $$('.swatch');
+  var flag = document.getElementById('flag');
+  var verdict = document.getElementById('verdict');
+  var stage = document.querySelector('.flag-stage');
+  function splash() {
+    if (reduce || !stage.animate) return;
+    var col = getComputedStyle(root).getPropertyValue('--accent').trim();
+    var r = stage.getBoundingClientRect(), f = flag.getBoundingClientRect();
+    var cx = f.left - r.left + f.width * 0.45, cy = f.top - r.top + f.height * 0.45;
+    for (var i = 0; i < 14; i++) {
+      var d = document.createElement('span'); d.className = 'splat';
+      var size = 4 + Math.random() * 10; d.style.width = d.style.height = size + 'px';
+      d.style.left = (cx - size / 2) + 'px'; d.style.top = (cy - size / 2) + 'px'; d.style.background = col;
+      stage.appendChild(d);
+      var ang = Math.random() * Math.PI * 2, dist = 50 + Math.random() * 100;
+      var a = d.animate([{ transform: 'translate(0,0) scale(.4)', opacity: .95 },
+        { transform: 'translate(' + Math.cos(ang) * dist + 'px,' + (Math.sin(ang) * dist + 24) + 'px) scale(1)', opacity: 0 }],
+        { duration: 800 + Math.random() * 500, easing: 'cubic-bezier(.2,.7,.3,1)' });
+      a.onfinish = (function (el) { return function () { el.remove(); }; })(d);
+    }
+  }
+  function choose(btn, quiet) {
+    swatches.forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+    root.style.setProperty('--accent-l', btn.style.getPropertyValue('--sw-l'));
+    root.style.setProperty('--accent-d', btn.style.getPropertyValue('--sw-d'));
+    flag.classList.add('chosen');
+    verdict.innerHTML = '<p class="says"></p><p class="small"></p>';
+    verdict.querySelector('.says').textContent = lines[btn.getAttribute('data-k')];
+    verdict.querySelector('.small').textContent = 'Notice the page: the illuminated letter and accents now wear your color.';
+    if (!quiet) { splash(); try { localStorage.setItem('cw-banner', btn.getAttribute('data-k')); } catch (e) {} }
+  }
+  swatches.forEach(function (b) { b.addEventListener('click', function () { choose(b); }); });
+  try { var saved = localStorage.getItem('cw-banner'); var sb = saved && document.querySelector('.swatch[data-k="' + saved + '"]'); if (sb) choose(sb, true); } catch (e) {}
+  if (reduce) { $$('animate').forEach(function (a) { a.remove(); }); }
+
+  /* Portraits: tap to color */
+  $$('.tile').forEach(function (t) {
+    var name = t.getAttribute('aria-label').replace('Show ', '').replace(' in color', '');
+    t.addEventListener('click', function () {
+      var on = t.getAttribute('aria-pressed') !== 'true';
+      t.setAttribute('aria-pressed', on ? 'true' : 'false');
+      t.setAttribute('aria-label', on ? 'Show ' + name + ' as line art' : 'Show ' + name + ' in color');
+    });
+  });
+
+  /* Brush strokes under headings */
+  var bcols = { pages: '--gold', why: '--teal', how: '--garnet', banner: '--gold', kingdoms: '--wisdom', cast: '--heart', worlds: '--teal', contact: '--garnet' };
+  $$('section.band h2').forEach(function (h) {
+    var sec = h.closest('section');
+    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'brush'); svg.setAttribute('viewBox', '0 0 240 16'); svg.setAttribute('preserveAspectRatio', 'none'); svg.setAttribute('aria-hidden', 'true');
+    svg.innerHTML = '<path d="M4,11 C56,4 110,14 166,7 S222,9 236,5"/>';
+    if (sec && bcols[sec.id]) svg.style.setProperty('--bc', 'var(' + bcols[sec.id] + ')');
+    h.insertAdjacentElement('afterend', svg);
+  });
+  var brushes = $$('.brush');
+  if ('IntersectionObserver' in window && !reduce) {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('seen'); io.unobserve(e.target); } }); }, { threshold: .6 });
+    brushes.forEach(function (b) { io.observe(b); });
+  } else { brushes.forEach(function (b) { b.classList.add('seen'); }); }
+
+  /* Copy address */
+  $$('.copy-btn').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var note = b.parentNode.querySelector('.copied');
+      function selectIt() {
+        var r = document.createRange(); r.selectNodeContents(b.parentNode.querySelector('code'));
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        note.textContent = 'Selected. Copy it with your keyboard or long-press.';
+      }
+      try { navigator.clipboard.writeText(b.getAttribute('data-copy')).then(function () { note.textContent = 'Copied'; }, selectIt); } catch (e) { selectIt(); }
+    });
+  });
+})();
+</script>
 
 </body>
 </html>
