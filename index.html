@@ -248,6 +248,14 @@ footer { position: relative; margin-top: 64px; }
 .smudge { width: 104px; top: auto; bottom: calc(10px + env(safe-area-inset-bottom, 0px)); z-index: 29; transform: translateX(-180px); }
 #paint { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 40; }
 @media (max-width: 520px) { .doodle { width: 66px; } .smudge { width: 84px; } .sprig { width: 116px; margin-bottom: -12px; } }
+/* Sound and music: off until a visitor turns them on */
+.sound-dock { position: fixed; right: max(14px, env(safe-area-inset-right, 0px)); bottom: calc(14px + env(safe-area-inset-bottom, 0px)); z-index: 35; display: flex; gap: 8px; }
+.tog { display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: .95rem; cursor: pointer; padding: 7px 14px 7px 10px; color: var(--ink);
+  background: var(--paper); border: 1.5px solid var(--ink); border-radius: 999px; box-shadow: 3px 3px 0 var(--rule); transition: background .3s, color .3s; }
+.tog svg { width: 20px; height: 20px; flex: none; }
+.tog:hover { border-color: var(--accent); }
+.tog[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+@media (max-width: 520px) { .tog .lbl { display: none; } .tog { padding: 9px; } }
 @media (prefers-reduced-motion: reduce) {
   .roam { display: none; }
   html { scroll-behavior: auto; }
@@ -534,6 +542,11 @@ footer { position: relative; margin-top: 64px; }
 <div class="roam doodle" id="doodle" aria-hidden="true"><img src="images/hatch/doodle-roam.svg" alt="" width="1036" height="936"></div>
 <div class="roam smudge" id="smudge" aria-hidden="true"><img src="images/hatch/smudge-roam.svg" alt="" width="882" height="1394"></div>
 
+<div class="sound-dock" role="group" aria-label="Sound">
+  <button class="tog" id="soundBtn" type="button" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span class="lbl">Sound</span><span class="sr"> effects</span></button>
+  <button class="tog" id="musicBtn" type="button" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l11-2v13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="17.5" cy="16" r="2.5" fill="currentColor"/></svg><span class="lbl">Music</span></button>
+</div>
+
 <script>
 (function () {
   var root = document.documentElement;
@@ -578,7 +591,7 @@ footer { position: relative; margin-top: 64px; }
     verdict.innerHTML = '<p class="says"></p><p class="small"></p>';
     verdict.querySelector('.says').textContent = lines[btn.getAttribute('data-k')];
     verdict.querySelector('.small').textContent = 'Notice the page: the illuminated letter and accents now wear your color.';
-    if (!quiet) { splash(); try { localStorage.setItem('cw-banner', btn.getAttribute('data-k')); } catch (e) {} }
+    if (!quiet) { splash(); sfx('chime'); try { localStorage.setItem('cw-banner', btn.getAttribute('data-k')); } catch (e) {} }
   }
   swatches.forEach(function (b) { b.addEventListener('click', function () { choose(b); }); });
   try { var saved = localStorage.getItem('cw-banner'); var sb = saved && document.querySelector('.swatch[data-k="' + saved + '"]'); if (sb) choose(sb, true); } catch (e) {}
@@ -609,6 +622,55 @@ footer { position: relative; margin-top: 64px; }
     var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('seen'); io.unobserve(e.target); } }); }, { threshold: .6 });
     brushes.forEach(function (b) { io.observe(b); });
   } else { brushes.forEach(function (b) { b.classList.add('seen'); }); }
+
+  /* ---------- Sound and music (off until a visitor turns them on) ---------- */
+  var ac = null, master = null, soundOn = false, musicOn = false, musicTimer = null, droneNodes = [];
+  function actx() {
+    if (!ac) { var C = window.AudioContext || window.webkitAudioContext; if (!C) return null; ac = new C(); master = ac.createGain(); master.gain.value = .9; master.connect(ac.destination); }
+    if (ac.state === 'suspended') ac.resume();
+    return ac;
+  }
+  function noiseBuf(len) { var b = ac.createBuffer(1, Math.floor(ac.sampleRate * len), ac.sampleRate), d = b.getChannelData(0); for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; return b; }
+  function env(g, t, a, peak, dec) { g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + a); g.gain.exponentialRampToValueAtTime(0.0001, t + a + dec); }
+  function tone(type, f, t, a, peak, dec, f2) { var o = ac.createOscillator(), g = ac.createGain(); o.type = type; o.frequency.setValueAtTime(f, t); if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + a + dec); env(g, t, a, peak, dec); o.connect(g); g.connect(master); o.start(t); o.stop(t + a + dec + .05); }
+  function noise(t, len, ftype, freq, q, peak, dec, freq2) { var s = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain(); s.buffer = noiseBuf(len); f.type = ftype; f.frequency.setValueAtTime(freq, t); if (freq2) f.frequency.exponentialRampToValueAtTime(freq2, t + len); f.Q.value = q; env(g, t, .01, peak, dec); s.connect(f); f.connect(g); g.connect(master); s.start(t); s.stop(t + len); }
+  var SFX = {
+    splat: function () { var t = ac.currentTime; noise(t, .2, 'bandpass', 900, .8, .22, .16); tone('sine', 150, t, .005, .25, .14, 50); },
+    chime: function () { var t = ac.currentTime; [880, 1175, 1568].forEach(function (f, i) { tone('sine', f, t + i * .07, .005, .12, .5); }); },
+    toot: function () { var t = ac.currentTime, o = ac.createOscillator(), lf = ac.createOscillator(), lg = ac.createGain(), f = ac.createBiquadFilter(), g = ac.createGain();
+      o.type = 'sawtooth'; o.frequency.setValueAtTime(170, t); o.frequency.exponentialRampToValueAtTime(75, t + .42);
+      f.type = 'lowpass'; f.frequency.value = 700; lf.frequency.value = 26; lg.gain.value = .12; lf.connect(lg); lg.connect(g.gain);
+      g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(.2, t + .04); g.gain.linearRampToValueAtTime(0.0001, t + .45);
+      o.connect(f); f.connect(g); g.connect(master); o.start(t); lf.start(t); o.stop(t + .5); lf.stop(t + .5);
+      for (var i = 0; i < 6; i++) tone('sine', 1400 + Math.random() * 1800, t + .38 + i * .05, .004, .07, .28); },
+    whoosh: function () { noise(ac.currentTime, .7, 'bandpass', 300, 1.2, .12, .6, 2200); },
+    snore: function () { var t = ac.currentTime, s = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain(); s.buffer = noiseBuf(1.6); f.type = 'lowpass'; f.frequency.value = 380;
+      g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(.16, t + .7); g.gain.linearRampToValueAtTime(0.0001, t + 1.5); s.connect(f); f.connect(g); g.connect(master); s.start(t); s.stop(t + 1.6); },
+    hop: function () { tone('triangle', 420, ac.currentTime, .005, .14, .18, 900); },
+    brush: function () { var t = ac.currentTime; [0, .12, .24].forEach(function (d) { noise(t + d, .1, 'highpass', 3000, .7, .07, .08); }); }
+  };
+  function sfx(n) { if (!soundOn || !actx()) return; try { SFX[n](); } catch (e) {} }
+  /* An original little tune in D dorian, plucked like a lute */
+  var TUNE = [[69,1],[67,1],[65,1],[67,1],[69,1],[72,1],[69,2],[67,1],[65,1],[64,1],[65,1],[67,1],[69,1],[67,2],
+              [65,1],[67,1],[69,1],[67,1],[65,1],[64,1],[62,2],[64,1],[65,1],[67,1],[65,1],[64,1],[60,1],[62,2]];
+  var BEAT = .32, nextT = 0, step = 0;
+  function mtof(m) { return 440 * Math.pow(2, (m - 69) / 12); }
+  function pluck(m, t, vol) { tone('triangle', mtof(m), t, .006, vol, .75); tone('sine', mtof(m + 12), t, .006, vol * .35, .4); }
+  function startMusic() {
+    if (!actx()) return; nextT = ac.currentTime + .1; step = 0;
+    droneNodes = [50, 57].map(function (m) { var o = ac.createOscillator(), g = ac.createGain(); o.type = 'sine'; o.frequency.value = mtof(m);
+      g.gain.setValueAtTime(0.0001, ac.currentTime); g.gain.linearRampToValueAtTime(.035, ac.currentTime + 1.5); o.connect(g); g.connect(master); o.start(); return [o, g]; });
+    musicTimer = setInterval(function () { while (nextT < ac.currentTime + .25) { var n = TUNE[step % TUNE.length]; pluck(n[0], nextT, .11); if (step % 4 === 0) pluck(n[0] - 12, nextT, .06); nextT += n[1] * BEAT; step++; } }, 60);
+  }
+  function stopMusic() {
+    clearInterval(musicTimer); musicTimer = null;
+    if (ac) droneNodes.forEach(function (d) { var g = d[1]; g.gain.cancelScheduledValues(ac.currentTime); g.gain.setValueAtTime(g.gain.value, ac.currentTime); g.gain.linearRampToValueAtTime(0.0001, ac.currentTime + .4); d[0].stop(ac.currentTime + .5); });
+    droneNodes = [];
+  }
+  var soundBtn = document.getElementById('soundBtn'), musicBtn = document.getElementById('musicBtn');
+  soundBtn.addEventListener('click', function () { soundOn = !soundOn; soundBtn.setAttribute('aria-pressed', soundOn ? 'true' : 'false'); if (soundOn) sfx('chime'); });
+  musicBtn.addEventListener('click', function () { musicOn = !musicOn; musicBtn.setAttribute('aria-pressed', musicOn ? 'true' : 'false'); if (musicOn) startMusic(); else stopMusic(); });
+  document.addEventListener('visibilitychange', function () { if (!ac) return; if (document.hidden) ac.suspend(); else if (soundOn || musicOn) ac.resume(); });
 
   /* ---------- Hatchlings ---------- */
   var FINE = window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -648,7 +710,7 @@ footer { position: relative; margin-top: 64px; }
     document.addEventListener('pointerdown', function (e) {
       if (e.button !== 0) return;
       if (e.target.closest && e.target.closest('a,button,input,select,textarea,code,label')) return;
-      makeSplat(e.clientX, e.clientY);
+      makeSplat(e.clientX, e.clientY); sfx('splat');
     });
   }
 
@@ -671,7 +733,7 @@ footer { position: relative; margin-top: 64px; }
   /* Smudge tumbles past */
   var smudge = document.getElementById('smudge'), tumbling = false;
   function tumble() {
-    if (reduce || tumbling || !smudge.animate) return; tumbling = true;
+    if (reduce || tumbling || !smudge.animate) return; tumbling = true; sfx('whoosh');
     var w = innerWidth + 300;
     smudge.animate([{ transform: 'translateX(-180px) rotate(0deg)' }, { transform: 'translateX(' + w * .5 + 'px) translateY(-40px) rotate(400deg)', offset: .5 }, { transform: 'translateX(' + w + 'px) rotate(820deg)' }],
       { duration: 8000, easing: 'ease-in-out' }).onfinish = function () { tumbling = false; };
@@ -698,13 +760,14 @@ footer { position: relative; margin-top: 64px; }
 
   /* Sprig naps on the footer */
   var sprig = document.getElementById('sprig'), says = document.getElementById('sprigSays');
-  sprig.addEventListener('click', function () { says.classList.add('show'); setTimeout(function () { says.classList.remove('show'); }, 1800); });
+  sprig.addEventListener('click', function () { sfx('snore'); says.classList.add('show'); setTimeout(function () { says.classList.remove('show'); }, 1800); });
 
   /* Crew cards: tap for the signature move */
   $$('.mate').forEach(function (b) {
     var k = b.getAttribute('data-k');
     b.addEventListener('click', function () {
       b.classList.remove('go-' + k); void b.offsetWidth; b.classList.add('go-' + k);
+      sfx({ dabble: 'brush', doodle: 'hop', sprig: 'snore', ember: 'toot' }[k] || '');
       var pic = b.querySelector('.pic'), r = pic.getBoundingClientRect();
       if (k === 'ember') sparkBurst(pic, r.width * .15, r.height * .85, 12, Math.PI * 1.2);
       if (k === 'doodle') sparkBurst(pic, r.width * .8, r.height * .3, 6, -Math.PI / 2);
