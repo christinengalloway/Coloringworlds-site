@@ -674,7 +674,7 @@ footer { position: relative; margin-top: 64px; }
     if (reduce || tumbling || !smudge.animate) return; tumbling = true;
     var w = innerWidth + 300;
     smudge.animate([{ transform: 'translateX(-180px) rotate(0deg)' }, { transform: 'translateX(' + w * .5 + 'px) translateY(-40px) rotate(400deg)', offset: .5 }, { transform: 'translateX(' + w + 'px) rotate(820deg)' }],
-      { duration: 3800, easing: 'ease-in-out' }).onfinish = function () { tumbling = false; };
+      { duration: 8000, easing: 'ease-in-out' }).onfinish = function () { tumbling = false; };
   }
   if (!reduce) { setTimeout(tumble, 6000); setInterval(function () { if (!document.hidden) tumble(); }, 26000); }
 
