@@ -7,789 +7,546 @@
 <meta name="description" content="Story coloring books for grown-ups where five color choices quietly shape your ending. Start with Kingdoms of Color: The Dragon of Thornfield.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&family=IM+Fell+English:ital@0;1&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&display=swap">
 <style>
-/* Layout: an illuminated storybook for grown-up colorists. Christine's own artwork leads; the page reads like chapters, with jewel tones from the book's stained glass. Left-aligned text, generous margins. */
+/* Layout: a cathedral at night. Near-black ground, gold lettering, and Christine's stained glass window as the one loud thing; each section is a bay lit by jewel colors. Single dark look on purpose. */
 :root {
-  --paper: #F6F1E4;
-  --panel: #ECE4D0;
-  --ink: #2A2238;
-  --muted: #5F566C;
-  --line: #2A2238;
-  --rule: #D8CDB5;
-  --gold: #9C7019;
-  --power: #A63A26;
-  --wisdom: #2B5590;
-  --heart: #4A7330;
-  --garnet: #8E2F45;
-  --teal: #2C6F69;
-  --accent-l: #9C7019;
-  --accent-d: #D9AE4E;
-  --accent: var(--accent-l);
-  --wash-o: .18;
-  --display: "IM Fell English", "Iowan Old Style", Georgia, serif;
-  --body: "Alegreya", "Iowan Old Style", Georgia, serif;
-  color-scheme: light;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --paper: #1B1928; --panel: #252237; --ink: #EFE8D8; --muted: #B5ACC0; --line: #E9E1CF; --rule: #3A3652;
-    --gold: #D9AE4E; --power: #E0785B; --wisdom: #86A9E6; --heart: #93BE6D; --garnet: #E08AA0; --teal: #6CC2B6;
-    --accent: var(--accent-d); --wash-o: .12; color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --paper: #1B1928; --panel: #252237; --ink: #EFE8D8; --muted: #B5ACC0; --line: #E9E1CF; --rule: #3A3652;
-  --gold: #D9AE4E; --power: #E0785B; --wisdom: #86A9E6; --heart: #93BE6D; --garnet: #E08AA0; --teal: #6CC2B6;
-  --accent: var(--accent-d); --wash-o: .12; color-scheme: dark;
+  --night: #0D0B16; --panel: #17142A; --panel2: #201B38; --ink: #F3E9D2; --muted: #CFC6DA; --dim: #A79FB8; --gold: #E8B94A; --rule: #3A3550;
+  --power: #E0785B; --wisdom: #9DC3FF; --heart: #9CCB74; --paper: #FBF6EA; --pick: #E8B94A;
+  --display: "Cinzel", "Trajan Pro", Georgia, serif; --body: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  color-scheme: dark;
 }
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 76px; }
-body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 1.125rem; line-height: 1.68; }
-body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
-.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
-h1, h2, h3 { font-family: var(--display); font-weight: 400; line-height: 1.12; text-wrap: balance; margin: 0; }
-h2 { font-size: clamp(2rem, 4.4vw, 2.9rem); }
-h3 { font-size: 1.45rem; }
-p { margin: 0; }
+html, body { margin: 0; padding: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+body { background: var(--night); color: var(--ink); font-family: var(--body); font-size: 1.3rem; line-height: 1.5; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 20; background: var(--night); }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3, p { margin: 0; }
+h1, h2 { font-weight: 600; line-height: .98; text-wrap: balance; letter-spacing: -.01em; }
+h2 { font-size: clamp(2.3rem, 5.4vw, 3.6rem); }
+h3 { font-family: var(--display); font-weight: 700; font-size: 1.15rem; letter-spacing: .08em; }
+em.g { color: var(--gold); }
 a { color: inherit; }
-img { display: block; max-width: 100%; height: auto; }
-:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.kicker { font-family: var(--display); font-size: .8rem; letter-spacing: .22em; color: var(--gold); }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
+.btn { display: inline-block; font-family: var(--display); font-size: .88rem; letter-spacing: .12em; font-weight: 700; text-decoration: none; cursor: pointer; padding: 16px 26px; border: 1px solid var(--gold); background: var(--gold); color: var(--night); }
+.btn.ghost { background: transparent; color: var(--ink); border-color: #6F6788; font-weight: 500; }
+.btn.ghost:hover { border-color: var(--gold); }
+.btn[disabled] { opacity: .45; cursor: default; }
+
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 15; background: var(--night); border-bottom: 1px solid var(--rule); }
+.nav::before { content: ""; display: block; height: 5px; background: linear-gradient(90deg, #A63A26 0 16.6%, #D6962A 0 33.3%, #4A7330 0 50%, #2C6F69 0 66.6%, #2B5590 0 83.3%, #6E4696 0); }
+.nav .wrap { display: flex; align-items: center; gap: 8px 26px; padding-block: 14px; flex-wrap: wrap; }
+.mark { font-family: var(--display); font-size: 1.1rem; letter-spacing: .18em; color: var(--gold); text-decoration: none; margin-right: auto; white-space: nowrap; }
+.links { display: flex; gap: 22px; overflow-x: auto; scrollbar-width: none; font-family: var(--display); font-size: .74rem; letter-spacing: .14em; max-width: 100%; }
+.links a { text-decoration: none; white-space: nowrap; padding-block: 6px; }
+.links a:hover { color: var(--gold); }
+
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(28px, 5vw, 64px); align-items: center; padding-block: clamp(36px, 6vw, 72px); }
+.hero-text { display: grid; gap: 22px; }
+.hero h1 { font-size: clamp(3rem, 8.2vw, 6.2rem); line-height: .93; }
+.lede { color: var(--muted); max-width: 30em; }
+.acts { display: flex; flex-wrap: wrap; gap: 12px; }
+.pick-row { display: grid; gap: 12px; margin-top: 10px; }
+.pick-row .kicker { color: var(--dim); }
+.dots { display: flex; flex-wrap: wrap; gap: 12px; }
+.dot { width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--rule); background: var(--c); cursor: pointer; padding: 0; }
+.dot[aria-pressed="true"] { border-color: var(--ink); box-shadow: 0 0 0 3px var(--night), 0 0 0 5px var(--c); }
+.says { min-height: 3.2em; font-style: italic; color: var(--muted); max-width: 30em; }
+.window-col { position: relative; justify-self: center; width: 100%; max-width: 470px; }
+.window { position: relative; aspect-ratio: 848 / 1264; }
+.window img, .window .tint { position: absolute; inset: 0; width: 100%; height: 100%; }
+.window .tint { background: var(--pick); mix-blend-mode: color; opacity: 0; transition: opacity .8s; pointer-events: none; }
+.window.tinted .tint { opacity: .78; }
+.perch { position: absolute; left: -36px; bottom: -8px; width: 150px; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-/* Nav with a stained-glass stripe */
-.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; border-bottom: 1px solid var(--rule);
-  background: linear-gradient(90deg, var(--garnet) 0 20%, var(--gold) 0 40%, var(--heart) 0 60%, var(--teal) 0 80%, var(--wisdom) 0) top / 100% 4px no-repeat, var(--paper); }
-.nav .wrap { display: flex; align-items: center; gap: 24px; padding-block: 14px 12px; }
-.mark { font-family: var(--display); font-style: italic; font-size: 1.45rem; text-decoration: none; white-space: nowrap; }
-.mark span { color: var(--accent); transition: color .5s; }
-.links { display: flex; gap: 22px; margin-left: auto; overflow-x: auto; scrollbar-width: none; font-size: 1rem; }
-.links::-webkit-scrollbar { display: none; }
-.links a { text-decoration: none; color: var(--muted); white-space: nowrap; padding-block: 4px; }
-.links a:hover { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 5px; }
-@media (max-width: 680px) { .nav .wrap { flex-direction: column; align-items: flex-start; gap: 4px; } .links { margin-left: 0; max-width: 100%; } }
+section.bay { border-top: 1px solid var(--rule); padding-block: clamp(56px, 8vw, 104px); }
+.head { display: grid; gap: 14px; max-width: 760px; margin-bottom: clamp(28px, 4vw, 44px); }
+.head p { color: var(--muted); }
 
-/* Hero: the real Thornfield page */
-.hero { padding-top: clamp(28px, 5vw, 56px); }
-.hero-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 5vw, 60px); align-items: center; }
-@media (max-width: 860px) { .hero-grid { grid-template-columns: minmax(0, 1fr); } }
-.hero-text { display: grid; gap: 18px; }
-.kicker { font-family: var(--display); font-style: italic; color: var(--muted); font-size: 1.15rem; }
-.hero h1 { font-size: clamp(2.6rem, 6vw, 4.3rem); line-height: 1.02; }
-.cap { float: left; font-size: 2.05em; line-height: .8; margin: .06em .12em 0 0; padding: .1em .14em .06em;
-  color: var(--paper); background: var(--accent); border: 3px double var(--paper); outline: 2px solid var(--accent); transition: background .5s, outline-color .5s; }
-.lede { font-size: 1.25rem; color: var(--muted); max-width: 32em; }
-.lede strong { color: var(--ink); font-weight: 500; }
-.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
-.btn { display: inline-block; font: inherit; font-size: 1.05rem; text-decoration: none; cursor: pointer; padding: 10px 22px;
-  border: 1.5px solid var(--ink); border-radius: 999px; background: var(--ink); color: var(--paper); transition: background .3s, border-color .3s, color .3s; }
-.btn.ghost { background: transparent; color: var(--ink); }
-.btn:not(.ghost):hover { background: var(--accent); border-color: var(--accent); }
-.btn.ghost:hover { border-color: var(--accent); }
-.plate { position: relative; margin: 0; border: 1.5px solid var(--line); padding: 10px; background: var(--paper); box-shadow: 10px 10px 0 var(--rule); }
-.plate .frame { overflow: hidden; aspect-ratio: 2048 / 1374; }
-.plate img { width: 100%; height: 100%; object-fit: cover; transform-origin: 62% 40%; animation: pan 28s ease-in-out infinite alternate; }
-@keyframes pan { from { transform: scale(1.02) translate(0, 0); } to { transform: scale(1.12) translate(-2%, 1.5%); } }
-.plate figcaption { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: .95rem; color: var(--muted); font-style: italic; padding: 10px 4px 0; }
+/* Chromatic Destiny */
+.cd { background: var(--panel); }
+.cd-top { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: center; }
+.seal { font-family: var(--display); font-size: .82rem; letter-spacing: .2em; font-weight: 700; color: var(--gold); border: 2px solid var(--gold); padding: 9px 16px; white-space: nowrap; }
+.steps { list-style: none; padding: 0; margin: 0 0 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 26px; }
+.steps li { display: grid; grid-template-columns: auto 1fr; gap: 14px; min-width: 0; }
+.steps .n { font-family: var(--display); font-size: 2rem; line-height: 1; color: var(--gold); min-width: 1.5em; }
+.steps p { color: var(--muted); font-size: 1.2rem; }
+.paths { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 18px; }
+.path { border: 2px solid var(--c); background: var(--night); padding: 26px 22px; display: grid; gap: 10px; justify-items: start; min-width: 0; }
+.path svg { width: 56px; height: 56px; stroke: var(--c); fill: none; stroke-width: 1.4; stroke-linejoin: round; }
+.path b { font-family: var(--display); font-size: 1.5rem; letter-spacing: .06em; color: var(--c); font-weight: 700; }
+.path span { color: var(--muted); font-size: 1.15rem; }
+.creed { margin-top: 34px; font-style: italic; font-size: 1.6rem; color: var(--ink); }
 
-/* Sections */
-section.band { position: relative; overflow: clip; padding-block: clamp(64px, 9vw, 112px); }
-.band + .band, .hero + .band { border-top: 1px solid var(--rule); }
-.hero + .band { margin-top: clamp(56px, 8vw, 96px); }
-.band > .wrap { position: relative; z-index: 1; }
-.wash { position: absolute; z-index: 0; border-radius: 46% 54% 60% 40% / 50% 42% 58% 50%; filter: blur(60px); opacity: var(--wash-o); pointer-events: none; animation: drift 30s ease-in-out infinite alternate; }
-@keyframes drift { to { transform: translate(40px, 30px) rotate(20deg) scale(1.1); } }
-.head { display: grid; gap: 12px; max-width: 680px; margin-bottom: clamp(30px, 4vw, 46px); }
-.head p { color: var(--muted); font-size: 1.2rem; }
-.brush { display: block; width: min(240px, 66%); height: 16px; overflow: visible; }
-.brush path { fill: none; stroke: var(--bc, var(--accent)); stroke-width: 6; stroke-linecap: round; stroke-dasharray: 300; stroke-dashoffset: 300; transition: stroke-dashoffset 1.4s ease; }
-.brush.seen path { stroke-dashoffset: 0; }
+/* Coloring table */
+.table { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 22px; align-items: start; }
+.sheet-wrap { position: relative; min-width: 0; }
+.sheet { background: var(--paper); border: 2px solid var(--gold); overflow: auto; max-height: 80vh; touch-action: pan-x pan-y; }
+.sheet svg { display: block; width: 100%; height: auto; }
+.sheet.zoom svg { width: 220%; }
+.sheet .reg { cursor: pointer; }
+.sheet.crest svg { max-width: 460px; margin: 0 auto; }
+.sheet.crest.zoom svg { max-width: none; }
+.tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+.tab { font-family: var(--display); font-size: .78rem; letter-spacing: .12em; padding: 12px 16px; background: transparent; color: var(--ink); border: 1px solid var(--rule); cursor: pointer; }
+.tab[aria-pressed="true"] { border-color: var(--gold); color: var(--gold); }
+.tools { display: grid; gap: 18px; background: var(--panel); border: 1px solid var(--rule); padding: 18px; }
+.fam { display: grid; gap: 8px; }
+.fam-h { display: flex; align-items: center; gap: 8px; font-family: var(--display); font-size: .72rem; letter-spacing: .16em; color: var(--dim); }
+.fam-h svg { width: 18px; height: 18px; stroke: var(--dim); fill: none; stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+.sws { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.sw { aspect-ratio: 1; border-radius: 50%; border: 2px solid var(--rule); background: var(--c); cursor: pointer; padding: 0; min-width: 0; }
+.sw[aria-pressed="true"] { border-color: var(--ink); box-shadow: 0 0 0 2px var(--panel), 0 0 0 4px var(--c); }
+.row-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+.mini { font-family: var(--display); font-size: .7rem; letter-spacing: .1em; padding: 11px 12px; background: transparent; color: var(--ink); border: 1px solid var(--rule); cursor: pointer; flex: 1 1 auto; }
+.mini:hover { border-color: var(--gold); }
+.mini[aria-pressed="true"] { border-color: var(--gold); color: var(--gold); }
+.count { color: var(--muted); font-size: 1.1rem; font-variant-numeric: tabular-nums; }
+.verdict { border-top: 1px solid var(--rule); padding-top: 16px; display: grid; gap: 10px; }
+.verdict .res { font-size: 1.35rem; line-height: 1.3; }
+.verdict .res b { font-family: var(--display); letter-spacing: .06em; }
+.peek { position: absolute; right: -6px; top: -74px; width: 110px; pointer-events: auto; }
+@media (max-width: 860px) { .hero .wrap { grid-template-columns: minmax(0, 1fr); } .table { grid-template-columns: minmax(0, 1fr); } .window-col { max-width: 360px; } .perch { left: -8px; width: 112px; } .peek { width: 88px; top: -60px; } }
 
-/* The page you color */
-.pages { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(18px, 3vw, 32px); }
-@media (max-width: 700px) { .pages { grid-template-columns: minmax(0, 1fr); } }
-.pages figure { margin: 0; display: grid; gap: 10px; }
-.pages .pg { border: 1.5px solid var(--line); padding: 8px; background: #FFFFFF; }
-.pages figcaption { color: var(--muted); font-size: 1rem; }
-.pages figcaption b { font-family: var(--display); font-weight: 400; font-size: 1.25rem; color: var(--ink); display: block; }
+/* Book */
+.book { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 6fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
+.book img { width: 100%; max-width: 380px; height: auto; justify-self: center; border: 2px solid var(--gold); display: block; }
+.book .copy { display: grid; gap: 16px; }
+.status { justify-self: start; font-family: var(--display); font-size: .72rem; letter-spacing: .16em; color: var(--dim); border: 1px solid var(--rule); padding: 6px 12px; }
+.facts { list-style: none; padding: 0; margin: 6px 0; display: grid; border-top: 1px solid var(--rule); }
+.facts li { display: grid; grid-template-columns: 3.4rem 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--rule); align-items: baseline; color: var(--muted); }
+.facts b { font-family: var(--display); font-size: 1.7rem; color: var(--gold); font-variant-numeric: tabular-nums; }
+@media (max-width: 760px) { .book { grid-template-columns: minmax(0, 1fr); } }
 
-/* For grown-up colorists */
-.why { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 30px 36px; list-style: none; padding: 0; margin: 0; }
-.why li { display: grid; gap: 6px; padding-top: 16px; border-top: 2px solid var(--c); min-width: 0; }
-.why li:nth-child(1) { --c: var(--garnet); } .why li:nth-child(2) { --c: var(--gold); } .why li:nth-child(3) { --c: var(--teal); } .why li:nth-child(4) { --c: var(--wisdom); }
-.why p { color: var(--muted); }
+/* Hatchlings */
+.crew { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 34px 12px; }
+.hatch { display: grid; gap: 4px; justify-items: center; text-align: center; min-width: 0; }
+.stage { position: relative; display: block; width: 100%; max-width: 220px; aspect-ratio: 1 / 1.08; padding: 0; border: 0; background: none; cursor: pointer; perspective: 700px; -webkit-tap-highlight-color: transparent; }
+.plinth { position: absolute; left: 12%; right: 12%; bottom: 2%; height: 15%; border-radius: 50%; background: radial-gradient(ellipse at 50% 40%, #2A2542 0%, #17142A 70%); border: 2px solid var(--gold); }
+.shadow { position: absolute; left: 22%; right: 22%; bottom: 7%; height: 7%; border-radius: 50%; background: #05040A; filter: blur(7px); opacity: .85; }
+.body3d { position: absolute; left: 4%; right: 4%; top: 0; aspect-ratio: 1; will-change: transform; }
+.body3d canvas, .body3d img { width: 100%; height: 100%; display: block; }
+.stage.bare .plinth { display: none; } .stage.bare { aspect-ratio: 1; max-width: none; } .stage.bare .shadow { bottom: 2%; } .stage.bare .body3d { left: 0; right: 0; }
+.nm { font-family: var(--display); font-weight: 700; font-size: 1.15rem; letter-spacing: .08em; margin-top: 6px; }
+.trait { font-style: italic; color: var(--gold); }
+.does { color: var(--muted); font-size: 1.08rem; line-height: 1.35; max-width: 22ch; }
 
-/* How it works: a true sequence */
-.steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 28px; }
-.steps li { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; min-width: 0; }
-.num { font-family: var(--display); font-size: 2.5rem; line-height: 1; min-width: 1.4em; color: var(--c); }
-.steps li:nth-child(1) { --c: var(--garnet); } .steps li:nth-child(2) { --c: var(--teal); } .steps li:nth-child(3) { --c: var(--wisdom); }
-.steps h3 { margin-bottom: 6px; }
-.steps p { color: var(--muted); }
-.paths { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 34px; }
-.path { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 8px; border: 1.5px solid var(--pc); border-radius: 999px; font-size: 1rem; font-weight: 500; }
-.path i { width: 18px; height: 18px; border-radius: 50%; display: inline-block; background: var(--pc); }
-.p-power { --pc: var(--power); } .p-wisdom { --pc: var(--wisdom); } .p-heart { --pc: var(--heart); }
-
-/* Banner teaser */
-.teaser { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
-@media (max-width: 780px) { .teaser { grid-template-columns: minmax(0, 1fr); } }
-.swatches { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 22px; }
-.swatch { display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 8px 14px; cursor: pointer; font: inherit; font-size: 1.05rem; color: var(--ink); text-align: left;
-  background: var(--paper); border: 1.5px solid var(--rule); border-radius: 10px; }
-.swatch:hover { border-color: var(--ink); }
-.swatch[aria-pressed="true"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
-.swatch b { width: 28px; height: 28px; border-radius: 50%; flex: none; border: 1.5px solid var(--line); background: var(--sw-l); }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .swatch b { background: var(--sw-d); } }
-:root[data-theme="dark"] .swatch b { background: var(--sw-d); }
-.flag-stage { position: relative; border-radius: 14px; padding: 26px; display: grid; gap: 18px; background: var(--panel); background: color-mix(in srgb, var(--accent) 9%, var(--panel)); transition: background .6s; }
-.flag { width: 100%; max-width: 340px; height: auto; margin: 0 auto; display: block; overflow: visible; }
-.flag .o { stroke: var(--line); stroke-width: 2.5; stroke-linejoin: round; }
-.flag .cloth { fill: var(--paper); transition: fill .6s; }
-.flag .trim { fill: none; stroke: var(--gold); stroke-width: 2; }
-.flag.chosen .cloth { fill: var(--accent); }
-.verdict { min-height: 6.4em; }
-.verdict .says { font-family: var(--display); font-size: 1.35rem; line-height: 1.35; }
-.verdict .small { color: var(--muted); font-size: 1rem; margin-top: 8px; }
-.splat { position: absolute; border-radius: 50%; pointer-events: none; z-index: 2; }
-
-/* Featured book */
-.book { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
-@media (max-width: 780px) { .book { grid-template-columns: minmax(0, 1fr); } }
-.cover { margin: 0; max-width: 420px; justify-self: center; border: 1.5px solid var(--line); padding: 8px; background: var(--paper); box-shadow: 10px 10px 0 var(--rule); transform: rotate(-1.5deg); }
-.status { display: inline-block; font-size: .95rem; padding: 2px 12px; border-radius: 999px; border: 1px solid var(--rule); color: var(--muted); }
-.facts { list-style: none; padding: 0; margin: 22px 0 26px; display: grid; border-top: 1px solid var(--rule); }
-.facts li { display: grid; grid-template-columns: 4rem 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--rule); align-items: baseline; }
-.facts b { font-family: var(--display); font-weight: 400; font-size: 1.9rem; line-height: 1; color: var(--accent); transition: color .5s; font-variant-numeric: tabular-nums; }
-.book .copy { display: grid; gap: 14px; }
-
-/* Cast: tap a portrait to color it */
-.cast { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 18px; }
-.cast .person:first-child { grid-column: span 2; }
-.cast .person:first-child .tile { max-width: 340px; }
-@media (min-width: 940px) { .cast { grid-template-columns: repeat(5, minmax(0, 1fr)); } .cast .person:first-child { grid-column: auto; } }
-.person { display: grid; gap: 10px; align-content: start; min-width: 0; }
-.tile { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: pointer; perspective: 1000px; }
-.tile .in { display: block; position: relative; aspect-ratio: 4 / 5; transition: transform .8s cubic-bezier(.4,.1,.2,1); transform-style: preserve-3d; }
-.tile[aria-pressed="true"] .in { transform: rotateY(180deg); }
-.tile .f { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border: 1.5px solid var(--line); padding: 6px; background: #FFFFFF; overflow: hidden; }
-.tile .f.back { transform: rotateY(180deg); border-color: var(--c); box-shadow: 0 0 0 3px var(--c); }
-.tile img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
-.tile .hint { font-family: var(--body); position: absolute; left: 10px; bottom: 10px; font-size: .85rem; padding: 2px 10px; border-radius: 999px; background: var(--paper); color: var(--ink); border: 1px solid var(--rule); }
-.person:nth-child(1) { --c: var(--heart); } .person:nth-child(2) { --c: var(--garnet); } .person:nth-child(3) { --c: var(--wisdom); }
-.person:nth-child(4) { --c: var(--teal); } .person:nth-child(5) { --c: var(--power); }
-.person .nm { font-family: var(--display); font-size: 1.35rem; line-height: 1.15; }
-.person .rl { color: var(--c); font-style: italic; font-size: 1rem; }
-.person p { color: var(--muted); font-size: 1.02rem; }
-.cast-note { margin-top: 26px; color: var(--muted); font-style: italic; }
-
-/* Worlds */
+/* Worlds + list */
 .worlds { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
-.world { border: 1.5px solid var(--c, var(--rule)); border-radius: 10px; padding: 24px; display: grid; gap: 10px; align-content: start; min-width: 0; }
-.world.tides { --c: var(--wisdom); background: color-mix(in srgb, var(--wisdom) 8%, var(--paper)); }
-.world.apoth { --c: var(--garnet); background: color-mix(in srgb, var(--garnet) 7%, var(--paper)); }
-.world .stage { font-style: italic; color: var(--c, var(--muted)); font-size: 1rem; }
+.world { border: 1px solid var(--c, var(--rule)); padding: 24px; display: grid; gap: 10px; align-content: start; min-width: 0; background: var(--panel); }
+.world .stg { font-style: italic; color: var(--c, var(--dim)); }
 .world p { color: var(--muted); }
-.world.join { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-.world.join p, .world.join .stage { color: var(--paper); }
-.addr { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 6px; }
-.addr code { font-family: var(--body); font-size: 1.02rem; user-select: all; word-break: break-all; }
-.copy-btn { font: inherit; font-size: .95rem; padding: 5px 14px; border-radius: 999px; cursor: pointer; border: 1.5px solid currentColor; background: transparent; color: inherit; }
-.copied { font-size: .9rem; }
-.contact { display: grid; gap: 18px; max-width: 640px; }
-.contact .addr code { font-size: 1.25rem; }
-footer { border-top: 1px solid var(--rule); color: var(--muted); font-size: .95rem; }
-footer .wrap { padding-block: 28px; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
-/* Hatchlings: crew cards, Sprig on the footer, Doodle and Smudge roaming, paint splats */
-.sub { font-size: clamp(1.7rem, 3.4vw, 2.2rem); }
-.hatch-head { margin-top: clamp(52px, 7vw, 84px); }
-.crew { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px; }
-@media (min-width: 940px) { .crew { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
-@media (max-width: 939px) { .crew .mate:last-child { grid-column: 1 / -1; width: 100%; max-width: calc(50% - 8px); justify-self: center; } }
-.mate { font: inherit; color: inherit; text-align: left; cursor: pointer; display: grid; gap: 5px; align-content: start; min-width: 0;
-  padding: 10px 10px 14px; background: var(--paper); border: 1.5px solid var(--line); border-top: 6px solid var(--c); border-radius: 10px;
-  box-shadow: 6px 6px 0 var(--rule); transform: rotate(-1.2deg); transition: transform .3s cubic-bezier(.3,1.6,.5,1); }
-.mate:nth-child(even) { transform: rotate(1.3deg); }
-.mate:hover { transform: rotate(0) translateY(-4px); }
-.mate:nth-child(1) { --c: var(--wisdom); } .mate:nth-child(2) { --c: var(--teal); } .mate:nth-child(3) { --c: var(--heart); }
-.mate:nth-child(4) { --c: var(--garnet); } .mate:nth-child(5) { --c: var(--power); }
-.mate .pic { display: block; position: relative; aspect-ratio: 1 / 1; background: #FFFFFF; border: 1px solid var(--rule); border-radius: 6px; }
-.mate .pic img { width: 100%; height: 100%; object-fit: contain; padding: 6px; }
-.mate .nm { font-family: var(--display); font-size: 1.4rem; line-height: 1.1; margin-top: 4px; }
-.mate .mv { font-style: italic; color: var(--c); font-size: 1rem; line-height: 1.2; }
-.mate .ln { color: var(--muted); font-size: .98rem; line-height: 1.4; }
-.mate .do { font-size: .85rem; color: var(--muted); margin-top: 6px; }
-.mate.go-dabble .pic img { animation: wiggle .8s ease; }
-.mate.go-smudge .pic img { animation: roll .9s cubic-bezier(.5,0,.4,1); }
-.mate.go-doodle .pic img { animation: hop .7s ease 2; }
-.mate.go-sprig .pic img { animation: snooze 1.6s ease; }
-.mate.go-ember .pic img { animation: squash .45s ease; }
-@keyframes wiggle { 20% { transform: rotate(-8deg); } 40% { transform: rotate(7deg); } 60% { transform: rotate(-5deg); } 80% { transform: rotate(3deg); } }
-@keyframes roll { to { transform: rotate(360deg); } }
-@keyframes hop { 50% { transform: translateY(-14%) rotate(-6deg); } }
-@keyframes snooze { 50% { transform: scale(1.06, .94); } }
-@keyframes squash { 30% { transform: scale(1.05, .93); } 60% { transform: scale(.96, 1.05); } }
-.spark { position: absolute; pointer-events: none; z-index: 4; width: 18px; height: 18px; margin: -9px 0 0 -9px; }
-footer { position: relative; margin-top: 64px; }
-.sprig { position: absolute; right: 8%; bottom: 100%; margin-bottom: -16px; width: 150px; padding: 0; border: 0; background: none; cursor: pointer; z-index: 2; }
-.sprig img { width: 100%; transform-origin: 50% 100%; animation: breathe 3.6s ease-in-out infinite; }
-@keyframes breathe { 50% { transform: scale(1.025, .97); } }
-.zzz { position: absolute; left: 66%; top: -4px; font-family: var(--display); font-style: italic; font-size: 1.35rem; color: var(--wisdom); pointer-events: none; }
-.zzz span { position: absolute; opacity: 0; animation: zz 3.6s ease-in infinite; }
-.zzz span:nth-child(2) { animation-delay: 1.2s; font-size: 1.1rem; }
-.zzz span:nth-child(3) { animation-delay: 2.4s; font-size: .9rem; }
-@keyframes zz { 0% { opacity: 0; transform: translate(0, 0); } 20% { opacity: 1; } 100% { opacity: 0; transform: translate(26px, -46px) rotate(14deg); } }
-.bubble { position: absolute; right: 70%; top: -30px; white-space: nowrap; font-family: var(--display); font-style: italic; font-size: 1.2rem; color: #2A2238; background: #FFFFFF;
-  border: 1.5px solid #2A2238; border-radius: 16px; padding: 2px 12px; pointer-events: none; opacity: 0; transform: scale(.4); transition: opacity .2s, transform .3s cubic-bezier(.3,1.6,.5,1); }
-.bubble.show { opacity: 1; transform: scale(1); }
-.roam { position: fixed; left: 0; top: 0; pointer-events: none; will-change: transform; }
-.roam img, .sprig img { filter: drop-shadow(0 0 1px var(--line)) drop-shadow(2px 3px 0 rgba(42,34,56,.16)); }
-.doodle { width: 92px; z-index: 30; }
-.smudge { width: 104px; top: auto; bottom: calc(10px + env(safe-area-inset-bottom, 0px)); z-index: 29; transform: translateX(-180px); }
-#paint { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 40; }
-@media (max-width: 520px) { .doodle { width: 66px; } .smudge { width: 84px; } .sprig { width: 116px; margin-bottom: -12px; } }
-/* Sound and music: off until a visitor turns them on */
-.sound-dock { position: fixed; right: max(14px, env(safe-area-inset-right, 0px)); bottom: calc(14px + env(safe-area-inset-bottom, 0px)); z-index: 35; display: flex; gap: 8px; }
-.tog { display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: .95rem; cursor: pointer; padding: 7px 14px 7px 10px; color: var(--ink);
-  background: var(--paper); border: 1.5px solid var(--ink); border-radius: 999px; box-shadow: 3px 3px 0 var(--rule); transition: background .3s, color .3s; }
-.tog svg { width: 20px; height: 20px; flex: none; }
-.tog:hover { border-color: var(--accent); }
-.tog[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
-@media (max-width: 520px) { .tog .lbl { display: none; } .tog { padding: 9px; } }
-@media (prefers-reduced-motion: reduce) {
-  .roam { display: none; }
-  html { scroll-behavior: auto; }
-  *, *::before, *::after { animation: none !important; transition: none !important; }
-  .brush path { stroke-dashoffset: 0; }
-}
+.world.join { background: var(--gold); color: var(--night); border-color: var(--gold); }
+.world.join p, .world.join .stg { color: var(--night); }
+.addr { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.addr code { font-family: var(--body); font-size: 1.1rem; font-weight: 600; user-select: all; word-break: break-all; }
+.copy-btn { font-family: var(--display); font-size: .7rem; letter-spacing: .1em; padding: 9px 12px; background: var(--night); color: var(--ink); border: 0; cursor: pointer; }
+footer { border-top: 1px solid var(--rule); color: var(--dim); font-size: 1.05rem; }
+footer .wrap { padding-block: 26px 34px; display: flex; flex-wrap: wrap; gap: 8px 26px; justify-content: space-between; }
+.dock { position: fixed; right: max(14px, env(safe-area-inset-right, 0px)); bottom: calc(14px + env(safe-area-inset-bottom, 0px)); z-index: 25; display: flex; gap: 8px; }
+.tog { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-size: .72rem; letter-spacing: .12em; cursor: pointer; padding: 11px 14px; color: var(--ink); background: var(--night); border: 1px solid var(--gold); }
+.tog svg { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; stroke-linecap: round; }
+.tog[aria-pressed="true"] { background: var(--gold); color: var(--night); }
+@media (max-width: 520px) { .tog .lbl { display: none; } }
+#fx { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 30; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .window .tint { transition: none; } }
 </style>
 </head>
 <body>
 
+<nav class="nav" aria-label="Main"><div class="wrap">
+  <a class="mark" href="#top">COLORING WORLDS</a>
+  <div class="links">
+    <a href="#destiny">CHROMATIC DESTINY</a><a href="#color">COLOR A PAGE</a><a href="#book">THE FIRST BOOK</a><a href="#hatchlings">HATCHLINGS</a><a href="#worlds">JOIN THE LIST</a>
+  </div>
+</div></nav>
 
-<nav class="nav" aria-label="Main">
-  <div class="wrap">
-    <a class="mark" href="#top">Coloring <span>Worlds</span></a>
-    <div class="links">
-      <a href="#pages">The pages</a>
-      <a href="#how">How it works</a>
-      <a href="#banner">Try it</a>
-      <a href="#kingdoms">The first book</a>
-      <a href="#cast">Characters</a>
-      <a href="#worlds">More worlds</a>
-      <a href="#contact">Contact</a>
+<header class="hero" id="top"><div class="wrap">
+  <div class="hero-text">
+    <p class="kicker">STORY COLORING BOOKS FOR GROWN-UPS</p>
+    <h1>Every color you choose <em class="g">changes the ending.</em></h1>
+    <p class="lede">Intricate medieval fantasy pages, a story told in six chapters, and one secret: five of your color choices quietly decide how it ends.</p>
+    <div class="acts"><a class="btn" href="#color">COLOR A PAGE NOW</a><a class="btn ghost" href="#destiny">HOW IT WORKS</a></div>
+    <div class="pick-row">
+      <p class="kicker">CHOOSE A COLOR. WATCH THE WINDOW ANSWER.</p>
+      <div class="dots" role="group" aria-label="Window colors" id="dots">
+        <button class="dot" type="button" id="dot-ember" style="--c:#C2452C" data-say="Ember red. The glass burns like a forge, and something with scales looks up." aria-pressed="false"><span class="sr">Ember red</span></button>
+        <button class="dot" type="button" id="dot-gold" style="--c:#D6962A" data-say="Royal gold. The whole window gleams like a crown at noon." aria-pressed="false"><span class="sr">Royal gold</span></button>
+        <button class="dot" type="button" id="dot-blue" style="--c:#2F64B0" data-say="Midnight blue. The panes go deep and quiet, the color of old secrets." aria-pressed="false"><span class="sr">Midnight blue</span></button>
+        <button class="dot" type="button" id="dot-teal" style="--c:#2C8079" data-say="Deep teal. Cool as river water under the Thornfield bridge." aria-pressed="false"><span class="sr">Deep teal</span></button>
+        <button class="dot" type="button" id="dot-moss" style="--c:#5C8A3A" data-say="Moss green. The window turns to forest light and growing things." aria-pressed="false"><span class="sr">Moss green</span></button>
+        <button class="dot" type="button" id="dot-violet" style="--c:#7A4FA8" data-say="Royal violet. Dusk settles over the castle, one pane at a time." aria-pressed="false"><span class="sr">Royal violet</span></button>
+      </div>
+      <p class="says" id="says" aria-live="polite">The window is waiting. In the book, a choice like this one is how your story turns.</p>
     </div>
   </div>
-</nav>
+  <div class="window-col">
+    <div class="window" id="window">
+      <img src="art/glass_line.jpg" alt="The stained glass window from chapter four, drawn in gold line." width="848" height="1264">
+      <img src="art/glass.jpg" id="lit" alt="The same window with its panes lit in jewel colors." width="848" height="1264">
+      <div class="tint" id="tint"></div>
+    </div>
+    <div class="perch"><button class="stage bare" type="button" data-hatch="ember" aria-label="Ember the hatchling. Tap for a glitter toot."></button></div>
+  </div>
+</div></header>
 
-<header class="hero" id="top">
-  <div class="wrap hero-grid">
-    <div class="hero-text">
-      <p class="kicker">Story coloring books for grown-ups</p>
-      <h1><span class="cap" aria-hidden="true">W</span><span class="sr">W</span>here your colors write the story</h1>
-      <p class="lede">Richly detailed pages, a story that unfolds chapter by chapter, and a secret: <strong>five color choices quietly shape your ending.</strong> No dice. No rulebook. Just you, your pencils, and an evening in another world.</p>
-      <div class="actions">
-        <a class="btn" href="#pages">See the pages</a>
-        <a class="btn ghost" href="#banner">Try the first choice</a>
+<section class="bay cd" id="destiny"><div class="wrap">
+  <div class="head">
+    <p class="kicker">THE STORY ENGINE INSIDE EVERY BOOK</p>
+    <div class="cd-top"><h2>Chromatic Destiny</h2><span class="seal">PATENT PENDING</span></div>
+    <p>It looks like a coloring book and plays like a story. You never roll a die or read a rule. You pick the colors you love, and the book keeps count.</p>
+  </div>
+  <ol class="steps">
+    <li><span class="n" aria-hidden="true">I</span><div><h3>COLOR WHAT THE CHAPTER HANDS YOU</h3><p>A banner, a dragon's scales, a traveling cloak. Any color you like.</p></div></li>
+    <li><span class="n" aria-hidden="true">II</span><div><h3>YOUR COLORS ADD UP</h3><p>Each color family quietly nudges one of three hidden paths. You won't know where you stand.</p></div></li>
+    <li><span class="n" aria-hidden="true">III</span><div><h3>EARN YOUR ENDING</h3><p>The last chapter opens one of three endings. Color it again to find the others.</p></div></li>
+  </ol>
+  <div class="paths">
+    <div class="path" style="--c:var(--power)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18h18l1-10-5 4-5-7-5 7-5-4z"/><path d="M4 21h16"/></svg><b>POWER</b><span>Warm colors: reds, ambers, golds.</span></div>
+    <div class="path" style="--c:var(--wisdom)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-6.5 10-6.5S22 12 22 12s-4 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><b>WISDOM</b><span>Cool colors: blues, violets, silver.</span></div>
+    <div class="path" style="--c:var(--heart)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5S3.5 15 3.5 8.8A4.3 4.3 0 0 1 12 7a4.3 4.3 0 0 1 8.5 1.8C20.5 15 12 20.5 12 20.5z"/></svg><b>HEART</b><span>Earth colors: greens, browns, rose.</span></div>
+  </div>
+  <p class="creed">No dice. No rulebook. No wrong colors.</p>
+</div></section>
+
+<section class="bay" id="color"><div class="wrap">
+  <div class="head">
+    <p class="kicker">TRY IT HERE</p>
+    <h2>Color a page. <em class="g">See where it leads.</em></h2>
+    <p>These two pages are extras, not from the book. Pick a color, tap a shape, and when you have colored enough, ask the page what your palette says about you.</p>
+  </div>
+  <div class="tabs" role="group" aria-label="Choose a page">
+    <button class="tab" type="button" id="tab-dragon" data-page="dragon" aria-pressed="true">THE MOUNTAIN DRAGON</button>
+    <button class="tab" type="button" id="tab-crest" data-page="crest" aria-pressed="false">THE LION CREST (QUICK)</button>
+  </div>
+  <div class="table">
+    <div class="sheet-wrap">
+      <div class="peek"><button class="stage bare" type="button" id="peeker" aria-label="A hatchling is watching you color. Tap for its move."></button></div>
+      <div class="sheet" id="sheet" aria-label="Coloring page"><p style="padding:40px;color:#2A2238">Loading the page…</p></div>
+    </div>
+    <div class="tools">
+      <div class="fam"><div class="fam-h"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-6 1-9z"/></svg>WARM</div><div class="sws" id="fam-warm"></div></div>
+      <div class="fam"><div class="fam-h"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>COOL</div><div class="sws" id="fam-cool"></div></div>
+      <div class="fam"><div class="fam-h"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19c0-8 5-14 15-14 0 9-5 15-13 15"/><path d="M5 19c3-5 7-8 11-10"/></svg>EARTH</div><div class="sws" id="fam-earth"></div></div>
+      <div class="row-btns">
+        <button class="mini" type="button" id="eraser" aria-pressed="false">ERASER</button>
+        <button class="mini" type="button" id="undo">UNDO</button>
+        <button class="mini" type="button" id="zoom" aria-pressed="false">ZOOM</button>
+        <button class="mini" type="button" id="clear">START OVER</button>
+      </div>
+      <p class="count" id="count">0 shapes colored</p>
+      <div class="verdict">
+        <button class="btn" type="button" id="reveal" disabled>REVEAL MY PATH</button>
+        <p class="res" id="res" aria-live="polite">Color at least 12 shapes, then ask.</p>
       </div>
     </div>
-    <figure class="plate">
-      <div class="frame"><img src="images/town_c.jpg" alt="A finished colored page from Kingdoms of Color: Elara stands on a flowered hillside above the walled town of Thornfield, its castle, river, and stone bridge glowing at sunset." width="1500" height="1006"></div>
-      <figcaption><span>The kingdom of Thornfield, chapter one</span><span>From Kingdoms of Color</span></figcaption>
-    </figure>
   </div>
-</header>
+</div></section>
 
-<section class="band" id="pages">
-  <span class="wash" aria-hidden="true" style="background:var(--gold);width:460px;height:340px;top:-100px;right:-160px"></span>
-  <div class="wrap">
-    <div class="head">
-      <h2>Every page is a world to get lost in</h2>
-      <p>Castles with a hundred windows, market stalls, rolling fields, wildflowers on the hillside. Each illustration is drawn with enough detail to fill a whole evening, or a whole week of evenings.</p>
-    </div>
-    <div class="pages">
-      <figure>
-        <div class="pg"><img src="images/town_l.jpg" alt="The black and white line art for the Thornfield page, full of fine detail waiting to be colored." loading="lazy" width="1500" height="1006"></div>
-        <figcaption><b>The page you color</b>Every line is yours to fill.</figcaption>
-      </figure>
-      <figure>
-        <div class="pg"><img src="images/town_c.jpg" alt="The same Thornfield scene shown in one possible set of colors." loading="lazy" width="1500" height="1006"></div>
-        <figcaption><b>One way it could look</b>Your version will be different, and that's the point.</figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
-
-<section class="band" id="why">
-  <span class="wash" aria-hidden="true" style="background:var(--teal);width:420px;height:320px;bottom:-120px;left:-150px"></span>
-  <div class="wrap">
-    <div class="head">
-      <h2>Made for grown-up colorists</h2>
-      <p>If you love intricate coloring pages and a good story, this is both at once.</p>
-    </div>
-    <ul class="why">
-      <li><h3>Intricate, detailed art</h3><p>Stained glass, tapestries, scales, and stonework. Plenty of room for blending, shading, and your favorite techniques.</p></li>
-      <li><h3>A story to come back to</h3><p>Each chapter ends with a reason to start the next. It turns a coloring session into a little ritual you look forward to.</p></li>
-      <li><h3>Choices that matter</h3><p>Your palette is your vote. Warm, cool, or earthy, the colors you reach for decide how the tale ends.</p></li>
-      <li><h3>Worth coloring twice</h3><p>Three endings means three reasons to print the pages again and try a completely different palette.</p></li>
+<section class="bay cd" id="book"><div class="wrap book">
+  <img src="art/cover.jpg" alt="The cover of Kingdoms of Color: the dragon Varathos spreads his wings over a castle at dusk while Elara looks up at him." loading="lazy" width="760" height="1133">
+  <div class="copy">
+    <span class="status">IN DEVELOPMENT</span>
+    <h2>Kingdoms of Color: <em class="g">The Dragon of Thornfield</em></h2>
+    <p style="color:var(--muted)">In the kingdom of Thornfield, a dragon stirs beneath the ancient mountain. You are Elara, and how you color your journey decides whether Varathos becomes a destroyer, an ally, or a legend.</p>
+    <ul class="facts">
+      <li><b>6</b><span>illustrated chapters to color</span></li>
+      <li><b>5</b><span>characters with their own storylines</span></li>
+      <li><b>3</b><span>hidden paths: Power, Wisdom and Heart</span></li>
+      <li><b>3</b><span>endings to discover</span></li>
     </ul>
+    <p style="color:var(--muted)">Play it digitally, or print the PDF and use your own pencils.</p>
+    <div class="acts"><a class="btn" href="#worlds">HEAR WHEN IT OPENS</a></div>
   </div>
-</section>
+</div></section>
 
-<section class="band" id="how">
-  <div class="wrap">
-    <div class="head">
-      <h2>How a Light RPG coloring book works</h2>
-      <p>It looks like a coloring book and plays like a story. Colored pencils, markers, or a digital brush all work.</p>
-    </div>
-    <ol class="steps">
-      <li><span class="num" aria-hidden="true">I</span><div><h3>Color each page</h3><p>In each chapter, the story hands you something to color. Pick any color you love.</p></div></li>
-      <li><span class="num" aria-hidden="true">II</span><div><h3>Your colors add up</h3><p>Behind the scenes, each color family quietly nudges one of three hidden paths. You won't know where you stand until the end.</p></div></li>
-      <li><span class="num" aria-hidden="true">III</span><div><h3>Reach your ending</h3><p>The final chapter reveals which of three endings your colors earned. Recolor and play again to find the others.</p></div></li>
-    </ol>
-    <div class="paths" aria-label="The three hidden paths">
-      <span class="path p-power"><i></i>Power</span>
-      <span class="path p-wisdom"><i></i>Wisdom</span>
-      <span class="path p-heart"><i></i>Heart</span>
-    </div>
+<section class="bay" id="hatchlings"><div class="wrap">
+  <div class="head">
+    <p class="kicker">IN THE MARGINS</p>
+    <h2>And then there are <em class="g">the hatchlings.</em></h2>
+    <p>Five baby dragons who wander into the edges of the book when you least expect them. Move your pointer like a candle. Tap one for its signature move.</p>
   </div>
-</section>
+  <div class="crew" id="crew"></div>
+</div></section>
 
-<section class="band" id="banner">
-  <span class="wash" aria-hidden="true" style="background:var(--garnet);width:440px;height:340px;top:-90px;right:-150px"></span>
-  <div class="wrap teaser">
-    <div>
-      <p class="kicker">Chapter one: The Kingdom Awakens</p>
-      <h2 style="margin-top:8px">Thornfield needs a royal banner</h2>
-      <p style="color:var(--muted);margin-top:14px;font-size:1.2rem">Pick its color. In the book this choice quietly shapes your story. Here, it colors this whole page.</p>
-      <div class="swatches" role="group" aria-label="Banner colors">
-        <button class="swatch" type="button" id="sw-ember" data-k="ember" style="--sw-l:#A63A26;--sw-d:#E0785B" aria-pressed="false"><b></b>Ember red</button>
-        <button class="swatch" type="button" id="sw-gold" data-k="gold" style="--sw-l:#9C7019;--sw-d:#D9AE4E" aria-pressed="false"><b></b>Royal gold</button>
-        <button class="swatch" type="button" id="sw-night" data-k="night" style="--sw-l:#2B5590;--sw-d:#86A9E6" aria-pressed="false"><b></b>Midnight blue</button>
-        <button class="swatch" type="button" id="sw-moon" data-k="moon" style="--sw-l:#5D6880;--sw-d:#B1BBCA" aria-pressed="false"><b></b>Moon silver</button>
-        <button class="swatch" type="button" id="sw-moss" data-k="moss" style="--sw-l:#4A7330;--sw-d:#93BE6D" aria-pressed="false"><b></b>Moss green</button>
-        <button class="swatch" type="button" id="sw-oak" data-k="oak" style="--sw-l:#7A5534;--sw-d:#C59766" aria-pressed="false"><b></b>Oak brown</button>
-      </div>
-    </div>
-    <div class="flag-stage">
-      <svg class="flag" id="flag" viewBox="0 0 320 320" aria-hidden="true">
-        <line class="o" x1="60" y1="20" x2="60" y2="312"/>
-        <path class="o" style="fill:var(--gold)" d="M60,6 L66,16 L60,26 L54,16 Z"/>
-        <line class="o" x1="40" y1="44" x2="250" y2="44"/>
-        <path class="cloth o" d="M48,44 L242,44 L242,230 L145,282 L48,230 Z"><animate class="wave" attributeName="d" dur="5s" repeatCount="indefinite" values="M48,44 L242,44 L242,230 L145,282 L48,230 Z;M48,44 L242,44 C246,120 238,170 244,232 L147,286 L48,228 C44,170 52,110 48,44 Z;M48,44 L242,44 L242,230 L145,282 L48,230 Z"/></path>
-        <path class="trim" d="M62,58 L228,58 L228,222 L145,266 L62,222 Z"/>
-        <path class="o" style="fill:none;stroke-width:2;opacity:.6" d="M110,150 L124,122 L138,142 L145,112 L152,142 L166,122 L180,150 L176,170 L114,170 Z"/>
-      </svg>
-      <div class="verdict" id="verdict" aria-live="polite">
-        <p class="says">Your banner is still uncolored.</p>
-        <p class="small">Choose a color and see what Thornfield makes of it.</p>
-      </div>
-    </div>
+<section class="bay cd" id="worlds"><div class="wrap">
+  <div class="head"><p class="kicker">A GROWING LIBRARY</p><h2>More worlds are coming</h2></div>
+  <div class="worlds">
+    <article class="world" style="--c:var(--wisdom)"><span class="stg">Coming next</span><h3>TIDES OF AETHERMOOR</h3><p>An ocean adventure with Nerissa, where your palette shapes the moods of the sea and the fates of its sailors.</p></article>
+    <article class="world" style="--c:var(--heart)"><span class="stg">In early sketches</span><h3>THE ENCHANTED APOTHECARY</h3><p>Help Pip color magical ingredients and brew impossible potions for a village in need. Mind the frogs.</p></article>
+    <article class="world join"><span class="stg">Be first to know</span><h3>HEAR WHEN A WORLD OPENS</h3><p>The mailing list is almost ready. Until then, send a note that says "Add me" to this address.</p>
+      <div class="addr"><code>coloringworlds@coloringworlds.network</code><button class="copy-btn" type="button" id="copy" data-copy="coloringworlds@coloringworlds.network">COPY ADDRESS</button><span id="copied" aria-live="polite"></span></div></article>
   </div>
-</section>
+</div></section>
 
-<section class="band" id="kingdoms">
-  <span class="wash" aria-hidden="true" style="background:var(--wisdom);width:440px;height:340px;bottom:-130px;left:-160px"></span>
-  <div class="wrap book">
-    <figure class="cover"><img src="images/cover.jpg" alt="The cover art of Kingdoms of Color: the green dragon Varathos spreads his wings over a gothic castle at dusk while Elara looks up at him." loading="lazy" width="800" height="1192"></figure>
-    <div class="copy">
-      <span class="status" style="justify-self:start">In development</span>
-      <h2>Kingdoms of Color: The Dragon of Thornfield</h2>
-      <p>In the kingdom of Thornfield, a dragon stirs beneath the ancient mountain. You are Elara, and how you color your journey decides whether Varathos becomes a destroyer, an ally, or a legend.</p>
-      <ul class="facts">
-        <li><b>6</b><span>illustrated chapters to color</span></li>
-        <li><b>5</b><span>characters with their own storylines</span></li>
-        <li><b>3</b><span>hidden paths: Power, Wisdom, and Heart</span></li>
-        <li><b>3</b><span>endings to discover</span></li>
-      </ul>
-      <p style="color:var(--muted)">Play it digitally, or print the PDF and use your own pencils.</p>
-      <div class="actions"><a class="btn" href="#worlds">Hear when it opens</a></div>
-    </div>
-  </div>
-</section>
-
-<section class="band" id="cast">
-  <span class="wash" aria-hidden="true" style="background:var(--heart);width:440px;height:330px;top:-100px;right:-150px"></span>
-  <div class="wrap">
-    <div class="head">
-      <h2>Meet the cast</h2>
-      <p>Each portrait starts as line art. Tap one to see it colored.</p>
-    </div>
-    <div class="cast">
-      <div class="person">
-        <button class="tile" type="button" aria-pressed="false" aria-label="Show Elara of Thornfield in color"><span class="in">
-          <span class="f front"><img src="images/elara_l.jpg" alt="Line art portrait of Elara holding a book beneath a gothic arch." loading="lazy"><span class="hint">Tap to color</span></span>
-          <span class="f back"><img src="images/elara_c.jpg" alt="Elara in color: long auburn hair and an embroidered green gown." loading="lazy"></span>
-        </span></button>
-        <span class="nm">Elara of Thornfield</span><span class="rl">The Maiden</span>
-        <p>Our hero. When the dragon stirs, her choices, and your colors, decide what Thornfield becomes.</p>
-      </div>
-      <div class="person">
-        <button class="tile" type="button" aria-pressed="false" aria-label="Show King Aldric in color"><span class="in">
-          <span class="f front"><img src="images/aldric_l.jpg" alt="Line art portrait of King Aldric in a crown and fur mantle." loading="lazy"><span class="hint">Tap to color</span></span>
-          <span class="f back"><img src="images/aldric_c.jpg" alt="King Aldric in color: a gold crown, crimson robes, and white fur." loading="lazy"></span>
-        </span></button>
-        <span class="nm">King Aldric</span><span class="rl">The King</span>
-        <p>Rules Thornfield from the castle on the hill, and calls his council together when danger comes.</p>
-      </div>
-      <div class="person">
-        <button class="tile" type="button" aria-pressed="false" aria-label="Show Prince Caelan in color"><span class="in">
-          <span class="f front"><img src="images/caelan_l.jpg" alt="Line art portrait of Prince Caelan in armor with a flowing cloak." loading="lazy"><span class="hint">Tap to color</span></span>
-          <span class="f back"><img src="images/caelan_c.jpg" alt="Prince Caelan in color: silver armor and a deep blue cloak." loading="lazy"></span>
-        </span></button>
-        <span class="nm">Prince Caelan</span><span class="rl">The Prince</span>
-        <p>Sets out on the quest when the kingdom needs him most. You choose the color of his cloak.</p>
-      </div>
-      <div class="person">
-        <button class="tile" type="button" aria-pressed="false" aria-label="Show Mira the Mapmaker in color"><span class="in">
-          <span class="f front"><img src="images/mira_l.jpg" alt="Line art portrait of Mira, smiling, holding a map, her scarf blowing in the wind." loading="lazy"><span class="hint">Tap to color</span></span>
-          <span class="f back"><img src="images/mira_c.jpg" alt="Mira in color: curly brown hair, a rust coat, and a blue scarf." loading="lazy"></span>
-        </span></button>
-        <span class="nm">Mira the Mapmaker</span><span class="rl">The Wildcard</span>
-        <p>Knows every road in Thornfield, and a few that aren't on any map. Color her scarf however you like.</p>
-      </div>
-      <div class="person">
-        <button class="tile" type="button" aria-pressed="false" aria-label="Show Varathos in color"><span class="in">
-          <span class="f front"><img src="images/varathos_l.jpg" alt="Line art portrait of the dragon Varathos, horned and finely scaled." loading="lazy"><span class="hint">Tap to color</span></span>
-          <span class="f back"><img src="images/varathos_c.jpg" alt="Varathos in color: deep green scales and a golden eye." loading="lazy"></span>
-        </span></button>
-        <span class="nm">Varathos</span><span class="rl">The Dragon</span>
-        <p>He has slept beneath the ancient mountain for a very long time. Destroyer, ally, or legend? That part is up to you.</p>
-      </div>
-    </div>
-    <p class="cast-note">These colors are only one possibility. In your copy, they're whatever you decide.</p>
-
-    <div class="head hatch-head">
-      <h3 class="sub">And the hatchlings</h3>
-      <p>Five baby dragons with big personalities. Tap one to see their signature move.</p>
-    </div>
-    <div class="crew">
-      <button class="mate" type="button" data-k="dabble" aria-label="Dabble, the painter. Tap to see the signature move.">
-        <span class="pic"><img src="images/hatch/dabble.svg" alt="" loading="lazy" width="1101" height="1582"></span>
-        <span class="nm">Dabble</span><span class="mv">the painter</span>
-        <span class="ln">Never met a paintbrush worth keeping clean.</span><span class="do">Tap for the move</span>
-      </button>
-      <button class="mate" type="button" data-k="smudge" aria-label="Smudge, the tumbler. Tap to see the signature move.">
-        <span class="pic"><img src="images/hatch/smudge.svg" alt="" loading="lazy" width="988" height="1433"></span>
-        <span class="nm">Smudge</span><span class="mv">the tumbler</span>
-        <span class="ln">Dives into the palette headfirst. Every single time.</span><span class="do">Tap for the move</span>
-      </button>
-      <button class="mate" type="button" data-k="doodle" aria-label="Doodle, the chaser. Tap to see the signature move.">
-        <span class="pic"><img src="images/hatch/doodle.svg" alt="" loading="lazy" width="1063" height="966"></span>
-        <span class="nm">Doodle</span><span class="mv">the chaser</span>
-        <span class="ln">Follows anything that flutters, including your cursor.</span><span class="do">Tap for the move</span>
-      </button>
-      <button class="mate" type="button" data-k="sprig" aria-label="Sprig, the napper. Tap to see the signature move.">
-        <span class="pic"><img src="images/hatch/sprig.svg" alt="" loading="lazy" width="1462" height="1496"></span>
-        <span class="nm">Sprig</span><span class="mv">the napper</span>
-        <span class="ln">Finds the coziest corner of every page and claims it.</span><span class="do">Tap for the move</span>
-      </button>
-      <button class="mate" type="button" data-k="ember" aria-label="Ember, the sparkler. Tap to see the signature move.">
-        <span class="pic"><img src="images/hatch/ember.svg" alt="" loading="lazy" width="1030" height="1442"></span>
-        <span class="nm">Ember</span><span class="mv">the sparkler</span>
-        <span class="ln">Toots glitter when surprised. Nobody talks about it.</span><span class="do">Tap for the move</span>
-      </button>
-    </div>
-  </div>
-</section>
-
-<section class="band" id="worlds">
-  <span class="wash" aria-hidden="true" style="background:var(--teal);width:420px;height:320px;bottom:-120px;right:-150px"></span>
-  <div class="wrap">
-    <div class="head">
-      <h2>More worlds are coming</h2>
-      <p>Kingdoms of Color is the first book in a growing library. Each world brings a new hero and a new story to color into life.</p>
-    </div>
-    <div class="worlds">
-      <article class="world tides">
-        <span class="stage">Coming next</span>
-        <h3>Tides of Aethermoor</h3>
-        <p>An ocean adventure with Nerissa, where your palette shapes the moods of the sea and the fates of its sailors.</p>
-      </article>
-      <article class="world apoth">
-        <span class="stage">In early sketches</span>
-        <h3>The Enchanted Apothecary</h3>
-        <p>Help Pip color magical ingredients and brew impossible potions for a village in need. Mind the frogs.</p>
-      </article>
-      <article class="world join">
-        <span class="stage">Be first to know</span>
-        <h3>Hear when a new world opens</h3>
-        <p>The mailing list is almost ready. Until then, send a note that says "Add me" to this address and you'll be on it from day one.</p>
-        <div class="addr"><code>coloringworlds@coloringworlds.network</code><button class="copy-btn" type="button" data-copy="coloringworlds@coloringworlds.network">Copy address</button><span class="copied" aria-live="polite"></span></div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section class="band" id="contact">
-  <div class="wrap contact">
-    <h2>Say hello</h2>
-    <p style="color:var(--muted);font-size:1.2rem">Questions about the books, or want to follow along as they come together? I'd love to hear from you.</p>
-    <div class="addr"><code>coloringworlds@coloringworlds.network</code><button class="copy-btn" type="button" data-copy="coloringworlds@coloringworlds.network">Copy address</button><span class="copied" aria-live="polite"></span></div>
-  </div>
-</section>
-
-<footer>
-  <button class="sprig" id="sprig" type="button" aria-label="Sprig is napping. Tap to try waking Sprig."><span class="zzz" aria-hidden="true"><span>z</span><span>z</span><span>z</span></span><img src="images/hatch/sprig-nap.svg" alt="" width="1286" height="1072"><span class="bubble" id="sprigSays" aria-hidden="true">five more minutes…</span></button>
-  <div class="wrap">
-    <span>© 2026 Coloring Worlds, LLC</span>
-    <span>Chromatic Destiny &middot; Patent Pending</span>
-    <span>Made with colored pencils in Ohio</span>
-  </div>
-</footer>
-
-<canvas id="paint" aria-hidden="true"></canvas>
-<div class="roam doodle" id="doodle" aria-hidden="true"><img src="images/hatch/doodle-roam.svg" alt="" width="1036" height="936"></div>
-<div class="roam smudge" id="smudge" aria-hidden="true"><img src="images/hatch/smudge-roam.svg" alt="" width="882" height="1394"></div>
-
-<div class="sound-dock" role="group" aria-label="Sound">
-  <button class="tog" id="soundBtn" type="button" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span class="lbl">Sound</span><span class="sr"> effects</span></button>
-  <button class="tog" id="musicBtn" type="button" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l11-2v13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="17.5" cy="16" r="2.5" fill="currentColor"/></svg><span class="lbl">Music</span></button>
+<footer><div class="wrap"><span>© 2026 Coloring Worlds, LLC</span><span>Chromatic Destiny · Patent Pending</span><span>Made with colored pencils in Ohio</span></div></footer>
+<div class="dock" role="group" aria-label="Sound">
+  <button class="tog" id="soundBtn" type="button" aria-pressed="false" aria-label="Sound effects"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg><span class="lbl">SOUND</span></button>
+  <button class="tog" id="musicBtn" type="button" aria-pressed="false" aria-label="Music"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></svg><span class="lbl">MUSIC</span></button>
 </div>
+<canvas id="fx" aria-hidden="true"></canvas>
 
 <script>
 (function () {
-  var root = document.documentElement;
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var $$ = function (s) { return Array.prototype.slice.call(document.querySelectorAll(s)); };
+  var $ = function (id) { return document.getElementById(id); };
+  var JEWEL = ['#C2452C', '#D6962A', '#2F64B0', '#2C8079', '#5C8A3A', '#7A4FA8'];
+  function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
 
-  /* Banner teaser */
-  var lines = {
-    ember: 'A banner of fire and courage. Thornfield will stand strong, and something with scales has noticed.',
-    gold: 'A banner that gleams like a crown. The king is pleased. So is anyone in the kingdom who loves treasure.',
-    night: 'A banner the color of the night sky. Somewhere above the clouds, an old secret stirs.',
-    moon: 'A banner like moonlight on stone. Quiet, watchful, and wiser than it looks.',
-    moss: 'A banner of forest and field. Roots run deep in Thornfield, and so do friendships.',
-    oak: 'A banner of sturdy oak. Plain, honest, and ready for whatever comes down the mountain.'
-  };
-  var swatches = $$('.swatch');
-  var flag = document.getElementById('flag');
-  var verdict = document.getElementById('verdict');
-  var stage = document.querySelector('.flag-stage');
-  function splash() {
-    if (reduce || !stage.animate) return;
-    var col = getComputedStyle(root).getPropertyValue('--accent').trim();
-    var r = stage.getBoundingClientRect(), f = flag.getBoundingClientRect();
-    var cx = f.left - r.left + f.width * 0.45, cy = f.top - r.top + f.height * 0.45;
-    for (var i = 0; i < 14; i++) {
-      var d = document.createElement('span'); d.className = 'splat';
-      var size = 4 + Math.random() * 10; d.style.width = d.style.height = size + 'px';
-      d.style.left = (cx - size / 2) + 'px'; d.style.top = (cy - size / 2) + 'px'; d.style.background = col;
-      stage.appendChild(d);
-      var ang = Math.random() * Math.PI * 2, dist = 50 + Math.random() * 100;
-      var a = d.animate([{ transform: 'translate(0,0) scale(.4)', opacity: .95 },
-        { transform: 'translate(' + Math.cos(ang) * dist + 'px,' + (Math.sin(ang) * dist + 24) + 'px) scale(1)', opacity: 0 }],
-        { duration: 800 + Math.random() * 500, easing: 'cubic-bezier(.2,.7,.3,1)' });
-      a.onfinish = (function (el) { return function () { el.remove(); }; })(d);
-    }
-  }
-  function choose(btn, quiet) {
-    swatches.forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
-    root.style.setProperty('--accent-l', btn.style.getPropertyValue('--sw-l'));
-    root.style.setProperty('--accent-d', btn.style.getPropertyValue('--sw-d'));
-    flag.classList.add('chosen');
-    verdict.innerHTML = '<p class="says"></p><p class="small"></p>';
-    verdict.querySelector('.says').textContent = lines[btn.getAttribute('data-k')];
-    verdict.querySelector('.small').textContent = 'Notice the page: the illuminated letter and accents now wear your color.';
-    if (!quiet) { splash(); sfx('chime'); try { localStorage.setItem('cw-banner', btn.getAttribute('data-k')); } catch (e) {} }
-  }
-  swatches.forEach(function (b) { b.addEventListener('click', function () { choose(b); }); });
-  try { var saved = localStorage.getItem('cw-banner'); var sb = saved && document.querySelector('.swatch[data-k="' + saved + '"]'); if (sb) choose(sb, true); } catch (e) {}
-  if (reduce) { $$('animate').forEach(function (a) { a.remove(); }); }
 
-  /* Portraits: tap to color */
-  $$('.tile').forEach(function (t) {
-    var name = t.getAttribute('aria-label').replace('Show ', '').replace(' in color', '');
-    t.addEventListener('click', function () {
-      var on = t.getAttribute('aria-pressed') !== 'true';
-      t.setAttribute('aria-pressed', on ? 'true' : 'false');
-      t.setAttribute('aria-label', on ? 'Show ' + name + ' as line art' : 'Show ' + name + ' in color');
-    });
-  });
-
-  /* Brush strokes under headings */
-  var bcols = { pages: '--gold', why: '--teal', how: '--garnet', banner: '--gold', kingdoms: '--wisdom', cast: '--heart', worlds: '--teal', contact: '--garnet' };
-  $$('section.band h2').forEach(function (h) {
-    var sec = h.closest('section');
-    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('class', 'brush'); svg.setAttribute('viewBox', '0 0 240 16'); svg.setAttribute('preserveAspectRatio', 'none'); svg.setAttribute('aria-hidden', 'true');
-    svg.innerHTML = '<path d="M4,11 C56,4 110,14 166,7 S222,9 236,5"/>';
-    if (sec && bcols[sec.id]) svg.style.setProperty('--bc', 'var(' + bcols[sec.id] + ')');
-    h.insertAdjacentElement('afterend', svg);
-  });
-  var brushes = $$('.brush');
-  if ('IntersectionObserver' in window && !reduce) {
-    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('seen'); io.unobserve(e.target); } }); }, { threshold: .6 });
-    brushes.forEach(function (b) { io.observe(b); });
-  } else { brushes.forEach(function (b) { b.classList.add('seen'); }); }
-
-  /* ---------- Sound and music (off until a visitor turns them on) ---------- */
-  var ac = null, master = null, soundOn = false, musicOn = false, musicTimer = null, droneNodes = [];
+  /* ---------- Sound and music: silent until a visitor turns them on ---------- */
+  var ac = null, master = null, echo = null, sfxOn = false, musOn = false, mus = null;
   function actx() {
-    if (!ac) { var C = window.AudioContext || window.webkitAudioContext; if (!C) return null; ac = new C(); master = ac.createGain(); master.gain.value = .9; master.connect(ac.destination); }
-    if (ac.state === 'suspended') ac.resume();
-    return ac;
+    if (!ac) { var C = window.AudioContext || window.webkitAudioContext; if (!C) return null; ac = new C();
+      master = ac.createGain(); master.gain.value = .8; master.connect(ac.destination);
+      echo = ac.createDelay(1); echo.delayTime.value = .31; var fb = ac.createGain(); fb.gain.value = .4; var wet = ac.createGain(); wet.gain.value = .32;
+      echo.connect(fb); fb.connect(echo); echo.connect(wet); wet.connect(master); }
+    if (ac.state === 'suspended') ac.resume(); return ac;
   }
-  function noiseBuf(len) { var b = ac.createBuffer(1, Math.floor(ac.sampleRate * len), ac.sampleRate), d = b.getChannelData(0); for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; return b; }
-  function env(g, t, a, peak, dec) { g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + a); g.gain.exponentialRampToValueAtTime(0.0001, t + a + dec); }
-  function tone(type, f, t, a, peak, dec, f2) { var o = ac.createOscillator(), g = ac.createGain(); o.type = type; o.frequency.setValueAtTime(f, t); if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + a + dec); env(g, t, a, peak, dec); o.connect(g); g.connect(master); o.start(t); o.stop(t + a + dec + .05); }
-  function noise(t, len, ftype, freq, q, peak, dec, freq2) { var s = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain(); s.buffer = noiseBuf(len); f.type = ftype; f.frequency.setValueAtTime(freq, t); if (freq2) f.frequency.exponentialRampToValueAtTime(freq2, t + len); f.Q.value = q; env(g, t, .01, peak, dec); s.connect(f); f.connect(g); g.connect(master); s.start(t); s.stop(t + len); }
+  function tone(type, f, t, a, peak, dec, f2, wet, out) { var o = ac.createOscillator(), g = ac.createGain(); o.type = type; o.frequency.setValueAtTime(f, t);
+    if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + a + dec); g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + a); g.gain.exponentialRampToValueAtTime(.0001, t + a + dec);
+    o.connect(g); g.connect(out || master); if (wet) g.connect(echo); o.start(t); o.stop(t + a + dec + .05); }
+  function hiss(t, len, ftype, f, q, peak, f2) { var b = ac.createBuffer(1, Math.floor(ac.sampleRate * len), ac.sampleRate), d = b.getChannelData(0); for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    var s = ac.createBufferSource(), fl = ac.createBiquadFilter(), g = ac.createGain(); s.buffer = b; fl.type = ftype; fl.frequency.setValueAtTime(f, t); if (f2) fl.frequency.exponentialRampToValueAtTime(f2, t + len); fl.Q.value = q;
+    g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + .012); g.gain.exponentialRampToValueAtTime(.0001, t + len); s.connect(fl); fl.connect(g); g.connect(master); s.start(t); s.stop(t + len); }
+  var CHIME = [587.33, 698.46, 783.99, 880, 1046.5, 1174.66];
   var SFX = {
-    splat: function () { var t = ac.currentTime; noise(t, .2, 'bandpass', 900, .8, .22, .16); tone('sine', 150, t, .005, .25, .14, 50); },
-    chime: function () { var t = ac.currentTime; [880, 1175, 1568].forEach(function (f, i) { tone('sine', f, t + i * .07, .005, .12, .5); }); },
-    toot: function () { var t = ac.currentTime, o = ac.createOscillator(), lf = ac.createOscillator(), lg = ac.createGain(), f = ac.createBiquadFilter(), g = ac.createGain();
-      o.type = 'sawtooth'; o.frequency.setValueAtTime(170, t); o.frequency.exponentialRampToValueAtTime(75, t + .42);
-      f.type = 'lowpass'; f.frequency.value = 700; lf.frequency.value = 26; lg.gain.value = .12; lf.connect(lg); lg.connect(g.gain);
-      g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(.2, t + .04); g.gain.linearRampToValueAtTime(0.0001, t + .45);
-      o.connect(f); f.connect(g); g.connect(master); o.start(t); lf.start(t); o.stop(t + .5); lf.stop(t + .5);
-      for (var i = 0; i < 6; i++) tone('sine', 1400 + Math.random() * 1800, t + .38 + i * .05, .004, .07, .28); },
-    whoosh: function () { noise(ac.currentTime, .7, 'bandpass', 300, 1.2, .12, .6, 2200); },
-    snore: function () { var t = ac.currentTime, s = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain(); s.buffer = noiseBuf(1.6); f.type = 'lowpass'; f.frequency.value = 380;
-      g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(.16, t + .7); g.gain.linearRampToValueAtTime(0.0001, t + 1.5); s.connect(f); f.connect(g); g.connect(master); s.start(t); s.stop(t + 1.6); },
-    hop: function () { tone('triangle', 420, ac.currentTime, .005, .14, .18, 900); },
-    brush: function () { var t = ac.currentTime; [0, .12, .24].forEach(function (d) { noise(t + d, .1, 'highpass', 3000, .7, .07, .08); }); }
+    chime: function (i) { var t = ac.currentTime, f = CHIME[i % 6]; pluck(f / 2, t, .2); pluck(f, t + .09, .14); },
+    stroke: function () { hiss(ac.currentTime, .15, 'bandpass', 2600, .7, .09, 1400); },
+    bell: function () { var t = ac.currentTime; hiss(t, .18, 'highpass', 6500, .7, .07); hiss(t + .09, .14, 'highpass', 7500, .7, .05); pluck(1174.66, t, .06); },
+    warm: function () { var t = ac.currentTime; [293.66, 440, 587.33].forEach(function (f, i) { tone('triangle', f, t + i * .17, .03, .16, .7, null, true); tone('square', f, t + i * .17, .03, .03, .5); }); },
+    cool: function () { var t = ac.currentTime; [293.66, 349.23, 440, 523.25, 587.33, 698.46, 880, 1174.66].forEach(function (f, i) { pluck(f, t + i * .075, .11); }); },
+    earth: function () { var t = ac.currentTime; [146.83, 220, 293.66, 349.23, 440].forEach(function (f, i) { pluck(f, t + i * .035, .15); }); [587.33, 698.46, 587.33, 698.46, 880].forEach(function (f, i) { tone('sine', f, t + .5 + i * .09, .01, .09, .16, null, true); }); },
+    dabble: function () { tone('sine', 950, ac.currentTime, .004, .2, .11, 300); },
+    smudge: function () { var t = ac.currentTime; hiss(t, .2, 'lowpass', 600, .8, .22, 200); tone('sine', 160, t + .16, .01, .22, .4, 520); },
+    doodle: function () { var t = ac.currentTime; [1318.5, 1760, 2349.3].forEach(function (f, i) { tone('sine', f, t + i * .09, .004, .1, .5, null, true); }); },
+    sprig: function () { var t = ac.currentTime; tone('sine', 300, t, .25, .07, .35, 540); tone('sine', 540, t + .65, .05, .06, .55, 250); },
+    ember: function () { var t = ac.currentTime; hiss(t, .24, 'bandpass', 230, 1.3, .3, 150); tone('square', 150, t, .01, .05, .2, 90); [2637, 3136, 3520].forEach(function (f, i) { tone('sine', f, t + .28 + i * .07, .004, .05, .4, null, true); }); }
   };
-  function sfx(n) { if (!soundOn || !actx()) return; try { SFX[n](); } catch (e) {} }
-  /* An original little tune in D dorian, plucked like a lute */
-  var TUNE = [[69,1],[67,1],[65,1],[67,1],[69,1],[72,1],[69,2],[67,1],[65,1],[64,1],[65,1],[67,1],[69,1],[67,2],
-              [65,1],[67,1],[69,1],[67,1],[65,1],[64,1],[62,2],[64,1],[65,1],[67,1],[65,1],[64,1],[60,1],[62,2]];
-  var BEAT = .32, nextT = 0, step = 0;
-  function mtof(m) { return 440 * Math.pow(2, (m - 69) / 12); }
-  function pluck(m, t, vol) { tone('triangle', mtof(m), t, .006, vol, .75); tone('sine', mtof(m + 12), t, .006, vol * .35, .4); }
-  function startMusic() {
-    if (!actx()) return; nextT = ac.currentTime + .1; step = 0;
-    droneNodes = [50, 57].map(function (m) { var o = ac.createOscillator(), g = ac.createGain(); o.type = 'sine'; o.frequency.value = mtof(m);
-      g.gain.setValueAtTime(0.0001, ac.currentTime); g.gain.linearRampToValueAtTime(.035, ac.currentTime + 1.5); o.connect(g); g.connect(master); o.start(); return [o, g]; });
-    musicTimer = setInterval(function () { while (nextT < ac.currentTime + .25) { var n = TUNE[step % TUNE.length]; pluck(n[0], nextT, .11); if (step % 4 === 0) pluck(n[0] - 12, nextT, .06); nextT += n[1] * BEAT; step++; } }, 60);
+  function sfx(n, a) { if (!sfxOn || !actx()) return; try { SFX[n](a); } catch (e) {} }
+  /* An original slow air in D Dorian: harp arpeggios, a tin-whistle tune, a drone and a soft hand drum. */
+  var CH = { Dm: [146.83, 220, 293.66, 349.23], C: [130.81, 196, 261.63, 329.63], Am: [110, 164.81, 220, 261.63], F: [174.61, 261.63, 349.23, 440], G: [196, 293.66, 392, 493.88] };
+  var BARS = ['Dm', 'C', 'Dm', 'Am', 'F', 'C', 'Dm', 'Dm', 'F', 'C', 'Dm', 'Am', 'G', 'Dm', 'C', 'Dm'];
+  var N = { A4: 440, C5: 523.25, D5: 587.33, E5: 659.25, F5: 698.46, G5: 783.99, A5: 880, B5: 987.77, C6: 1046.5, D6: 1174.66 };
+  var TUNE = [[['D5', 1], ['F5', 1], ['A5', 1]], [['G5', 1.5], ['E5', .5], ['C5', 1]], [['D5', 1], ['F5', .5], ['E5', .5], ['D5', 1]], [['E5', 2], ['A4', 1]],
+    [['F5', 1], ['A5', 1], ['C6', 1]], [['B5', .5], ['A5', .5], ['G5', 1], ['E5', 1]], [['F5', 1], ['E5', .5], ['D5', .5], ['C5', 1]], [['D5', 3]],
+    [['A5', 1.5], ['C6', .5], ['A5', 1]], [['G5', 1], ['E5', 1], ['G5', 1]], [['F5', 1], ['D5', 1], ['F5', 1]], [['E5', 2], ['C5', 1]],
+    [['G5', 1], ['B5', 1], ['D6', 1]], [['A5', 1.5], ['F5', .5], ['D5', 1]], [['E5', 1], ['G5', .5], ['E5', .5], ['C5', 1]], [['D5', 3]]];
+  var BEAT = .64;
+  function pluck(f, t, peak, out) { tone('triangle', f, t, .004, peak, 1.3, null, true, out); tone('sine', f * 2, t, .004, peak * .3, .5, null, false, out); }
+  function whistle(f, t, dur, out) { var o = ac.createOscillator(), o2 = ac.createOscillator(), g = ac.createGain(), g2 = ac.createGain(), v = ac.createOscillator(), vg = ac.createGain();
+    o.type = 'sine'; o2.type = 'sine'; o.frequency.setValueAtTime(dur >= 1 ? f * 1.122 : f, t); o.frequency.linearRampToValueAtTime(f, t + .05); o2.frequency.setValueAtTime(f * 2, t);
+    v.frequency.value = 5.4; vg.gain.setValueAtTime(0, t); vg.gain.linearRampToValueAtTime(f * .006, t + Math.min(.5, dur * .6)); v.connect(vg); vg.connect(o.frequency);
+    g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.11, t + .05); g.gain.setValueAtTime(.11, t + Math.max(.06, dur - .1)); g.gain.exponentialRampToValueAtTime(.0001, t + dur + .12);
+    g2.gain.value = .12; o.connect(g); o2.connect(g2); g2.connect(g); g.connect(out); g.connect(echo); o.start(t); o2.start(t); v.start(t); o.stop(t + dur + .2); o2.stop(t + dur + .2); v.stop(t + dur + .2); }
+  function musicOn() {
+    if (!actx() || mus) return; var g = ac.createGain(), t = ac.currentTime; g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.55, t + 2); g.connect(master);
+    var lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 500; lp.connect(g);
+    var dr = [73.42, 110, 146.83].map(function (f, i) { var o = ac.createOscillator(), og = ac.createGain(); o.type = 'sawtooth'; o.frequency.value = f; og.gain.value = [.07, .05, .04][i]; o.connect(og); og.connect(lp); o.start(); return o; });
+    var bar = -4, next = t + .2, id = setInterval(function () { if (!ac) return;
+      while (next < ac.currentTime + 1.2) {
+        var k = ((bar % 16) + 16) % 16, ch = CH[BARS[k]], pass = bar < 0 ? -1 : Math.floor(bar / 16) % 2, b0 = next;
+        [0, 1, 2, 3, 2, 1].forEach(function (ix, i) { pluck(ch[ix] * (i === 3 ? 1 : 1), b0 + i * BEAT / 2, i === 0 ? .1 : .065, g); });
+        tone('sine', 92, b0, .005, .16, .22, 48, false, g); tone('sine', 120, b0 + BEAT * 2, .005, .06, .12, 70, false, g);
+        [ch[2], ch[3]].forEach(function (f) { tone('triangle', f, b0, .5, .035, BEAT * 3, null, true, g); });
+        if (pass >= 0) { var at = b0; TUNE[k].forEach(function (nt) { if (pass === 0) whistle(N[nt[0]], at, nt[1] * BEAT * .96, g); else pluck(N[nt[0]], at, .12, g); at += nt[1] * BEAT; }); }
+        bar++; next += BEAT * 3;
+      } }, 250);
+    mus = { g: g, os: dr, id: id };
   }
-  function stopMusic() {
-    clearInterval(musicTimer); musicTimer = null;
-    if (ac) droneNodes.forEach(function (d) { var g = d[1]; g.gain.cancelScheduledValues(ac.currentTime); g.gain.setValueAtTime(g.gain.value, ac.currentTime); g.gain.linearRampToValueAtTime(0.0001, ac.currentTime + .4); d[0].stop(ac.currentTime + .5); });
-    droneNodes = [];
-  }
-  var soundBtn = document.getElementById('soundBtn'), musicBtn = document.getElementById('musicBtn');
-  soundBtn.addEventListener('click', function () { soundOn = !soundOn; soundBtn.setAttribute('aria-pressed', soundOn ? 'true' : 'false'); if (soundOn) sfx('chime'); });
-  musicBtn.addEventListener('click', function () { musicOn = !musicOn; musicBtn.setAttribute('aria-pressed', musicOn ? 'true' : 'false'); if (musicOn) startMusic(); else stopMusic(); });
-  document.addEventListener('visibilitychange', function () { if (!ac) return; if (document.hidden) ac.suspend(); else if (soundOn || musicOn) ac.resume(); });
+  function musicOff() { if (!mus) return; var m = mus, t = ac.currentTime; mus = null; clearInterval(m.id); m.g.gain.cancelScheduledValues(t); m.g.gain.setTargetAtTime(.0001, t, .3); setTimeout(function () { m.os.forEach(function (o) { try { o.stop(); } catch (e) {} }); }, 2500); }
+  $('soundBtn').addEventListener('click', function () { sfxOn = !sfxOn; this.setAttribute('aria-pressed', sfxOn ? 'true' : 'false'); if (sfxOn) sfx('bell'); });
+  $('musicBtn').addEventListener('click', function () { musOn = !musOn; this.setAttribute('aria-pressed', musOn ? 'true' : 'false'); if (musOn) musicOn(); else musicOff(); });
 
-  /* ---------- Hatchlings ---------- */
-  var FINE = window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches;
-  var CRAYONS = ['#F28C28','#E4572E','#F6C445','#F4845F','#B8432F','#3A6FD8','#7FB5F0','#7B5EC6','#B79CF2','#2FA39A','#5E9E3E','#9ACD68','#8A5A35','#D8B77A','#E27D9B','#F3B3C4'];
+  /* ---------- Hero window: wipes from gold line to lit glass ---------- */
+  var lit = $('lit'), win = $('window'), wipe = reduce ? 46 : 100, wipeTo = 46;
+  function setWipe(v) { lit.style.clipPath = 'polygon(0 100%, 0 ' + v + '%, 100% ' + Math.max(0, v - 24) + '%, 100% 100%)'; }
+  setWipe(wipe);
+  function tweenWipe() { if (Math.abs(wipe - wipeTo) < .3) { wipe = wipeTo; setWipe(wipe); return; } wipe += (wipeTo - wipe) * .06; setWipe(wipe); requestAnimationFrame(tweenWipe); }
+  if (!reduce) setTimeout(tweenWipe, 500);
+  var dots = Array.prototype.slice.call(document.querySelectorAll('.dot'));
+  dots.forEach(function (d, di) { d.addEventListener('click', function () { sfx('chime', di);
+    dots.forEach(function (o) { o.setAttribute('aria-pressed', o === d ? 'true' : 'false'); });
+    document.documentElement.style.setProperty('--pick', d.style.getPropertyValue('--c'));
+    win.classList.add('tinted'); $('says').textContent = d.getAttribute('data-say');
+    wipeTo = -2; if (reduce) { wipe = wipeTo; setWipe(wipe); } else tweenWipe();
+  }); });
 
-  /* Paint splats wherever you tap */
-  var cv = document.getElementById('paint'), c2 = cv.getContext && cv.getContext('2d'), splats = [], raf = null, dpr = 1;
-  function sizeCanvas() { dpr = Math.min(2, window.devicePixelRatio || 1); cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; }
-  function blob(pts) { c2.beginPath(); var n = pts.length; for (var i = 0; i <= n; i++) { var p = pts[i % n], q = pts[(i + 1) % n], mx = (p[0] + q[0]) / 2, my = (p[1] + q[1]) / 2; if (i === 0) c2.moveTo(mx, my); else c2.quadraticCurveTo(p[0], p[1], mx, my); } c2.closePath(); }
-  function makeSplat(x, y) {
-    if (reduce || !c2) return;
-    var col = CRAYONS[Math.floor(Math.random() * CRAYONS.length)], r = 24 + Math.random() * 24, pts = [], drops = [], i, a, rr;
-    for (i = 0; i < 16; i++) { a = i / 16 * Math.PI * 2 + Math.random() * .2; rr = r * (.72 + Math.random() * .4); if (Math.random() < .25) rr *= 1.35 + Math.random() * .4; pts.push([Math.cos(a) * rr, Math.sin(a) * rr]); }
-    for (i = 0; i < 7; i++) { a = Math.random() * Math.PI * 2; rr = r * (1.3 + Math.random() * 1.1); drops.push([Math.cos(a) * rr, Math.sin(a) * rr, 2 + Math.random() * 5]); }
-    splats.push({ x: x, y: y, col: col, pts: pts, drops: drops, ang: Math.random() * Math.PI, born: performance.now() });
-    if (!raf) raf = requestAnimationFrame(paintTick);
+  /* ---------- Hatchlings: lit, leaning, each with its own manner ---------- */
+  var INFO = {
+    dabble: { nm: 'Dabble', trait: 'the little artist', does: 'Tap and he flicks a dab of paint.' },
+    smudge: { nm: 'Smudge', trait: 'the messy one', does: 'Tap for a tumble and a trail of paw prints.' },
+    doodle: { nm: 'Doodle', trait: 'the daydreamer', does: 'Drifts after your pointer. Tap for a star.' },
+    sprig: { nm: 'Sprig', trait: 'the sleepy one', does: 'Snores leaf puffs. Tap for a sleepy stretch.' },
+    ember: { nm: 'Ember', trait: 'the baby flame', does: 'Tap for a glitter toot and a blush.' }
+  };
+  var KEYS = ['dabble', 'smudge', 'doodle', 'sprig', 'ember'];
+  var VS = 'attribute vec2 p;varying vec2 v;void main(){v=p*.5+.5;gl_Position=vec4(p,0.,1.);}';
+  var FS = 'precision mediump float;uniform sampler2D uC,uN;uniform vec3 uL;uniform float uBlush;varying vec2 v;' +
+    'void main(){vec4 c=texture2D(uC,v);vec3 n=normalize(texture2D(uN,v).rgb*2.-1.);' +
+    'float d=pow(clamp(dot(n,uL)*.5+.5,0.,1.),1.3);vec3 h=normalize(uL+vec3(0.,0.,1.));float s=pow(max(dot(n,h),0.),38.);' +
+    'float rim=pow(1.-n.z,2.2);vec3 col=c.rgb*(.38+.85*d)+s*.38+rim*vec3(.25,.2,.4)*.5;' +
+    'col=mix(col,vec3(.95,.35,.4),uBlush*.35*smoothstep(.75,.45,distance(v,vec2(.5,.62))*2.));gl_FragColor=vec4(col*c.a,c.a);}';
+  var crew = $('crew'), H = [], px = innerWidth / 2, py = innerHeight * .2, hasPointer = false, t0 = performance.now();
+  function load(src) { return new Promise(function (res, rej) { var i = new Image(); i.onload = function () { res(i); }; i.onerror = rej; i.src = src; }); }
+  function tex(gl, img, unit) { var t = gl.createTexture(); gl.activeTexture(gl.TEXTURE0 + unit); gl.bindTexture(gl.TEXTURE_2D, t);
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE); }
+  function mount(btn, k, i) {
+    btn.innerHTML = '<span class="plinth"></span><span class="shadow"></span><span class="body3d"><canvas width="512" height="512"></canvas></span>';
+    var h = { k: k, btn: btn, body: btn.querySelector('.body3d'), shadow: btn.querySelector('.shadow'), cv: btn.querySelector('canvas'), act: 0, actT: 0, seed: i * 1.7, dx: 0 };
+    btn.addEventListener('click', function () { h.act = 1; h.actT = performance.now(); move(h); });
+    Promise.all([load('img/' + k + '.png'), load('img/' + k + '_n.png')]).then(function (im) {
+      var gl = h.cv.getContext('webgl', { premultipliedAlpha: true, alpha: true });
+      function flat() { im[0].alt = ''; h.body.replaceChild(im[0], h.cv); }
+      if (!gl) { flat(); return; }
+      var pr = gl.createProgram();
+      [[gl.VERTEX_SHADER, VS], [gl.FRAGMENT_SHADER, FS]].forEach(function (s) { var sh = gl.createShader(s[0]); gl.shaderSource(sh, s[1]); gl.compileShader(sh); gl.attachShader(pr, sh); });
+      gl.linkProgram(pr); if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) { flat(); return; }
+      gl.useProgram(pr);
+      var b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+      var a = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(a); gl.vertexAttribPointer(a, 2, gl.FLOAT, false, 0, 0);
+      tex(gl, im[0], 0); tex(gl, im[1], 1);
+      gl.uniform1i(gl.getUniformLocation(pr, 'uC'), 0); gl.uniform1i(gl.getUniformLocation(pr, 'uN'), 1);
+      h.gl = gl; h.uL = gl.getUniformLocation(pr, 'uL'); h.uB = gl.getUniformLocation(pr, 'uBlush');
+    }).catch(function () {});
+    H.push(h); return h;
   }
-  function paintTick(now) {
-    c2.setTransform(1, 0, 0, 1, 0, 0); c2.clearRect(0, 0, cv.width, cv.height);
-    splats = splats.filter(function (s) { return now - s.born < 3200; });
-    splats.forEach(function (s) {
-      var age = (now - s.born) / 1000, g = Math.min(1, age / .22), sc = g < 1 ? 1 - Math.pow(1 - g, 3) + Math.sin(g * Math.PI) * .15 : 1;
-      var al = age < 1.8 ? 1 : Math.max(0, 1 - (age - 1.8) / 1.4), k;
-      c2.setTransform(dpr * sc, 0, 0, dpr * sc, s.x * dpr, s.y * dpr);
-      c2.globalAlpha = al * .62; c2.fillStyle = s.col; blob(s.pts); c2.fill();
-      c2.save(); c2.clip(); c2.globalAlpha = al * .45; c2.strokeStyle = s.col; c2.lineWidth = 1.6; c2.rotate(s.ang);
-      for (k = -90; k < 90; k += 4) { c2.beginPath(); c2.moveTo(k, -90); c2.lineTo(k + 6, 90); c2.stroke(); } c2.restore();
-      c2.globalAlpha = al * .85; c2.strokeStyle = '#2A2238'; c2.lineWidth = 1.3; c2.setLineDash([7, 4]); blob(s.pts); c2.stroke(); c2.setLineDash([]);
-      c2.globalAlpha = al * .7; c2.fillStyle = s.col; s.drops.forEach(function (d) { c2.beginPath(); c2.arc(d[0], d[1], d[2], 0, 7); c2.fill(); });
-    });
-    c2.globalAlpha = 1;
-    raf = splats.length ? requestAnimationFrame(paintTick) : null;
-    if (!raf) { c2.setTransform(1, 0, 0, 1, 0, 0); c2.clearRect(0, 0, cv.width, cv.height); }
-  }
-  if (c2 && !reduce) {
-    sizeCanvas(); addEventListener('resize', sizeCanvas);
-    document.addEventListener('pointerdown', function (e) {
-      if (e.button !== 0) return;
-      if (e.target.closest && e.target.closest('a,button,input,select,textarea,code,label')) return;
-      makeSplat(e.clientX, e.clientY); sfx('splat');
-    });
-  }
-
-  /* Sparkles */
-  function sparkBurst(host, ox, oy, count, dir) {
-    if (reduce || !host.animate) return;
-    var cols = ['#F6C445', '#F4845F', '#B79CF2', '#7FB5F0', '#9ACD68', '#E27D9B'];
-    for (var i = 0; i < count; i++) (function (i) {
-      var s = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); s.setAttribute('viewBox', '0 0 24 24'); s.setAttribute('class', 'spark'); s.setAttribute('aria-hidden', 'true');
-      s.innerHTML = '<path d="M12 2l2.2 6.8L21 11l-6.8 2.2L12 20l-2.2-6.8L3 11l6.8-2.2z" fill="' + cols[i % cols.length] + '" stroke="#2A2238" stroke-width="1.3" stroke-linejoin="round"/>';
-      s.style.left = ox + 'px'; s.style.top = oy + 'px'; host.appendChild(s);
-      var a = dir + (Math.random() - .5) * 1.6, d = 50 + Math.random() * 90, z = .5 + Math.random() * .9;
-      s.animate([{ transform: 'translate(0,0) scale(.2) rotate(0)', opacity: 1 },
-        { transform: 'translate(' + Math.cos(a) * d + 'px,' + Math.sin(a) * d + 'px) scale(' + z + ') rotate(' + (Math.random() - .5) * 400 + 'deg)', opacity: 1, offset: .7 },
-        { transform: 'translate(' + Math.cos(a) * d * 1.15 + 'px,' + (Math.sin(a) * d * 1.15 + 20) + 'px) scale(' + z * .6 + ') rotate(' + (Math.random() - .5) * 500 + 'deg)', opacity: 0 }],
-        { duration: 900 + Math.random() * 500, easing: 'cubic-bezier(.2,.8,.3,1)' }).onfinish = function () { s.remove(); };
-    })(i);
-  }
-
-  /* Smudge tumbles past */
-  var smudge = document.getElementById('smudge'), tumbling = false;
-  function tumble() {
-    if (reduce || tumbling || !smudge.animate) return; tumbling = true; sfx('whoosh');
-    var w = innerWidth + 300;
-    smudge.animate([{ transform: 'translateX(-180px) rotate(0deg)' }, { transform: 'translateX(' + w * .5 + 'px) translateY(-40px) rotate(400deg)', offset: .5 }, { transform: 'translateX(' + w + 'px) rotate(820deg)' }],
-      { duration: 8000, easing: 'ease-in-out' }).onfinish = function () { tumbling = false; };
-  }
-  if (!reduce) { setTimeout(tumble, 6000); setInterval(function () { if (!document.hidden) tumble(); }, 26000); }
-
-  /* Doodle follows you */
-  var doodle = document.getElementById('doodle');
-  if (!reduce) {
-    var dx = 24, dy = innerHeight - 130, tx = dx, ty = dy, face = 1;
-    var moveTo = function (x, y) { tx = x - (FINE ? 110 : 40); ty = y - (FINE ? 20 : 70); };
-    addEventListener('pointermove', function (e) { if (e.pointerType === 'mouse') moveTo(e.clientX, e.clientY); }, { passive: true });
-    addEventListener('pointerdown', function (e) { if (e.pointerType !== 'mouse') moveTo(e.clientX, e.clientY); }, { passive: true });
-    addEventListener('resize', function () { ty = Math.min(ty, innerHeight - 100); });
-    var follow = function (t) {
-      var vx = (tx - dx) * .06, vy = (ty - dy) * .06; dx += vx; dy += vy;
-      if (Math.abs(vx) > .6) face = vx < 0 ? -1 : 1;
-      var bob = Math.sin(t / 260) * 5, tilt = Math.max(-14, Math.min(14, vx * 1.4));
-      doodle.style.transform = 'translate(' + dx + 'px,' + (dy + bob) + 'px) rotate(' + tilt + 'deg) scaleX(' + face + ')';
-      requestAnimationFrame(follow);
-    };
-    requestAnimationFrame(follow);
-  }
-
-  /* Sprig naps on the footer */
-  var sprig = document.getElementById('sprig'), says = document.getElementById('sprigSays');
-  sprig.addEventListener('click', function () { sfx('snore'); says.classList.add('show'); setTimeout(function () { says.classList.remove('show'); }, 1800); });
-
-  /* Crew cards: tap for the signature move */
-  $$('.mate').forEach(function (b) {
-    var k = b.getAttribute('data-k');
-    b.addEventListener('click', function () {
-      b.classList.remove('go-' + k); void b.offsetWidth; b.classList.add('go-' + k);
-      sfx({ dabble: 'brush', doodle: 'hop', sprig: 'snore', ember: 'toot' }[k] || '');
-      var pic = b.querySelector('.pic'), r = pic.getBoundingClientRect();
-      if (k === 'ember') sparkBurst(pic, r.width * .15, r.height * .85, 12, Math.PI * 1.2);
-      if (k === 'doodle') sparkBurst(pic, r.width * .8, r.height * .3, 6, -Math.PI / 2);
-      if (k === 'dabble') for (var i = 0; i < 3; i++) setTimeout(function () { makeSplat(r.left + r.width * (.2 + Math.random() * .6), r.top + r.height * (.2 + Math.random() * .6)); }, i * 140);
-      if (k === 'smudge') tumble();
-    });
+  KEYS.forEach(function (k, i) {
+    var f = INFO[k], el = document.createElement('div'); el.className = 'hatch';
+    el.innerHTML = '<button class="stage" type="button" id="st-' + k + '" aria-label="' + f.nm + ', ' + f.trait + '. Tap for the signature move."></button><span class="nm">' + f.nm.toUpperCase() + '</span><span class="trait">' + f.trait + '</span><span class="does">' + f.does + '</span>';
+    crew.appendChild(el); mount(el.querySelector('.stage'), k, i);
   });
+  mount(document.querySelector('[data-hatch="ember"]'), 'ember', 7);
+  /* Who watches you color is pure chance, never tied to the colors you pick. */
+  var peekK = KEYS[Math.floor(Math.random() * 4)]; mount($('peeker'), peekK, 9);
+  $('peeker').setAttribute('aria-label', INFO[peekK].nm + ' is watching you color. Tap for the signature move.');
+  addEventListener('pointermove', function (e) { px = e.clientX; py = e.clientY; if (e.pointerType === 'mouse') hasPointer = true; }, { passive: true });
 
-  /* Copy address */
-  $$('.copy-btn').forEach(function (b) {
-    b.addEventListener('click', function () {
-      var note = b.parentNode.querySelector('.copied');
-      function selectIt() {
-        var r = document.createRange(); r.selectNodeContents(b.parentNode.querySelector('code'));
-        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
-        note.textContent = 'Selected. Copy it with your keyboard or long-press.';
-      }
-      try { navigator.clipboard.writeText(b.getAttribute('data-copy')).then(function () { note.textContent = 'Copied'; }, selectIt); } catch (e) { selectIt(); }
+  var fx = $('fx'), c2 = fx.getContext('2d'), parts = [];
+  function size() { var d = Math.min(devicePixelRatio || 1, 2); fx.width = innerWidth * d; fx.height = innerHeight * d; c2.setTransform(d, 0, 0, d, 0, 0); } size(); addEventListener('resize', size);
+  function move(h) {
+    sfx(h.k);
+    if (reduce) return;
+    var r = h.btn.getBoundingClientRect(), u = r.width / 220, cx = r.left + r.width / 2, cy = r.top + r.height * .45, i, n;
+    if (h.k === 'dabble') { var col = JEWEL[Math.floor(Math.random() * 6)]; for (i = 0; i < 12; i++) parts.push({ t: 'dot', x: cx + 40 * u, y: cy - 10 * u, vx: 2 + Math.random() * 5, vy: -6 + Math.random() * 4, g: .28, r: 3 + Math.random() * 7, c: col, life: 70 }); }
+    if (h.k === 'smudge') { for (i = 0; i < 6; i++) parts.push({ t: 'paw', x: cx - 70 * u + i * 28 * u, y: r.bottom - 8 + (i % 2) * 12, vx: 0, vy: 0, g: 0, r: 7, c: i % 2 ? '#E8A33D' : '#4F9D8F', life: 150, delay: i * 9 }); }
+    if (h.k === 'doodle') { parts.push({ t: 'star', x: cx + 30 * u, y: cy - 60 * u, vx: .4, vy: -.5, g: 0, r: 16, c: '#F2C96B', life: 110 }); for (i = 0; i < 6; i++) parts.push({ t: 'star', x: cx + 30 * u, y: cy - 60 * u, vx: -2 + Math.random() * 4, vy: -2 + Math.random() * 3, g: .02, r: 4 + Math.random() * 4, c: '#9DC3FF', life: 70 }); }
+    if (h.k === 'sprig') { for (i = 0; i < 5; i++) parts.push({ t: 'leaf', x: cx + 20 * u, y: cy - 50 * u, vx: .6 + Math.random(), vy: -1.2 - Math.random(), g: -.004, r: 7 + Math.random() * 4, c: '#7FB069', life: 130, delay: i * 8, a: Math.random() * 6 }); }
+    if (h.k === 'ember') { for (i = 0; i < 34; i++) { n = Math.random() * Math.PI; parts.push({ t: 'dot', x: cx - 46 * u, y: cy + 46 * u, vx: -Math.cos(n) * (1 + Math.random() * 4) - 1, vy: -Math.sin(n) * (1 + Math.random() * 3), g: .05, r: 1.5 + Math.random() * 3, c: JEWEL[i % 6], life: 60 + Math.random() * 40, tw: 1 }); } }
+  }
+  function burst(x, y, col) { if (reduce) return; for (var i = 0; i < 9; i++) { var a = Math.random() * 6.28, s = 1 + Math.random() * 3.5; parts.push({ t: 'dot', x: x, y: y, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 1, g: .12, r: 2 + Math.random() * 4, c: col, life: 34 + Math.random() * 20 }); } }
+  function drawParts() {
+    c2.clearRect(0, 0, innerWidth, innerHeight);
+    for (var i = parts.length - 1; i >= 0; i--) {
+      var p = parts[i]; if (p.delay > 0) { p.delay--; continue; }
+      p.life--; if (p.life <= 0) { parts.splice(i, 1); continue; }
+      p.vy += p.g; p.x += p.vx; p.y += p.vy; if (p.a !== undefined) p.a += .06;
+      c2.globalAlpha = Math.min(1, p.life / 30) * (p.tw ? .6 + .4 * Math.sin(p.life) : 1); c2.fillStyle = p.c;
+      if (p.t === 'dot') { c2.beginPath(); c2.arc(p.x, p.y, p.r, 0, 7); c2.fill(); }
+      else if (p.t === 'paw') { c2.beginPath(); c2.ellipse(p.x, p.y, p.r, p.r * .8, 0, 0, 7); c2.fill(); for (var j = -1; j <= 1; j++) { c2.beginPath(); c2.arc(p.x + j * p.r * .8, p.y - p.r * 1.2, p.r * .36, 0, 7); c2.fill(); } }
+      else if (p.t === 'star') { c2.beginPath(); for (var k = 0; k < 8; k++) { var rr = k % 2 ? p.r * .38 : p.r, an = k * Math.PI / 4 + p.life * .03; c2.lineTo(p.x + Math.cos(an) * rr, p.y + Math.sin(an) * rr); } c2.closePath(); c2.fill(); }
+      else if (p.t === 'leaf') { c2.save(); c2.translate(p.x + Math.sin(p.a) * 8, p.y); c2.rotate(Math.sin(p.a) * .8); c2.beginPath(); c2.ellipse(0, 0, p.r, p.r * .45, 0, 0, 7); c2.fill(); c2.restore(); }
+    }
+    c2.globalAlpha = 1;
+  }
+  function frame(now) {
+    var t = (now - t0) / 1000;
+    if (!hasPointer && !reduce) { px = innerWidth / 2 + Math.cos(t * .6) * innerWidth * .45; py = innerHeight * .4 + Math.sin(t * .6) * innerHeight * .3; }
+    H.forEach(function (h) {
+      var r = h.btn.getBoundingClientRect(); if (r.bottom < -60 || r.top > innerHeight + 60 || !r.width) return;
+      var u = r.width / 220, cx = r.left + r.width / 2, cy = r.top + r.height * .45, dx = (px - cx) / 420, dy = (py - cy) / 420;
+      var m = Math.max(-1, Math.min(1, dx)), n = Math.max(-1, Math.min(1, dy));
+      var ry = m * 20, rx = -n * 14, rz = 0, tx = 0, ty = 0, sx = 1, sy = 1, blush = 0, s = t + h.seed, a = h.act ? (now - h.actT) / 1000 : -1;
+      if (!reduce) {
+        if (h.k === 'dabble') { rz = Math.sin(s * 1.3) * 4; ty = Math.abs(Math.sin(s * 2.6)) * -3; if (a >= 0 && a < .5) rz = Math.sin(a * 25) * 9; }
+        if (h.k === 'smudge') { rz = Math.sin(s * 1.9) * 6; tx = Math.sin(s * 1.9) * 5; sy = 1 + Math.sin(s * 3.8) * .015; if (a >= 0 && a < .9) { rz = a / .9 * 360; ty = -Math.sin(a / .9 * Math.PI) * 26; } }
+        if (h.k === 'doodle') { h.dx += (m * 16 - h.dx) * .03; tx = h.dx; ty = Math.sin(s * .9) * 9 - 6; rz = Math.sin(s * .7) * 3 + h.dx * .3; if (a >= 0 && a < .6) ty -= Math.sin(a / .6 * Math.PI) * 18; }
+        if (h.k === 'sprig') { rz = 7 + Math.sin(s * .5) * 2; sy = 1 + Math.sin(s * 1.1) * .035; sx = 1 - Math.sin(s * 1.1) * .02; rx += 8; if (a >= 0 && a < 1.2) { rz = 7 - Math.sin(a / 1.2 * Math.PI) * 12; sy = 1 + Math.sin(a / 1.2 * Math.PI) * .08; } if (Math.random() < .005) parts.push({ t: 'leaf', x: cx + 24 * u, y: cy - 46 * u, vx: .5, vy: -1, g: -.004, r: 6, c: '#7FB069', life: 110, a: 0 }); }
+        if (h.k === 'ember') { tx = Math.sin(s * 9) * 1.2; ty = Math.sin(s * 4.2) * 2; rz = Math.sin(s * 3.1) * 2.5; if (a >= 0 && a < 1.6) { blush = Math.sin(Math.min(1, a / 1.6) * Math.PI); tx += a > .5 ? Math.sin((a - .5) / 1.1 * Math.PI) * 18 : 0; } }
+        if (a > 1.6) h.act = 0;
+      } else { ry = rx = 0; }
+      h.body.style.transform = 'translate(' + (tx * u).toFixed(1) + 'px,' + (ty * u).toFixed(1) + 'px) rotateX(' + rx.toFixed(1) + 'deg) rotateY(' + ry.toFixed(1) + 'deg) rotateZ(' + rz.toFixed(1) + 'deg) scale(' + sx.toFixed(3) + ',' + sy.toFixed(3) + ')';
+      h.shadow.style.transform = 'translateX(' + ((-m * 16 + tx * .6) * u).toFixed(1) + 'px) scaleX(' + (1 + Math.abs(m) * .25 + ty * .006).toFixed(2) + ')';
+      if (h.gl) { var lx = m * 1.1, ly = -n * 1.1 + .25, lz = .62, L = Math.sqrt(lx * lx + ly * ly + lz * lz);
+        h.gl.uniform3f(h.uL, lx / L, ly / L, lz / L); h.gl.uniform1f(h.uB, blush); h.gl.clearColor(0, 0, 0, 0); h.gl.clear(h.gl.COLOR_BUFFER_BIT); h.gl.drawArrays(h.gl.TRIANGLE_STRIP, 0, 4); }
     });
+    drawParts(); requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  /* ---------- Coloring table ---------- */
+  var PAPER = '#FBF6EA';
+  var PAL = {
+    warm: [['#A3243B', 'Crimson'], ['#C2452C', 'Ember red'], ['#E08A2E', 'Amber'], ['#E8B94A', 'Royal gold'], ['#9A4B26', 'Rust']],
+    cool: [['#2F64B0', 'Sapphire'], ['#3B3A8C', 'Indigo'], ['#A99BD6', 'Lavender'], ['#B9C2CF', 'Moon silver'], ['#2C8079', 'Teal']],
+    earth: [['#5C8A3A', 'Moss'], ['#8DB36B', 'Fern'], ['#7A5534', 'Bark brown'], ['#D9C39A', 'Sand'], ['#C9788F', 'Wild rose']]
+  };
+  var PATHS = { warm: ['Power', 'Warm colors. In Thornfield, that is the road of courage and crowns.'], cool: ['Wisdom', 'Cool colors. That is the road of secrets, starlight and old books.'], earth: ['Heart', 'Earth colors. That is the road of roots, friendship and unlikely allies.'] };
+  var strokes = 0, cur = { col: PAL.warm[1][0], fam: 'warm' }, erasing = false, undo = [], page = 'dragon', sheet = $('sheet'), sws = [];
+  Object.keys(PAL).forEach(function (fam) { PAL[fam].forEach(function (p, i) {
+    var b = document.createElement('button'); b.className = 'sw'; b.type = 'button'; b.id = 'sw-' + fam + '-' + i; b.style.setProperty('--c', p[0]);
+    b.setAttribute('aria-pressed', p[0] === cur.col ? 'true' : 'false'); b.innerHTML = '<span class="sr">' + p[1] + '</span>'; b.title = p[1];
+    b.addEventListener('click', function () { cur = { col: p[0], fam: fam }; erasing = false; $('eraser').setAttribute('aria-pressed', 'false'); sws.forEach(function (o) { o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); }); });
+    $('fam-' + fam).appendChild(b); sws.push(b);
+  }); });
+  function regs() { return Array.prototype.slice.call(sheet.querySelectorAll('.reg')); }
+  function tally() { var t = { warm: 0, cool: 0, earth: 0 }; regs().forEach(function (r) { var f = r.getAttribute('data-fam'); if (f) t[f]++; }); return t; }
+  function refresh() {
+    var t = tally(), n = t.warm + t.cool + t.earth;
+    $('count').textContent = n + (n === 1 ? ' shape colored' : ' shapes colored');
+    $('reveal').disabled = n < 12; if (n < 12) $('res').textContent = 'Color at least 12 shapes, then ask.';
+    else if ($('res').getAttribute('data-shown') !== '1') $('res').textContent = 'Ready when you are.';
+    var save = {}; regs().forEach(function (r) { if (r.getAttribute('data-fam')) save[r.id] = [r.getAttribute('fill'), r.getAttribute('data-fam')]; });
+    store('cw-page-' + page, JSON.stringify(save));
+  }
+  function paint(r, col, fam) { r.setAttribute('fill', col); if (fam) r.setAttribute('data-fam', fam); else r.removeAttribute('data-fam'); }
+  sheet.addEventListener('click', function (e) {
+    var r = e.target.closest ? e.target.closest('.reg') : null; if (!r) return;
+    undo.push([r, r.getAttribute('fill'), r.getAttribute('data-fam')]); if (undo.length > 200) undo.shift();
+    if (erasing) paint(r, PAPER, null); else { paint(r, cur.col, cur.fam); burst(e.clientX, e.clientY, cur.col); strokes++; sfx(strokes % 10 === 0 ? 'bell' : 'stroke'); }
+    $('res').setAttribute('data-shown', '0'); refresh();
+  });
+  $('undo').addEventListener('click', function () { var u = undo.pop(); if (u) { paint(u[0], u[1], u[2]); refresh(); } });
+  $('eraser').addEventListener('click', function () { erasing = !erasing; $('eraser').setAttribute('aria-pressed', erasing ? 'true' : 'false'); });
+  $('zoom').addEventListener('click', function () { var z = sheet.classList.toggle('zoom'); $('zoom').setAttribute('aria-pressed', z ? 'true' : 'false'); });
+  var armed = false;
+  $('clear').addEventListener('click', function () {
+    if (!armed) { armed = true; $('clear').textContent = 'TAP AGAIN TO CLEAR'; setTimeout(function () { armed = false; $('clear').textContent = 'START OVER'; }, 3000); return; }
+    armed = false; $('clear').textContent = 'START OVER'; regs().forEach(function (r) { paint(r, PAPER, null); }); undo = []; $('res').setAttribute('data-shown', '0'); refresh();
+  });
+  $('reveal').addEventListener('click', function () {
+    var t = tally(), keys = ['warm', 'cool', 'earth'].sort(function (a, b) { return t[b] - t[a]; }), res = $('res'); res.setAttribute('data-shown', '1');
+    if (t[keys[0]] === t[keys[1]]) { res.innerHTML = 'An even split between <b></b> and <b></b>. In the book, a tie has a rule of its own. Color a few more shapes and ask again.'; var bs = res.querySelectorAll('b'); bs[0].textContent = PATHS[keys[0]][0].toUpperCase(); bs[1].textContent = PATHS[keys[1]][0].toUpperCase(); return; }
+    res.innerHTML = 'Your colors lean toward <b></b>. <span></span>'; res.querySelector('b').textContent = PATHS[keys[0]][0].toUpperCase(); res.querySelector('span').textContent = PATHS[keys[0]][1]; sfx(keys[0]);
+    var rr = $('reveal').getBoundingClientRect(); for (var i = 0; i < 3; i++) burst(rr.left + rr.width * (.2 + .3 * i), rr.top, JEWEL[(i * 2) % 6]);
+  });
+  function openPage(p) {
+    page = p; undo = []; sheet.classList.toggle('crest', p === 'crest');
+    Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (tb) { tb.setAttribute('aria-pressed', tb.getAttribute('data-page') === p ? 'true' : 'false'); });
+    fetch('art/' + p + '.svg').then(function (r) { if (!r.ok) throw 0; return r.text(); }).then(function (txt) {
+      var doc = new DOMParser().parseFromString(txt, 'image/svg+xml'), svg = doc.documentElement; if (!svg || svg.nodeName !== 'svg') throw 0;
+      svg.setAttribute('role', 'img'); svg.setAttribute('aria-label', p === 'crest' ? 'Line art of the Thornfield lion crest, ready to color' : 'Line art of a dragon standing among mountains, ready to color');
+      sheet.textContent = ''; sheet.appendChild(document.importNode(svg, true));
+      try { var sv = JSON.parse(store('cw-page-' + p) || '{}'); Object.keys(sv).forEach(function (id) { var r = sheet.querySelector('#' + id); if (r && /^#[0-9A-Fa-f]{6}$/.test(sv[id][0]) && PAL[sv[id][1]]) paint(r, sv[id][0], sv[id][1]); }); } catch (e) {}
+      $('res').setAttribute('data-shown', '0'); refresh();
+    }).catch(function () { sheet.innerHTML = '<p style="padding:40px;color:#2A2238">This page did not load. Refresh to try again.</p>'; });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (tb) { tb.addEventListener('click', function () { openPage(tb.getAttribute('data-page')); }); });
+  openPage('dragon');
+
+  /* Copy the address */
+  $('copy').addEventListener('click', function () {
+    var a = $('copy').getAttribute('data-copy'), out = $('copied');
+    function sel() { var r = document.createRange(); r.selectNodeContents($('copy').previousElementSibling); var s = getSelection(); s.removeAllRanges(); s.addRange(r); out.textContent = 'Selected. Press copy.'; }
+    try { navigator.clipboard.writeText(a).then(function () { out.textContent = 'Copied.'; }, sel); } catch (e) { sel(); }
   });
 })();
 </script>
-
 </body>
 </html>
