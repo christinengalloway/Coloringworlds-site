@@ -361,6 +361,7 @@ footer .wrap { padding-block: 26px 34px; display: flex; flex-wrap: wrap; gap: 8p
   }
   function musicOff() { if (!mus) return; var m = mus, t = ac.currentTime; mus = null; clearInterval(m.id); m.g.gain.cancelScheduledValues(t); m.g.gain.setTargetAtTime(.0001, t, .3); setTimeout(function () { m.os.forEach(function (o) { try { o.stop(); } catch (e) {} }); }, 2500); }
   $('soundBtn').addEventListener('click', function () { sfxOn = !sfxOn; this.setAttribute('aria-pressed', sfxOn ? 'true' : 'false'); if (sfxOn) sfx('bell'); });
+  document.addEventListener('visibilitychange', function () { if (!musOn) return; if (document.hidden) musicOff(); else musicOn(); });
   $('musicBtn').addEventListener('click', function () { musOn = !musOn; this.setAttribute('aria-pressed', musOn ? 'true' : 'false'); if (musOn) musicOn(); else musicOff(); });
 
   /* ---------- Hero window: wipes from gold line to lit glass ---------- */
@@ -414,7 +415,7 @@ footer .wrap { padding-block: 26px 34px; display: flex; flex-wrap: wrap; gap: 8p
       tex(gl, im[0], 0); tex(gl, im[1], 1);
       gl.uniform1i(gl.getUniformLocation(pr, 'uC'), 0); gl.uniform1i(gl.getUniformLocation(pr, 'uN'), 1);
       h.gl = gl; h.uL = gl.getUniformLocation(pr, 'uL'); h.uB = gl.getUniformLocation(pr, 'uBlush');
-    }).catch(function () {});
+    }).catch(function () { load('img/' + k + '.png').then(function (img) { img.alt = ''; if (h.cv.parentNode) h.body.replaceChild(img, h.cv); }).catch(function () { btn.hidden = true; }); });
     H.push(h); return h;
   }
   KEYS.forEach(function (k, i) {
@@ -512,30 +513,35 @@ footer .wrap { padding-block: 26px 34px; display: flex; flex-wrap: wrap; gap: 8p
     if (erasing) paint(r, PAPER, null); else { paint(r, cur.col, cur.fam); burst(e.clientX, e.clientY, cur.col); strokes++; sfx(strokes % 10 === 0 ? 'bell' : 'stroke'); }
     $('res').setAttribute('data-shown', '0'); refresh();
   });
-  $('undo').addEventListener('click', function () { var u = undo.pop(); if (u) { paint(u[0], u[1], u[2]); refresh(); } });
+  $('undo').addEventListener('click', function () { var u = undo.pop(); if (u) { paint(u[0], u[1], u[2]); $('res').setAttribute('data-shown', '0'); refresh(); } });
   $('eraser').addEventListener('click', function () { erasing = !erasing; $('eraser').setAttribute('aria-pressed', erasing ? 'true' : 'false'); });
   $('zoom').addEventListener('click', function () { var z = sheet.classList.toggle('zoom'); $('zoom').setAttribute('aria-pressed', z ? 'true' : 'false'); });
-  var armed = false;
+  var armed = false, armT = 0;
+  function disarm() { armed = false; clearTimeout(armT); $('clear').textContent = 'START OVER'; }
   $('clear').addEventListener('click', function () {
-    if (!armed) { armed = true; $('clear').textContent = 'TAP AGAIN TO CLEAR'; setTimeout(function () { armed = false; $('clear').textContent = 'START OVER'; }, 3000); return; }
-    armed = false; $('clear').textContent = 'START OVER'; regs().forEach(function (r) { paint(r, PAPER, null); }); undo = []; $('res').setAttribute('data-shown', '0'); refresh();
+    if (!armed) { armed = true; $('clear').textContent = 'TAP AGAIN TO CLEAR'; armT = setTimeout(disarm, 3000); return; }
+    disarm(); regs().forEach(function (r) { paint(r, PAPER, null); }); undo = []; $('res').setAttribute('data-shown', '0'); refresh();
   });
   $('reveal').addEventListener('click', function () {
     var t = tally(), keys = ['warm', 'cool', 'earth'].sort(function (a, b) { return t[b] - t[a]; }), res = $('res'); res.setAttribute('data-shown', '1');
+    if (t[keys[0]] === t[keys[2]]) { res.textContent = 'A perfect three-way split between Power, Wisdom and Heart. Color a few more shapes and ask again.'; return; }
     if (t[keys[0]] === t[keys[1]]) { res.innerHTML = 'An even split between <b></b> and <b></b>. In the book, a tie has a rule of its own. Color a few more shapes and ask again.'; var bs = res.querySelectorAll('b'); bs[0].textContent = PATHS[keys[0]][0].toUpperCase(); bs[1].textContent = PATHS[keys[1]][0].toUpperCase(); return; }
     res.innerHTML = 'Your colors lean toward <b></b>. <span></span>'; res.querySelector('b').textContent = PATHS[keys[0]][0].toUpperCase(); res.querySelector('span').textContent = PATHS[keys[0]][1]; sfx(keys[0]);
     var rr = $('reveal').getBoundingClientRect(); for (var i = 0; i < 3; i++) burst(rr.left + rr.width * (.2 + .3 * i), rr.top, JEWEL[(i * 2) % 6]);
   });
+  var openSeq = 0;
   function openPage(p) {
+    var seq = ++openSeq; disarm();
     page = p; undo = []; sheet.classList.toggle('crest', p === 'crest');
     Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (tb) { tb.setAttribute('aria-pressed', tb.getAttribute('data-page') === p ? 'true' : 'false'); });
     fetch('art/' + p + '.svg').then(function (r) { if (!r.ok) throw 0; return r.text(); }).then(function (txt) {
+      if (seq !== openSeq) return;
       var doc = new DOMParser().parseFromString(txt, 'image/svg+xml'), svg = doc.documentElement; if (!svg || svg.nodeName !== 'svg') throw 0;
       svg.setAttribute('role', 'img'); svg.setAttribute('aria-label', p === 'crest' ? 'Line art of the Thornfield lion crest, ready to color' : 'Line art of a dragon standing among mountains, ready to color');
       sheet.textContent = ''; sheet.appendChild(document.importNode(svg, true));
       try { var sv = JSON.parse(store('cw-page-' + p) || '{}'); Object.keys(sv).forEach(function (id) { var r = sheet.querySelector('#' + id); if (r && /^#[0-9A-Fa-f]{6}$/.test(sv[id][0]) && PAL[sv[id][1]]) paint(r, sv[id][0], sv[id][1]); }); } catch (e) {}
       $('res').setAttribute('data-shown', '0'); refresh();
-    }).catch(function () { sheet.innerHTML = '<p style="padding:40px;color:#2A2238">This page did not load. Refresh to try again.</p>'; });
+    }).catch(function () { if (seq !== openSeq) return; sheet.innerHTML = '<p style="padding:40px;color:#2A2238">This page did not load. Refresh to try again.</p>'; });
   }
   Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (tb) { tb.addEventListener('click', function () { openPage(tb.getAttribute('data-page')); }); });
   openPage('dragon');
