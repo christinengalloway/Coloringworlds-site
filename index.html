@@ -344,25 +344,26 @@ footer .wrap { padding-block: 26px 34px; display: flex; flex-wrap: wrap; gap: 8p
     v.frequency.value = 5.4; vg.gain.setValueAtTime(0, t); vg.gain.linearRampToValueAtTime(f * .006, t + Math.min(.5, dur * .6)); v.connect(vg); vg.connect(o.frequency);
     g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.11, t + .05); g.gain.setValueAtTime(.11, t + Math.max(.06, dur - .1)); g.gain.exponentialRampToValueAtTime(.0001, t + dur + .12);
     g2.gain.value = .12; o.connect(g); o2.connect(g2); g2.connect(g); g.connect(out); g.connect(echo); o.start(t); o2.start(t); v.start(t); o.stop(t + dur + .2); o2.stop(t + dur + .2); v.stop(t + dur + .2); }
+  var musBar = -4;
   function musicOn() {
     if (!actx() || mus) return; var g = ac.createGain(), t = ac.currentTime; g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.55, t + 2); g.connect(master);
     var lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 500; lp.connect(g);
     var dr = [73.42, 110, 146.83].map(function (f, i) { var o = ac.createOscillator(), og = ac.createGain(); o.type = 'sawtooth'; o.frequency.value = f; og.gain.value = [.07, .05, .04][i]; o.connect(og); og.connect(lp); o.start(); return o; });
-    var bar = -4, next = t + .2, id = setInterval(function () { if (!ac) return;
+    var bar = musBar, next = t + .2, id = setInterval(function () { if (!ac) return;
       while (next < ac.currentTime + 1.2) {
         var k = ((bar % 16) + 16) % 16, ch = CH[BARS[k]], pass = bar < 0 ? -1 : Math.floor(bar / 16) % 2, b0 = next;
         [0, 1, 2, 3, 2, 1].forEach(function (ix, i) { pluck(ch[ix] * (i === 3 ? 1 : 1), b0 + i * BEAT / 2, i === 0 ? .1 : .065, g); });
         tone('sine', 92, b0, .005, .16, .22, 48, false, g); tone('sine', 120, b0 + BEAT * 2, .005, .06, .12, 70, false, g);
         [ch[2], ch[3]].forEach(function (f) { tone('triangle', f, b0, .5, .035, BEAT * 3, null, true, g); });
         if (pass >= 0) { var at = b0; TUNE[k].forEach(function (nt) { if (pass === 0) whistle(N[nt[0]], at, nt[1] * BEAT * .96, g); else pluck(N[nt[0]], at, .12, g); at += nt[1] * BEAT; }); }
-        bar++; next += BEAT * 3;
+        bar++; musBar = bar; next += BEAT * 3;
       } }, 250);
     mus = { g: g, os: dr, id: id };
   }
   function musicOff() { if (!mus) return; var m = mus, t = ac.currentTime; mus = null; clearInterval(m.id); m.g.gain.cancelScheduledValues(t); m.g.gain.setTargetAtTime(.0001, t, .3); setTimeout(function () { m.os.forEach(function (o) { try { o.stop(); } catch (e) {} }); }, 2500); }
   $('soundBtn').addEventListener('click', function () { sfxOn = !sfxOn; this.setAttribute('aria-pressed', sfxOn ? 'true' : 'false'); if (sfxOn) sfx('bell'); });
   document.addEventListener('visibilitychange', function () { if (!musOn) return; if (document.hidden) musicOff(); else musicOn(); });
-  $('musicBtn').addEventListener('click', function () { musOn = !musOn; this.setAttribute('aria-pressed', musOn ? 'true' : 'false'); if (musOn) musicOn(); else musicOff(); });
+  $('musicBtn').addEventListener('click', function () { musOn = !musOn; this.setAttribute('aria-pressed', musOn ? 'true' : 'false'); if (musOn) { musBar = -4; musicOn(); } else musicOff(); });
 
   /* ---------- Hero window: wipes from gold line to lit glass ---------- */
   var lit = $('lit'), win = $('window'), wipe = reduce ? 46 : 100, wipeTo = 46;
@@ -508,17 +509,18 @@ footer .wrap { padding-block: 26px 34px; display: flex; flex-wrap: wrap; gap: 8p
   }
   function paint(r, col, fam) { r.setAttribute('fill', col); if (fam) r.setAttribute('data-fam', fam); else r.removeAttribute('data-fam'); }
   sheet.addEventListener('click', function (e) {
-    var r = e.target.closest ? e.target.closest('.reg') : null; if (!r) return;
+    var r = e.target.closest ? e.target.closest('.reg') : null; if (!r || loading) return;
     undo.push([r, r.getAttribute('fill'), r.getAttribute('data-fam')]); if (undo.length > 200) undo.shift();
     if (erasing) paint(r, PAPER, null); else { paint(r, cur.col, cur.fam); burst(e.clientX, e.clientY, cur.col); strokes++; sfx(strokes % 10 === 0 ? 'bell' : 'stroke'); }
     $('res').setAttribute('data-shown', '0'); refresh();
   });
-  $('undo').addEventListener('click', function () { var u = undo.pop(); if (u) { paint(u[0], u[1], u[2]); $('res').setAttribute('data-shown', '0'); refresh(); } });
+  $('undo').addEventListener('click', function () { if (loading) return; var u = undo.pop(); if (u) { paint(u[0], u[1], u[2]); $('res').setAttribute('data-shown', '0'); refresh(); } });
   $('eraser').addEventListener('click', function () { erasing = !erasing; $('eraser').setAttribute('aria-pressed', erasing ? 'true' : 'false'); });
   $('zoom').addEventListener('click', function () { var z = sheet.classList.toggle('zoom'); $('zoom').setAttribute('aria-pressed', z ? 'true' : 'false'); });
   var armed = false, armT = 0;
   function disarm() { armed = false; clearTimeout(armT); $('clear').textContent = 'START OVER'; }
   $('clear').addEventListener('click', function () {
+    if (loading) return;
     if (!armed) { armed = true; $('clear').textContent = 'TAP AGAIN TO CLEAR'; armT = setTimeout(disarm, 3000); return; }
     disarm(); regs().forEach(function (r) { paint(r, PAPER, null); }); undo = []; $('res').setAttribute('data-shown', '0'); refresh();
   });
@@ -529,19 +531,19 @@ footer .wrap { padding-block: 26px 34px; display: flex; flex-wrap: wrap; gap: 8p
     res.innerHTML = 'Your colors lean toward <b></b>. <span></span>'; res.querySelector('b').textContent = PATHS[keys[0]][0].toUpperCase(); res.querySelector('span').textContent = PATHS[keys[0]][1]; sfx(keys[0]);
     var rr = $('reveal').getBoundingClientRect(); for (var i = 0; i < 3; i++) burst(rr.left + rr.width * (.2 + .3 * i), rr.top, JEWEL[(i * 2) % 6]);
   });
-  var openSeq = 0;
+  var openSeq = 0, loading = false;
   function openPage(p) {
-    var seq = ++openSeq; disarm();
+    var seq = ++openSeq; disarm(); loading = true;
     page = p; undo = []; sheet.classList.toggle('crest', p === 'crest');
     Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (tb) { tb.setAttribute('aria-pressed', tb.getAttribute('data-page') === p ? 'true' : 'false'); });
     fetch('art/' + p + '.svg').then(function (r) { if (!r.ok) throw 0; return r.text(); }).then(function (txt) {
-      if (seq !== openSeq) return;
+      if (seq !== openSeq) return; loading = false;
       var doc = new DOMParser().parseFromString(txt, 'image/svg+xml'), svg = doc.documentElement; if (!svg || svg.nodeName !== 'svg') throw 0;
       svg.setAttribute('role', 'img'); svg.setAttribute('aria-label', p === 'crest' ? 'Line art of the Thornfield lion crest, ready to color' : 'Line art of a dragon standing among mountains, ready to color');
       sheet.textContent = ''; sheet.appendChild(document.importNode(svg, true));
       try { var sv = JSON.parse(store('cw-page-' + p) || '{}'); Object.keys(sv).forEach(function (id) { var r = sheet.querySelector('#' + id); if (r && /^#[0-9A-Fa-f]{6}$/.test(sv[id][0]) && PAL[sv[id][1]]) paint(r, sv[id][0], sv[id][1]); }); } catch (e) {}
       $('res').setAttribute('data-shown', '0'); refresh();
-    }).catch(function () { if (seq !== openSeq) return; sheet.innerHTML = '<p style="padding:40px;color:#2A2238">This page did not load. Refresh to try again.</p>'; });
+    }).catch(function () { if (seq !== openSeq) return; loading = false; sheet.innerHTML = '<p style="padding:40px;color:#2A2238">This page did not load. Refresh to try again.</p>'; });
   }
   Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (tb) { tb.addEventListener('click', function () { openPage(tb.getAttribute('data-page')); }); });
   openPage('dragon');
