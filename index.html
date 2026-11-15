@@ -161,6 +161,35 @@ footer .wrap { padding-block: 26px 34px; display: flex; flex-wrap: wrap; gap: 8p
 @media (max-width: 520px) { .tog .lbl { display: none; } }
 #fx { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 30; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .window .tint { transition: none; } }
+
+/* The Riddle: three doors, no hints */
+.riddle { background: radial-gradient(ellipse 60% 70% at 75% 60%, #1E1934 0%, var(--night) 70%); }
+.riddle .wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
+.riddle-text { display: grid; gap: 18px; }
+.riddle-text p { color: var(--muted); max-width: 30em; }
+.riddle-text .turn { color: var(--ink); font-style: italic; font-size: 1.55rem; line-height: 1.3; }
+.launch { font-family: var(--display); font-size: .82rem; letter-spacing: .18em; color: var(--gold); line-height: 1.7; }
+.launch .dotsep { color: var(--dim); padding-inline: .4em; }
+.doors-col { display: grid; gap: 14px; }
+.doors { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(10px, 2.4vw, 26px); align-items: end; }
+.door { display: grid; gap: 10px; justify-items: center; min-width: 0; }
+.dbtn { position: relative; width: 100%; aspect-ratio: 120 / 200; padding: 0; border: 0; background: none; cursor: pointer; perspective: 600px; -webkit-tap-highlight-color: transparent; }
+.dbtn svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.dbtn .ln { fill: none; stroke: var(--gold); stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+.dbtn .fine { stroke-width: 1; opacity: .7; }
+.dbtn .light { fill: #FFF3D0; opacity: .06; transition: opacity .6s; }
+.dbtn .leaf { transform-origin: 16.67% 50%; transition: transform 1.1s cubic-bezier(.2,.8,.2,1); }
+.dbtn .leaf .face { fill: var(--night); }
+.dbtn:hover .leaf { transform: rotateY(-14deg); }
+.dbtn:hover .light { opacity: .35; }
+.dbtn.ajar .leaf { transform: rotateY(-34deg); }
+.dbtn.ajar .light { opacity: .9; }
+.dname { font-family: var(--display); font-weight: 700; font-size: clamp(.82rem, 1.9vw, 1.1rem); letter-spacing: .14em; color: var(--c); }
+.dsub { font-size: .95rem; font-style: italic; color: var(--dim); margin-top: -8px; }
+.whisper { min-height: 2.8em; font-style: italic; color: var(--muted); text-align: center; }
+.doorpeek { position: absolute; left: calc(66.6% - 52px); bottom: 34px; width: 92px; z-index: 2; }
+@media (max-width: 860px) { .riddle .wrap { grid-template-columns: minmax(0, 1fr); } .doorpeek { width: 70px; left: calc(66.6% - 40px); bottom: 30px; } }
+@media (prefers-reduced-motion: reduce) { .dbtn .leaf, .dbtn .light { transition: none; } .dbtn:hover .leaf, .dbtn.ajar .leaf { transform: none; } }
 </style>
 <!-- MailerLite Universal -->
 <script>
@@ -177,7 +206,7 @@ footer .wrap { padding-block: 26px 34px; display: flex; flex-wrap: wrap; gap: 8p
 <nav class="nav" aria-label="Main"><div class="wrap">
   <a class="mark" href="#top">COLORING WORLDS</a>
   <div class="links">
-    <a href="#destiny">CHROMATIC DESTINY</a><a href="#color">COLOR A PAGE</a><a href="#book">THE FIRST BOOK</a><a href="#hatchlings">HATCHLINGS</a><a href="#join">JOIN THE LIST</a>
+    <a href="#riddle">THREE DOORS</a><a href="#destiny">CHROMATIC DESTINY</a><a href="#color">COLOR A PAGE</a><a href="#book">THE FIRST BOOK</a><a href="#hatchlings">HATCHLINGS</a><a href="#join">JOIN THE LIST</a>
   </div>
 </div></nav>
 
@@ -209,6 +238,27 @@ footer .wrap { padding-block: 26px 34px; display: flex; flex-wrap: wrap; gap: 8p
     <div class="perch"><button class="stage bare" type="button" data-hatch="ember" aria-label="Ember the hatchling. Tap for a glitter toot."></button></div>
   </div>
 </div></header>
+
+<section class="bay riddle" id="riddle"><div class="wrap">
+  <div class="riddle-text">
+    <p class="kicker">A RIDDLE FROM THORNFIELD</p>
+    <h2>Three doors. One kingdom. <em class="g">Your colors hold the key.</em></h2>
+    <p>In Thornfield, an ancient dragon watches from the mountain. Below him wait three doors: one of Power, one of Wisdom, one of Heart.</p>
+    <p class="turn">You won’t choose a door. You’ll color your way to one.</p>
+    <p>Every page you fill whispers to the story. By the last page, one door will open, and it will be yours alone.</p>
+    <p class="launch">KINGDOMS OF COLOR<span class="dotsep">·</span>PATENT PENDING<span class="dotsep">·</span>COMING <time datetime="2027-02-26">FEBRUARY 26, 2027</time></p>
+    <div class="acts"><a class="btn" href="#join">JOIN THE WAITLIST</a></div>
+  </div>
+  <div class="doors-col">
+    <div class="doors" id="doors">
+      <div class="door" style="--c:var(--power)"><button class="dbtn" type="button" aria-label="The door of Power. Try the handle."><svg viewBox="0 0 120 200" aria-hidden="true"><path class="light" d="M20 198V72a40 40 0 0 1 80 0v126z"/><path class="ln" d="M8 198V70a52 52 0 0 1 104 0v128"/><path class="ln" d="M20 198V72a40 40 0 0 1 80 0v126"/><path class="ln fine" d="M60 18v14M33 27l7 11M87 27l-7 11M15 46l11 6M105 46l-11 6M8 100h12M100 100h12M8 140h12M100 140h12"/><path class="ln" d="M2 198h116"/></svg><svg class="leaf" viewBox="0 0 120 200" aria-hidden="true"><path class="face ln" d="M20 198V72a40 40 0 0 1 80 0v126z"/><path class="ln fine" d="M40 198V42M60 198V32M80 198V42"/><path class="ln" d="M20 104h58M20 166h58"/><path class="ln fine" d="M78 100l8 4-8 4M78 162l8 4-8 4"/><circle class="ln" cx="88" cy="136" r="6"/><path class="ln fine" d="M88 124v6"/><path class="ln fine" d="M88 150a3 3 0 1 1 0 .1M88 153v5"/></svg></button><b class="dname">POWER</b></div>
+      <div class="door" style="--c:var(--wisdom)"><button class="dbtn" type="button" aria-label="The door of Wisdom. Try the handle."><svg viewBox="0 0 120 200" aria-hidden="true"><path class="light" d="M20 198V72a40 40 0 0 1 80 0v126z"/><path class="ln" d="M8 198V70a52 52 0 0 1 104 0v128"/><path class="ln" d="M20 198V72a40 40 0 0 1 80 0v126"/><path class="ln fine" d="M60 18v14M33 27l7 11M87 27l-7 11M15 46l11 6M105 46l-11 6M8 100h12M100 100h12M8 140h12M100 140h12"/><path class="ln" d="M2 198h116"/></svg><svg class="leaf" viewBox="0 0 120 200" aria-hidden="true"><path class="face ln" d="M20 198V72a40 40 0 0 1 80 0v126z"/><path class="ln fine" d="M40 198V42M60 198V32M80 198V42"/><path class="ln" d="M20 104h58M20 166h58"/><path class="ln fine" d="M78 100l8 4-8 4M78 162l8 4-8 4"/><circle class="ln" cx="88" cy="136" r="6"/><path class="ln fine" d="M88 124v6"/><path class="ln fine" d="M88 150a3 3 0 1 1 0 .1M88 153v5"/></svg></button><b class="dname">WISDOM</b></div>
+      <div class="door" style="--c:var(--heart)"><button class="dbtn" type="button" aria-label="The door of Heart. Try the handle."><svg viewBox="0 0 120 200" aria-hidden="true"><path class="light" d="M20 198V72a40 40 0 0 1 80 0v126z"/><path class="ln" d="M8 198V70a52 52 0 0 1 104 0v128"/><path class="ln" d="M20 198V72a40 40 0 0 1 80 0v126"/><path class="ln fine" d="M60 18v14M33 27l7 11M87 27l-7 11M15 46l11 6M105 46l-11 6M8 100h12M100 100h12M8 140h12M100 140h12"/><path class="ln" d="M2 198h116"/></svg><svg class="leaf" viewBox="0 0 120 200" aria-hidden="true"><path class="face ln" d="M20 198V72a40 40 0 0 1 80 0v126z"/><path class="ln fine" d="M40 198V42M60 198V32M80 198V42"/><path class="ln" d="M20 104h58M20 166h58"/><path class="ln fine" d="M78 100l8 4-8 4M78 162l8 4-8 4"/><circle class="ln" cx="88" cy="136" r="6"/><path class="ln fine" d="M88 124v6"/><path class="ln fine" d="M88 150a3 3 0 1 1 0 .1M88 153v5"/></svg></button><b class="dname">HEART</b></div>
+      <div class="doorpeek"><button class="stage bare" type="button" data-hatch="doors" aria-label="A hatchling peeking out from behind the doors. Tap for its move."></button></div>
+    </div>
+    <p class="whisper" id="whisper" aria-live="polite">Three doors, all shut. Try a handle.</p>
+  </div>
+</div></section>
 
 <section class="bay cd" id="destiny"><div class="wrap">
   <div class="head">
@@ -347,6 +397,12 @@ footer .wrap { padding-block: 26px 34px; display: flex; flex-wrap: wrap; gap: 8p
     sprig: function () { var t = ac.currentTime; tone('sine', 300, t, .25, .07, .35, 540); tone('sine', 540, t + .65, .05, .06, .55, 250); },
     ember: function () { var t = ac.currentTime; hiss(t, .24, 'bandpass', 230, 1.3, .3, 150); tone('square', 150, t, .01, .05, .2, 90); [2637, 3136, 3520].forEach(function (f, i) { tone('sine', f, t + .28 + i * .07, .004, .05, .4, null, true); }); }
   };
+
+  /* A slow wooden creak and a soft locked thunk for the three doors. */
+  SFX.door = function () { var t = ac.currentTime, o = ac.createOscillator(), g = ac.createGain(), f = ac.createBiquadFilter();
+    o.type = 'sawtooth'; o.frequency.setValueAtTime(70, t); o.frequency.linearRampToValueAtTime(110, t + .35); o.frequency.linearRampToValueAtTime(82, t + .8);
+    f.type = 'bandpass'; f.frequency.value = 900; f.Q.value = 6; g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.09, t + .08); g.gain.exponentialRampToValueAtTime(.0001, t + .9);
+    o.connect(f); f.connect(g); g.connect(master); o.start(t); o.stop(t + 1); tone('sine', 95, t + .95, .005, .2, .25, 55, false); };
   function sfx(n, a) { if (!sfxOn || !actx()) return; try { SFX[n](a); } catch (e) {} }
   /* An original slow air in D Dorian: harp arpeggios, a tin-whistle tune, a drone and a soft hand drum. */
   var CH = { Dm: [146.83, 220, 293.66, 349.23], C: [130.81, 196, 261.63, 329.63], Am: [110, 164.81, 220, 261.63], F: [174.61, 261.63, 349.23, 440], G: [196, 293.66, 392, 493.88] };
@@ -447,6 +503,16 @@ footer .wrap { padding-block: 26px 34px; display: flex; flex-wrap: wrap; gap: 8p
   /* Who watches you color is pure chance, never tied to the colors you pick. */
   var peekK = KEYS[Math.floor(Math.random() * 4)]; mount($('peeker'), peekK, 9);
   $('peeker').setAttribute('aria-label', INFO[peekK].nm + ' is watching you color. Tap for the signature move.');
+
+  /* The Riddle doors: every door says "not yet". Nothing here hints which colors open which door. */
+  mount(document.querySelector('[data-hatch="doors"]'), KEYS[Math.floor(Math.random() * 5)], 11);
+  var WH = ['Not yet. This door opens for colors, not for knocking.', 'Locked. Somewhere in the book, your colors are already deciding.', 'It won’t budge. Only the last page knows which door is yours.', 'A draft of warm air, then nothing. Keep coloring.'], wi = 0;
+  Array.prototype.forEach.call(document.querySelectorAll('#doors .dbtn'), function (b) {
+    b.addEventListener('click', function () {
+      sfx('door'); $('whisper').textContent = WH[wi++ % WH.length];
+      b.classList.add('ajar'); clearTimeout(b._t); b._t = setTimeout(function () { b.classList.remove('ajar'); }, 1600);
+    });
+  });
   addEventListener('pointermove', function (e) { px = e.clientX; py = e.clientY; if (e.pointerType === 'mouse') hasPointer = true; }, { passive: true });
 
   var fx = $('fx'), c2 = fx.getContext('2d'), parts = [];
